@@ -30,15 +30,6 @@ Thumbs.db
 # Project specific ignores
 # -------------------------
 
-# Ignore cache & history CSVs by default
-Data/
-AstroLotto/Data/
-BreakoutBuddy/Data/
-
-# Allow the important committed CSVs if you want them
-!AstroLotto/Data/*.csv
-!BreakoutBuddy/Data/*.csv
-
 # Ignore extras unless explicitly un-ignored
 extras/
 Extras/
@@ -49,10 +40,16 @@ BreakoutBuddy/extras/
 # Critical overrides
 # -------------------------
 
-# Always track code under programs/ (overrides any earlier ignore)
+# Always track code under programs/
 !AstroLotto/
 !AstroLotto/programs/
 !AstroLotto/programs/**
 !BreakoutBuddy/
 !BreakoutBuddy/program/
 !BreakoutBuddy/program/**
+
+# Always include Data folders & their contents
+!AstroLotto/Data/
+!AstroLotto/Data/**
+!BreakoutBuddy/Data/
+!BreakoutBuddy/Data/**
