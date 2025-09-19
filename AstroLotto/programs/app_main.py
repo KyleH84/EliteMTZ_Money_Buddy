@@ -349,6 +349,24 @@ cache_csv = DATA / cache_map.get(game, "")
 df = pd.read_csv(cache_csv) if cache_csv.exists() else pd.DataFrame()
 base = compute_number_probs(df, game)
 
+# --- Cloud-friendly history uploader (only if no cached file) ---
+if df.empty:
+    st.info("No cached history found for this game. Upload a CSV to seed history.")
+    upfile = st.file_uploader(f"Upload history CSV for {game}", type=["csv"], key=f"hist_upload_{game}")
+    if upfile is not None:
+        try:
+            tmp_df = pd.read_csv(upfile)
+            DATA.mkdir(parents=True, exist_ok=True)
+            tmp_df.to_csv(cache_csv, index=False)
+            st.success(f"Saved history to {cache_csv}")
+            if _rerun:
+                _rerun()
+        except Exception as _e:
+            st.error(f"Failed to save uploaded CSV: {_e}")
+# Recompute base after possible upload
+base = compute_number_probs(df if not df.empty else (pd.read_csv(cache_csv) if cache_csv.exists() else pd.DataFrame()), game)
+
+
 # ---- column alias helpers (for hot/cold & robustness) ----
 def ALT_WHITE(i: int):
     return [f"n{i}", f"N{i}", f"w{i}", f"W{i}", f"white{i}", f"White{i}", f"num{i}", f"Num{i}", f"ball{i}", f"Ball{i}", f"d{i}", f"D{i}"]
