@@ -237,6 +237,45 @@ st.set_page_config(
 st.title("AstroLotto")
 st.caption("Predict lottery numbers using history, per-ball models, oracle signals (moon / space / markets), quantum blending, hot/cold learning, and EV-aware de-popularization.")
 
+# ---- Dynamic pages under programs/pages (works local & cloud) ----
+import importlib
+import pathlib as _pl
+
+_PAGES_DIR = _pl.Path(__file__).parent / "pages"
+
+def _load_pages_dynamic():
+    pages = {}
+    if _PAGES_DIR.exists():
+        for _py in sorted(_PAGES_DIR.glob("*.py")):
+            if _py.name.startswith("_"):
+                continue
+            _name = _py.stem.replace("_"," ").title()
+            try:
+                _mod = importlib.import_module(f"programs.pages.{_py.stem}")
+                pages[_name] = _mod
+            except Exception as _e:
+                try:
+                    import streamlit as _st
+                    _st.sidebar.error(f"Failed to load page {_py.stem}: {_e}")
+                except Exception:
+                    pass
+    return pages
+
+__pages = _load_pages_dynamic()
+if __pages:
+    __choices = ["Main"] + list(__pages.keys())
+    __choice = st.sidebar.radio("Pages", __choices, index=0)
+    if __choice != "Main":
+        __mod = __pages[__choice]
+        for __fn in ("main","render","run"):
+            __f = getattr(__mod, __fn, None)
+            if callable(__f):
+                __f()
+                st.stop()
+        st.write(f"Page '{__choice}' loaded, but no entrypoint (main/render/run) found.")
+        st.stop()
+# ---- end dynamic pages ----
+
 # ---------------- Sidebar (initial toggles) ----------------
 st.sidebar.header("Modules")
 opt_oracle      = st.sidebar.checkbox("Oracle influence", True)
