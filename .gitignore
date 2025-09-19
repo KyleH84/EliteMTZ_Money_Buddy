@@ -1,5 +1,5 @@
 # -------------------------
-# Python & virtualenv stuff
+# Python & virtualenv junk
 # -------------------------
 __pycache__/
 *.py[cod]
@@ -27,40 +27,25 @@ env/
 Thumbs.db
 
 # -------------------------
-# Project specific ignores
-# (Do NOT ignore app code or extras; Data should be committed)
+# Build / packaging junk
 # -------------------------
-
-# Keep node_modules or build dirs ignored if they ever appear
 node_modules/
 dist/
 build/
 
 # -------------------------
-# Critical includes (order matters)
+# Always include app code + data + extras
 # -------------------------
-
-# Always include app code
-!AstroLotto/
 !AstroLotto/programs/
 !AstroLotto/programs/**
-
-!BreakoutBuddy/
-!BreakoutBuddy/programs/
-!BreakoutBuddy/programs/**
-
-# Always include per-app Data
-!AstroLotto/Data/
-!AstroLotto/Data/**
-!BreakoutBuddy/Data/
-!BreakoutBuddy/Data/**
-
-# Always include per-app extras
-!extras/
-!extras/**
-!Extras/
-!Extras/**
 !AstroLotto/extras/
 !AstroLotto/extras/**
+!AstroLotto/Data/
+!AstroLotto/Data/**
+
+!BreakoutBuddy/programs/
+!BreakoutBuddy/programs/**
 !BreakoutBuddy/extras/
 !BreakoutBuddy/extras/**
+!BreakoutBuddy/Data/
+!BreakoutBuddy/Data/**

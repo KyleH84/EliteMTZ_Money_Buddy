@@ -1,0 +1,14 @@
+{
+  "features_schema_version": 1,
+  "last_updated": "2025-09-05T19:26:50",
+  "training_enabled": true,
+  "show_admin_tools": true,
+  "enable_health_scan": true,
+  "enable_training": true,
+  "training": true,
+  "admin_tools": true,
+  "admin": {
+    "tools": true,
+    "enabled": true
+  }
+}

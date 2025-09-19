@@ -1,0 +1,31 @@
+Append the following to the end of AstroLotto/programs/admin.py:
+
+
+
+# ================= Data QA (CSV) =================
+import streamlit as _st
+from pathlib import Path as _Path
+try:
+    from programs.services import csv_qa as _qa
+    _st.divider()
+    _st.subheader("Data QA (CSV)")
+    _data_root = _qa._data_dir_from(_Path(__file__).resolve())
+    _files = _qa.list_csvs(_data_root)
+    if _files:
+        _sel = _st.selectbox("Pick a CSV", options=[str(p) for p in _files], key="al_csv_sel")
+        if _st.button("Analyze CSV", key="al_csv_analyze"):
+            with _st.spinner("Scanning…"):
+                _rep = _qa.analyze_csv(_Path(_sel))
+            _st.json(_rep)
+            _st.markdown("**Summary:** " + _qa.summarize_for_humans(_rep))
+            if _st.button("Explain with Local LLM (if available)", key="al_csv_llm"):
+                _aug = _qa.llm_explain(_rep)
+                if _aug:
+                    _st.markdown("**Local model read**")
+                    _st.write(_aug)
+                else:
+                    _st.info("Local LLM not available or failed — showing rule-based summary above.")
+    else:
+        _st.info(f"No CSVs found in {_data_root}.")
+except Exception as _e:
+    _st.info(f"CSV QA not available: {_e}")
