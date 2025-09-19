@@ -58,6 +58,7 @@ def _freshness_checkers():
         "markets":     lambda: last_markets_update_time(),
     }
 
+# NOTE: runs_dir now uses the flexible resolver (defined below) via get_data_dir()
 def _make_pipeline():
     return AgentsPipeline(
         etl_fetch=_etl_fetch,
@@ -67,7 +68,7 @@ def _make_pipeline():
         popularity_model=_PopularityModel(),
         oracle_fetchers=_oracle_fetchers(),
         freshness_checkers=_freshness_checkers(),
-        runs_dir="Data/runs"
+        runs_dir=str(get_data_dir() / "runs")
     )
 
 # === Agents Layer: Predict Hook (call this where you handle Predict button) ===
@@ -135,6 +136,86 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 import inspect, json, math, re
 
+# ---------- Flexible Data/Extras dir resolver (local / parent / cloud-aware) ----------
+HERE        = Path(__file__).resolve()
+APP_ROOT    = HERE.parents[1]   # .../AstroLotto
+REPO_ROOT   = APP_ROOT.parent   # repo root
+
+def _cloud_roots():
+    h = Path.home()
+    return [
+        h / "OneDrive",
+        h / "OneDrive - Personal",
+        h / "OneDrive - Wagstaff Law Firm",
+        h / "Dropbox",
+        h / "Google Drive",
+        h / "Library" / "CloudStorage" / "OneDrive",
+        h / "Library" / "CloudStorage" / "Dropbox",
+        h / "Library" / "CloudStorage" / "GoogleDrive",
+    ]
+
+def _first_existing(paths):
+    for p in paths:
+        try:
+            p2 = Path(p).expanduser().resolve()
+            if p2.exists():
+                return p2
+        except Exception:
+            pass
+    return None
+
+def resolve_dir(preferred_env_var: str, fallback_name: str):
+    """
+    Resolution order:
+      1) Env var (absolute or relative)
+      2) APP_ROOT/<name>
+      3) REPO_ROOT/<name>  (parent-level)
+      4) CWD/<name>
+      5) Common cloud roots (<Cloud>/<repo or app>/<name>)
+      6) If nothing exists, create APP_ROOT/<name>
+    """
+    # 1) Env override
+    envv = os.environ.get(preferred_env_var, "").strip()
+    if envv:
+        cand = (Path(envv) if os.path.isabs(envv) else (Path.cwd() / envv))
+        if cand.exists():
+            return cand.resolve()
+
+    # 2–4) Local candidates
+    hit = _first_existing([APP_ROOT/fallback_name, REPO_ROOT/fallback_name, Path.cwd()/fallback_name])
+    if hit: return hit
+
+    # 5) Cloud roots
+    cands = []
+    for root in _cloud_roots():
+        cands += [
+            root/REPO_ROOT.name/fallback_name,
+            root/APP_ROOT.name/fallback_name,
+            root/"Projects"/REPO_ROOT.name/fallback_name,
+        ]
+    hit = _first_existing(cands)
+    if hit: return hit
+
+    # 6) Fallback: create inside app
+    d = (APP_ROOT/fallback_name).resolve()
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+# Public constants for the app
+ROOT = Path(".")
+DATA   = resolve_dir("ASTROLOTTO_DATA",   "Data")
+EXTRAS = resolve_dir("ASTROLOTTO_EXTRAS", "extras")
+
+def get_data_dir() -> Path:
+    """Helper for call sites earlier in the file (e.g., Agents pipeline)."""
+    return DATA
+
+# Optional: allow helpers in extras/src
+extras_src = (EXTRAS / "src")
+if extras_src.exists() and str(extras_src) not in sys.path:
+    sys.path.insert(0, str(extras_src))
+# ---------- end resolver ----------
+
 # Core utilities
 from utilities.probability import compute_number_probs, GAME_RULES
 from utilities.fallback_predict import predict_frequency_fallback
@@ -152,7 +233,6 @@ except Exception:
 from visuals.timeline_viz import render_white_surface
 from utilities import jackpots as jp
 
-ROOT = Path("."); DATA = Path("Data")
 _rerun = getattr(st, "rerun", getattr(st, "experimental_rerun", None))
 
 
@@ -238,8 +318,8 @@ oracle_sign        = st.sidebar.selectbox("Zodiac (optional)",
 
 # [autotune moved to page]
 st.sidebar.subheader("Autotune κ (moved)")
-al_logs_csv = st.sidebar.text_input("Logs CSV", value="Data/temporal_logs.csv")
-al_results_csv = st.sidebar.text_input("Results CSV", value="Data/draw_results.csv")
+al_logs_csv    = st.sidebar.text_input("Logs CSV",    value=str(DATA / "temporal_logs.csv"))
+al_results_csv = st.sidebar.text_input("Results CSV", value=str(DATA / "draw_results.csv"))
 al_kmin = st.sidebar.number_input("κ min", value=-5e16, format="%.3e")
 al_kmax = st.sidebar.number_input("κ max", value= 5e16, format="%.3e")
 al_ksteps = st.sidebar.number_input("Steps", min_value=3, value=41, step=2)
@@ -528,7 +608,7 @@ def _get_weights_for_epoch_dateaware(epoch_s: float) -> list[float]:
             seed=0,
         )
     )
-    W_local = _weights_array(w_comp, white_max)
+    W_local = _num_weights_array(w_comp)
     s = W_local.sum()
     if s > 0:
         W_local = W_local / s
@@ -1127,8 +1207,8 @@ def _log_temporal_run(game: str,
     Append a row to Data/temporal_logs.csv capturing diagnostics for learning.
     """
     try:
-        os.makedirs("Data", exist_ok=True)
-        path = os.path.join("Data", "temporal_logs.csv")
+        (DATA).mkdir(parents=True, exist_ok=True)
+        path = (DATA / "temporal_logs.csv")
         # Prepare row
         import time
         row = {
@@ -1182,8 +1262,8 @@ def _log_temporal_run(game: str,
         row["Sp_final"] = json.dumps(Sp_final) if Sp_final is not None else None
 
         # Write header if file is new
-        write_header = not os.path.exists(path)
-        with open(path, "a", newline="", encoding="utf-8") as f:
+        write_header = not (path.exists())
+        with open(str(path), "a", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, fieldnames=list(row.keys()))
             if write_header:
                 w.writeheader()
@@ -1195,7 +1275,7 @@ def _log_temporal_run(game: str,
 
 def _al_config_path():
     # default location inside project
-    return os.path.join("extras", "al_config.json")
+    return os.path.join(str(EXTRAS), "al_config.json")
 
 def _load_al_kappa_default(path=None, fallback=0.0):
     """Load default κ from autotuner config JSON, fallback if not found."""
