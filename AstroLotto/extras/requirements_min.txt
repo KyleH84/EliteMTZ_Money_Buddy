@@ -1,9 +1,0 @@
-# Minimal runtime deps for AstroLotto Big Patch
-streamlit>=1.35,<2
-numpy>=1.26
-pandas>=2.0
-matplotlib>=3.8
-scikit-learn>=1.5
-requests>=2.31
-# Optional for planetary alignment (drop the .bsp file into Data/ to use)
-skyfield>=1.49

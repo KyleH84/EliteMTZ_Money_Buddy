@@ -28,34 +28,39 @@ Thumbs.db
 
 # -------------------------
 # Project specific ignores
+# (Do NOT ignore app code or extras; Data should be committed)
 # -------------------------
 
-# Ignore extras unless explicitly un-ignored
-extras/
-Extras/
-AstroLotto/extras/
-BreakoutBuddy/extras/
+# Keep node_modules or build dirs ignored if they ever appear
+node_modules/
+dist/
+build/
 
 # -------------------------
-# Critical overrides
+# Critical includes (order matters)
 # -------------------------
 
-# Always track code under programs/
+# Always include app code
 !AstroLotto/
 !AstroLotto/programs/
 !AstroLotto/programs/**
-!BreakoutBuddy/
-!BreakoutBuddy/program/
-!BreakoutBuddy/program/**
 
-# Always include Data folders & their contents
+!BreakoutBuddy/
+!BreakoutBuddy/programs/
+!BreakoutBuddy/programs/**
+
+# Always include per-app Data
 !AstroLotto/Data/
 !AstroLotto/Data/**
 !BreakoutBuddy/Data/
 !BreakoutBuddy/Data/**
 
-# Ensure app code is tracked (override any earlier patterns)
-!AstroLotto/programs/
-!AstroLotto/programs/**
-!BreakoutBuddy/programs/
-!BreakoutBuddy/programs/**
+# Always include per-app extras
+!extras/
+!extras/**
+!Extras/
+!Extras/**
+!AstroLotto/extras/
+!AstroLotto/extras/**
+!BreakoutBuddy/extras/
+!BreakoutBuddy/extras/**

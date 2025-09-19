@@ -1,7 +1,0 @@
-{
-  "enable_ensemble": false,
-  "enable_montecarlo": false,
-  "enable_gap_pair": false,
-  "enable_training": false,
-  "show_dev_panels": false
-}
