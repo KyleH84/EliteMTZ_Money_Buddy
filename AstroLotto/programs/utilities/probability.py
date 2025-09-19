@@ -1,6 +1,19 @@
-# Program/utilities/probability.py (v1.2 context-aware)
+# Program/utilities/probability.py (v1.2 context-aware, hotfixed)
+
 from __future__ import annotations
 import math, os
+import numpy as np
+import pandas as pd
+from typing import Dict, Optional, Tuple, List
+
+GAME_RULES = {
+    "powerball":   {"k_white": 5, "white_min": 1, "white_max": 69, "special_min": 1, "special_max": 26},
+    "megamillions":{"k_white": 5, "white_min": 1, "white_max": 70, "special_min": 1, "special_max": 25},
+    "colorado_lottery": {"k_white": 6, "white_min": 1, "white_max": 40, "special_min": None, "special_max": None},
+    "cash5": {"k_white": 5, "white_min": 1, "white_max": 32, "special_min": None, "special_max": None},
+    "pick3": {"k_white": 3, "white_min": 0, "white_max": 9, "special_min": None, "special_max": None},
+    "lucky_for_life":{"k_white": 5, "white_min": 1, "white_max": 48, "special_min": 1, "special_max": 18},
+}
 
 def _find_date_column(df):
     """
@@ -8,8 +21,7 @@ def _find_date_column(df):
     Matches common names, datetime dtypes, or parseable strings.
     Returns the column name or None.
     """
-    import pandas as pd
-    # 1) name-based candidates (case/space-insensitive)
+    # 1) name-based candidates
     name_keys = {"drawdate","draw_date","date","draw_dt","drawtime","draw time","draw-date"}
     for c in df.columns:
         k = str(c).strip().lower().replace(" ", "").replace("-", "_")
@@ -31,21 +43,7 @@ def _find_date_column(df):
             return c
         except Exception:
             continue
-
     return None
-
-from typing import Dict, Optional, Tuple, List
-import numpy as np
-import pandas as pd
-
-GAME_RULES = {
-    "powerball":   {"k_white": 5, "white_min": 1, "white_max": 69, "special_min": 1, "special_max": 26},
-    "megamillions":{"k_white": 5, "white_min": 1, "white_max": 70, "special_min": 1, "special_max": 25},
-    "colorado_lottery": {"k_white": 6, "white_min": 1, "white_max": 40, "special_min": None, "special_max": None},
-    "cash5": {"k_white": 5, "white_min": 1, "white_max": 32, "special_min": None, "special_max": None},
-    "pick3": {"k_white": 3, "white_min": 0, "white_max": 9, "special_min": None, "special_max": None},
-    "lucky_for_life":{"k_white": 5, "white_min": 1, "white_max": 48, "special_min": 1, "special_max": 18},
-}
 
 def _norm_game(game: str) -> str:
     g = (game or "").lower().strip()
@@ -81,7 +79,9 @@ def _context_weights(df: pd.DataFrame, context: Optional[Dict]) -> np.ndarray:
 
 def _guess_cols(df: pd.DataFrame, game: str) -> Tuple[List[str], Optional[str]]:
     cols = [c.lower() for c in df.columns]; mapping = dict(zip(cols, df.columns))
-    white_names = ["white1","white2","white3","white4","white5","white6","n1","n2","n3","n4","n5","n6","w1","w2","w3","w4","w5","w6","ball1","ball2","ball3","ball4","ball5","ball6"]
+    white_names = ["white1","white2","white3","white4","white5","white6",
+                   "n1","n2","n3","n4","n5","n6","w1","w2","w3","w4","w5","w6",
+                   "ball1","ball2","ball3","ball4","ball5","ball6"]
     special_names = ["powerball","power","pb","mega","megaball","bonus","special"]
     whites=[mapping[n] for n in white_names if n in mapping][:GAME_RULES.get(game,{}).get("k_white",5)]
     special=None
@@ -89,7 +89,15 @@ def _guess_cols(df: pd.DataFrame, game: str) -> Tuple[List[str], Optional[str]]:
         if n in mapping: special = mapping[n]; break
     return whites, special
 
-def compute_number_probs(df: pd.DataFrame, game: str, halflife_days: float=180.0, smoothing_white: float=1.0, smoothing_special: float=1.0, rule_clip: bool=True, context: Optional[Dict]=None) -> Dict[str, np.ndarray]:
+def compute_number_probs(
+    df: pd.DataFrame,
+    game: str,
+    halflife_days: float=180.0,
+    smoothing_white: float=1.0,
+    smoothing_special: float=1.0,
+    rule_clip: bool=True,
+    context: Optional[Dict]=None
+) -> Dict[str, np.ndarray]:
     game = _norm_game(game)
     rules = GAME_RULES[game]
     k_white = rules["k_white"]; wmin,wmax = rules["white_min"], rules["white_max"]
@@ -98,13 +106,11 @@ def compute_number_probs(df: pd.DataFrame, game: str, halflife_days: float=180.0
     if dc is None:
         dc = _find_date_column(df)
         if dc is None:
-            # Fallback: synthesize a pseudo date from row order so downstream code can run
-            import pandas as pd, numpy as np
+            # Fallback: synthesize pseudo date
             df = df.copy()
             df["__pseudo_date__"] = pd.Timestamp.utcnow().normalize() - pd.to_timedelta(np.arange(len(df))[::-1], unit="D")
             dc = "__pseudo_date__"
-            print("Warning: No date column detected; using pseudo-date based on row order.")
-
+            print("Warning: No date column detected; using pseudo-date.")
     whites_c, special_c = _guess_cols(df, game)
 
     w_time = _exp_weights(df[dc], halflife_days)
@@ -121,13 +127,13 @@ def compute_number_probs(df: pd.DataFrame, game: str, halflife_days: float=180.0
         w = float(weights[i])
         for c in whites_c:
             try:
-                n = int(row[c]); 
+                n = int(row[c])
                 if not rule_clip or (wmin<=n<=wmax): white_counts[n - wmin] += w
             except Exception:
                 continue
         if special_counts is not None and special_c is not None:
             try:
-                sp = int(row[special_c]); 
+                sp = int(row[special_c])
                 if not rule_clip or (smin<=sp<=smax): special_counts[sp - smin] += w
             except Exception:
                 continue
