@@ -1,4 +1,4 @@
-# app_main.py — BreakoutBuddy (hardened, 8 tabs, dropdown quick explain, rank_now fix)
+# app_main.py — BreakoutBuddy (hardened, 8 tabs, dropdown quick explain, rank_now dict fix)
 from __future__ import annotations
 
 from pathlib import Path
@@ -41,7 +41,7 @@ import streamlit as st
 
 st.set_page_config(page_title="BreakoutBuddy — Smart Dashboard", page_icon="📈", layout="wide")
 st.title("BreakoutBuddy")
-st.caption("BB build: 2025-09-19 (hardened + tabs + dropdown + rank_now fix)")
+st.caption("BB build: 2025-09-19 (hardened + tabs + dropdown + rank_now dict fix)")
 
 # Core modules/services
 from modules import data as data_mod
@@ -67,7 +67,7 @@ try:
         _AGENT_ERR = _e
 except Exception as _e:
     HAS_AGENTS = False
-    _AGENT_ERR = _e
+    _AGET_ERR = _e  # harmless if mis-typed; we never read this name
 
 # Tabs & UI
 from modules.tabs.sidebar import SidebarSettings, render_sidebar
@@ -100,6 +100,21 @@ from modules.ui.single_ticker_analyzer import render as render_single_ticker
 
 # ---------- DB ----------
 conn = duckdb.connect(str(DB_PATH))
+
+# ---------- Helpers ----------
+def _settings_to_dict(s: object) -> dict:
+    """Convert SidebarSettings (or any object) to a plain dict expected by scoring_svc.rank_now()."""
+    if isinstance(s, dict):
+        return dict(s)  # copy
+    d = {}
+    try:
+        d.update({k: v for k, v in vars(s).items() if not k.startswith("_")})
+    except Exception:
+        # fallback: pick common fields via getattr
+        for k in ("universe_size", "top_n", "sort_by", "agent_weight"):
+            if hasattr(s, k):
+                d[k] = getattr(s, k)
+    return d
 
 # ---------- Thin wrappers used by tabs ----------
 def list_universe_fn(n: int):
@@ -134,31 +149,31 @@ def compute_regime_fn() -> dict:
 
 def rank_now_fn(universe_size=None, top_n: int = 25, sort_by: str | None = None,
                 agent_weight: float | None = None, settings: SidebarSettings | None = None, **kwargs):
-    # Build or update settings object
+    # Build or update settings object first
     if settings is None:
         class _S: pass
-        s = _S()
-        setattr(s, "universe_size", int(universe_size) if universe_size is not None else 300)
-        setattr(s, "top_n", int(top_n))
-        setattr(s, "sort_by", sort_by)
-        setattr(s, "agent_weight", agent_weight)
+        settings = _S()
+        setattr(settings, "universe_size", int(universe_size) if universe_size is not None else 300)
+        setattr(settings, "top_n", int(top_n))
+        setattr(settings, "sort_by", sort_by)
+        setattr(settings, "agent_weight", agent_weight)
     else:
-        s = settings
         if universe_size is not None:
-            try: s.universe_size = int(universe_size)
+            try: settings.universe_size = int(universe_size)
             except Exception: pass
         if top_n is not None:
-            try: s.top_n = int(top_n)
+            try: settings.top_n = int(top_n)
             except Exception: pass
         if sort_by is not None:
-            try: s.sort_by = sort_by
-            except Exception: pass
+            settings.sort_by = sort_by
         if agent_weight is not None:
-            try: s.agent_weight = agent_weight
-            except Exception: pass
+            settings.agent_weight = agent_weight
 
-    # IMPORTANT: pass ONLY the settings object; rank_now takes 1 positional arg
-    snap, regime, ranked, auc, model = scoring_svc.rank_now(s)
+    # Convert to dict so scoring_svc.rank_now can .copy() it
+    settings_dict = _settings_to_dict(settings)
+
+    # IMPORTANT: pass ONLY one positional arg (dict)
+    snap, regime, ranked, auc, model = scoring_svc.rank_now(settings_dict)
 
     # Optional resort
     if sort_by:
@@ -176,7 +191,7 @@ settings = render_sidebar(default_universe=300, default_topn=25, default_agent_w
 tabs = st.tabs(["Dashboard", "Single", "Explore", "Watchlist", "Report", "Agents", "Admin", "About"])
 
 with tabs[0]:
-    # Dashboard renders ranked table + dropdown quick explain (in dashboard.py)
+    # Dashboard renders ranked table + dropdown quick explain (dashboard.py)
     render_dashboard_tab(
         settings=settings,
         rank_now_fn=rank_now_fn,
