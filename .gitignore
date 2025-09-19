@@ -1,24 +1,58 @@
-# Python
+# -------------------------
+# Python & virtualenv stuff
+# -------------------------
 __pycache__/
-*.pyc
+*.py[cod]
+*.egg-info/
+*.eggs/
 *.pyo
 *.pyd
+*.pdb
+*.db
+*.sqlite3
+*.log
+*.tmp
+
+# Virtualenvs
 .venv/
 venv/
+ENV/
 env/
 
-# Editors / OS
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# OS files
 .DS_Store
 Thumbs.db
-.vscode/
-.idea/
 
-# App artifacts
-*_predictions.csv
-cached_*_data.csv
+# -------------------------
+# Project specific ignores
+# -------------------------
+
+# Ignore cache & history CSVs by default
 Data/
-logs/
-*.log
+AstroLotto/Data/
+BreakoutBuddy/Data/
 
-# Streamlit local secrets (don’t commit)
-.streamlit/secrets.toml
+# Allow the important committed CSVs if you want them
+!AstroLotto/Data/*.csv
+!BreakoutBuddy/Data/*.csv
+
+# Ignore extras unless explicitly un-ignored
+extras/
+Extras/
+AstroLotto/extras/
+BreakoutBuddy/extras/
+
+# -------------------------
+# Critical overrides
+# -------------------------
+
+# Always track code under programs/ (overrides any earlier ignore)
+!AstroLotto/
+!AstroLotto/programs/
+!AstroLotto/programs/**
+!BreakoutBuddy/
+!BreakoutBuddy/program/
+!BreakoutBuddy/program/**
