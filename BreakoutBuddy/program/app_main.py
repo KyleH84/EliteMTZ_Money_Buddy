@@ -1,6 +1,7 @@
 from __future__ import annotations
 from pathlib import Path
 import streamlit as st
+from pathlib import Path as _DBG_P
 import duckdb
 from modules import data as data_mod
 from modules import regime as regime_mod
@@ -12,7 +13,31 @@ from modules.tabs.agents_tab import render_agents_tab
 from modules.tabs.admin import render_admin_tab
 from modules.tabs.about import render_about_tab
 
-DATA_DIR = Path(__file__).resolve().parents[2] / "Data"
+
+from pathlib import Path as _P
+
+def _resolve_data_dir_app():
+    here = _P(__file__).resolve()
+    candidates = [
+        here.parents[2] / "Data",          # BreakoutBuddy/Data  (repo-level)
+        here.parent / "Data",              # BreakoutBuddy/program/Data
+        here.parents[3] / "Data",          # extra-safe: one more up
+        _P.cwd() / "Data",                 # current working dir/Data
+    ]
+    for c in candidates:
+        try:
+            if c.exists():
+                return c
+        except Exception:
+            pass
+    return candidates[0]
+
+DATA_DIR = _resolve_data_dir_app()
+try:
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+except Exception:
+    pass
+
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 DB_PATH = DATA_DIR / "breakoutbuddy.duckdb"
 conn = duckdb.connect(str(DB_PATH))
@@ -34,6 +59,11 @@ except Exception:
 
 st.set_page_config(page_title="BreakoutBuddy", layout="wide")
 st.title("BreakoutBuddy")
+
+st.sidebar.expander("Debug: DATA_DIR").write({
+    "DATA_DIR": str(DATA_DIR),
+    "exists": DATA_DIR.exists(),
+})
 
 tabs = st.tabs(["Dashboard", "Watchlist", "Report", "Agents", "Admin", "About"])
 
