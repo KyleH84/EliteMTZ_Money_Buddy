@@ -1,5 +1,6 @@
-# app_main.py — BreakoutBuddy (hardened for Cloud: safe agents import + tabs + dropdown)
+# app_main.py — BreakoutBuddy (hardened, 8 tabs, dropdown quick explain, rank_now fix)
 from __future__ import annotations
+
 from pathlib import Path
 import os, sys
 
@@ -31,31 +32,31 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 EXTRAS_DIR.mkdir(parents=True, exist_ok=True)
 
 DB_PATH = DATA_DIR / "breakoutbuddy.duckdb"
+# ---------- end resolver ----------
 
 # ---------- Runtime imports ----------
 import duckdb
 import pandas as pd
 import streamlit as st
 
-# Version caption so we can verify on Cloud
-st.caption("BB build: 2025-09-19 hardened-agents")
+st.set_page_config(page_title="BreakoutBuddy — Smart Dashboard", page_icon="📈", layout="wide")
+st.title("BreakoutBuddy")
+st.caption("BB build: 2025-09-19 (hardened + tabs + dropdown + rank_now fix)")
 
-# Modules / services
+# Core modules/services
 from modules import data as data_mod
 from modules import regime as regime_mod
 from modules.services import enrich as enrich_svc
 from modules.services import scoring as scoring_svc
 
-# Agents import — hardened for Cloud (graceful off-switch)
+# Agents (safe import for Cloud)
 HAS_AGENTS = False
 Orchestrator = None
 _AGENT_ERR = None
 try:
     from modules.services import agents_service as agents_svc
     try:
-        # try_import_agents may be missing or throw; guard it
         out = agents_svc.try_import_agents()
-        # Support both (HAS, Orchestrator, err) and simple bool return forms
         if isinstance(out, tuple) and len(out) >= 2:
             HAS_AGENTS, Orchestrator = bool(out[0]), out[1]
             _AGENT_ERR = out[2] if len(out) >= 3 else None
@@ -73,10 +74,10 @@ from modules.tabs.sidebar import SidebarSettings, render_sidebar
 from modules.tabs.dashboard import render_dashboard_tab
 from modules.ui.watchlist_page import render as render_watchlist_page
 from modules.tabs.report import render_report_tab
-# Import agents tab lazily/safely
+# Agents tab guarded so failures don’t crash app
 try:
     from modules.tabs.agents_tab import render_agents_tab as _render_agents_tab_real
-    def render_agents_tab_safe():
+    def render_agents_tab():
         if not HAS_AGENTS:
             st.info("Agents are disabled or unavailable in this environment.")
             if _AGENT_ERR:
@@ -86,7 +87,6 @@ try:
             _render_agents_tab_real()
         except Exception as e:
             st.info(f"Agents tab unavailable: {e}")
-    render_agents_tab = render_agents_tab_safe
 except Exception as _e:
     def render_agents_tab():
         st.info("Agents tab not available.")
@@ -98,10 +98,7 @@ from modules.tabs.explore import render_explore_tab
 from modules.ui import plain_english as pe_ui
 from modules.ui.single_ticker_analyzer import render as render_single_ticker
 
-# ---------- App setup ----------
-st.set_page_config(page_title="BreakoutBuddy — Smart Dashboard", page_icon="📈", layout="wide")
-st.title("BreakoutBuddy")
-
+# ---------- DB ----------
 conn = duckdb.connect(str(DB_PATH))
 
 # ---------- Thin wrappers used by tabs ----------
@@ -135,7 +132,9 @@ def analyze_one_fn(ticker: str = "", *, model=None, prior: float | None = None, 
 def compute_regime_fn() -> dict:
     return regime_mod.compute_regime()
 
-def rank_now_fn(universe_size=None, top_n: int = 25, sort_by: str | None = None, agent_weight: float | None = None, settings: SidebarSettings | None = None, **kwargs):
+def rank_now_fn(universe_size=None, top_n: int = 25, sort_by: str | None = None,
+                agent_weight: float | None = None, settings: SidebarSettings | None = None, **kwargs):
+    # Build or update settings object
     if settings is None:
         class _S: pass
         s = _S()
@@ -148,12 +147,26 @@ def rank_now_fn(universe_size=None, top_n: int = 25, sort_by: str | None = None,
         if universe_size is not None:
             try: s.universe_size = int(universe_size)
             except Exception: pass
-    snap, regime, ranked, auc, model = scoring_svc.rank_now(s, int(top_n))
+        if top_n is not None:
+            try: s.top_n = int(top_n)
+            except Exception: pass
+        if sort_by is not None:
+            try: s.sort_by = sort_by
+            except Exception: pass
+        if agent_weight is not None:
+            try: s.agent_weight = agent_weight
+            except Exception: pass
+
+    # IMPORTANT: pass ONLY the settings object; rank_now takes 1 positional arg
+    snap, regime, ranked, auc, model = scoring_svc.rank_now(s)
+
+    # Optional resort
     if sort_by:
         try:
             ranked = scoring_svc.apply_sort(ranked, sort_by)
         except Exception:
             pass
+
     return snap, regime, ranked, auc, model
 
 # ---------- Sidebar ----------
@@ -163,7 +176,7 @@ settings = render_sidebar(default_universe=300, default_topn=25, default_agent_w
 tabs = st.tabs(["Dashboard", "Single", "Explore", "Watchlist", "Report", "Agents", "Admin", "About"])
 
 with tabs[0]:
-    # Render dashboard with hooks (dropdown quick explain lives inside dashboard module now)
+    # Dashboard renders ranked table + dropdown quick explain (in dashboard.py)
     render_dashboard_tab(
         settings=settings,
         rank_now_fn=rank_now_fn,
