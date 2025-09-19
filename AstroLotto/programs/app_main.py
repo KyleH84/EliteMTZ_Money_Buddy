@@ -398,7 +398,7 @@ def compute_oracle_mods() -> Dict[str,Any]:
         try:
             parts[k] = min(1.0, float(v) * float(oracle_gain))
         except Exception as _e:
-            print(\"Temporal logging failed:\", _e)
+            print("Temporal logging failed:", _e)
     scaled["parts"] = parts
     return scaled
 
