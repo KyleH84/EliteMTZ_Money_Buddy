@@ -5,7 +5,30 @@ import pandas as pd
 import time
 import yfinance as yf
 
-DATA_DIR = Path(__file__).resolve().parents[3] / "Data"
+
+from pathlib import Path as _P
+
+def _resolve_data_dir_cache():
+    here = _P(__file__).resolve()
+    candidates = [
+        here.parents[3] / "Data",          # BreakoutBuddy/Data  (repo-level)
+        here.parents[2] / "Data",          # BreakoutBuddy/program/Data
+        _P.cwd() / "Data",
+    ]
+    for c in candidates:
+        try:
+            if c.exists():
+                return c
+        except Exception:
+            pass
+    return candidates[0]
+
+DATA_DIR = _resolve_data_dir_cache()
+try:
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+except Exception:
+    pass
+
 CACHE_DIR = DATA_DIR / "cache" / "yf"
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 

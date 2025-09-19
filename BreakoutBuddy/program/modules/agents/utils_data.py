@@ -1,6 +1,24 @@
 
 from __future__ import annotations
 from pathlib import Path
+
+from pathlib import Path as _P
+
+def data_dir():
+    here = _P(__file__).resolve()
+    candidates = [
+        here.parents[3] / "Data",          # BreakoutBuddy/Data
+        here.parents[2] / "Data",          # BreakoutBuddy/program/Data
+        _P.cwd() / "Data",
+    ]
+    for c in candidates:
+        try:
+            if c.exists():
+                return c
+        except Exception:
+            pass
+    return candidates[0]
+
 from typing import Iterable, Optional, Dict, Tuple, List
 
 import numpy as np
