@@ -1,0 +1,5 @@
+{
+  "autotrain_on_start": true,
+  "quantum_echo": true,
+  "future_feed_enabled": true
+}

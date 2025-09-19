@@ -1,0 +1,4 @@
+draw_date,white_balls,special,notes,user_sign,moon_phase,moon_position,sun_sign,alignment_score,temp,humidity,pressure,moon_distance,tide_state,is_retrograde
+2025-08-16,22 24 26,,legacy,,,,,,,,,,,
+2025-08-18,1 8 12 21 22 28,,fallback,,,,,,,,,,,
+2025-08-19,2 3 5 7 18 22,,fallback,,,,,,,,,,,

@@ -1,0 +1,35 @@
+# --- Core runtime
+streamlit>=1.36
+numpy>=1.26
+pandas>=2.2
+requests>=2.32
+python-dateutil>=2.9
+tqdm>=4.66
+
+# --- Visualization
+matplotlib>=3.9
+seaborn>=0.13
+plotly>=5.22
+
+# --- Machine Learning
+scikit-learn>=1.5
+lightgbm>=4.3
+xgboost>=2.0
+catboost>=1.2
+joblib>=1.4
+
+# --- Astronomy / ephemeris (AstroLotto features)
+skyfield>=1.49
+jplephem>=2.21
+astral>=3.2
+meteostat>=1.6
+
+# --- Parsing / utils
+beautifulsoup4>=4.12
+lxml>=5.2
+
+# --- Agents (optional, only if Agents page is enabled)
+langchain>=0.2
+langchain-openai>=0.1
+openai>=1.30
+tiktoken>=0.7

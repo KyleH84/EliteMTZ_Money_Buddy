@@ -1,0 +1,11 @@
+{
+  "game": "luckyforlife",
+  "evaluated_draws": 90,
+  "picks_per_draw": 3,
+  "model_white_hits": 220,
+  "model_special_hits": 0,
+  "model_total_hits": 220,
+  "baseline_mean": 132.996,
+  "baseline_max": 170,
+  "baseline_min": 99
+}

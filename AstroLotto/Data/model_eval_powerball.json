@@ -1,0 +1,11 @@
+{
+  "game": "powerball",
+  "evaluated_draws": 90,
+  "picks_per_draw": 3,
+  "model_white_hits": 111,
+  "model_special_hits": 12,
+  "model_total_hits": 123,
+  "baseline_mean": 107.993,
+  "baseline_max": 141,
+  "baseline_min": 81
+}
