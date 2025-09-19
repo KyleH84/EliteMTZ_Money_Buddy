@@ -1,4 +1,4 @@
-# app_main.py — BreakoutBuddy (tabs restored + dropdown Quick Actions + safe paths)
+# app_main.py — BreakoutBuddy (hardened for Cloud: safe agents import + tabs + dropdown)
 from __future__ import annotations
 from pathlib import Path
 import os, sys
@@ -37,19 +37,61 @@ import duckdb
 import pandas as pd
 import streamlit as st
 
+# Version caption so we can verify on Cloud
+st.caption("BB build: 2025-09-19 hardened-agents")
+
 # Modules / services
 from modules import data as data_mod
 from modules import regime as regime_mod
 from modules.services import enrich as enrich_svc
 from modules.services import scoring as scoring_svc
-from modules.services import agents_service as agents_svc
+
+# Agents import — hardened for Cloud (graceful off-switch)
+HAS_AGENTS = False
+Orchestrator = None
+_AGENT_ERR = None
+try:
+    from modules.services import agents_service as agents_svc
+    try:
+        # try_import_agents may be missing or throw; guard it
+        out = agents_svc.try_import_agents()
+        # Support both (HAS, Orchestrator, err) and simple bool return forms
+        if isinstance(out, tuple) and len(out) >= 2:
+            HAS_AGENTS, Orchestrator = bool(out[0]), out[1]
+            _AGENT_ERR = out[2] if len(out) >= 3 else None
+        else:
+            HAS_AGENTS = bool(out)
+    except Exception as _e:
+        HAS_AGENTS = False
+        _AGENT_ERR = _e
+except Exception as _e:
+    HAS_AGENTS = False
+    _AGENT_ERR = _e
 
 # Tabs & UI
 from modules.tabs.sidebar import SidebarSettings, render_sidebar
 from modules.tabs.dashboard import render_dashboard_tab
 from modules.ui.watchlist_page import render as render_watchlist_page
 from modules.tabs.report import render_report_tab
-from modules.tabs.agents_tab import render_agents_tab
+# Import agents tab lazily/safely
+try:
+    from modules.tabs.agents_tab import render_agents_tab as _render_agents_tab_real
+    def render_agents_tab_safe():
+        if not HAS_AGENTS:
+            st.info("Agents are disabled or unavailable in this environment.")
+            if _AGENT_ERR:
+                st.caption(f"(agents init note: {type(_AGENT_ERR).__name__})")
+            return
+        try:
+            _render_agents_tab_real()
+        except Exception as e:
+            st.info(f"Agents tab unavailable: {e}")
+    render_agents_tab = render_agents_tab_safe
+except Exception as _e:
+    def render_agents_tab():
+        st.info("Agents tab not available.")
+        st.caption(f"(import note: {type(_e).__name__})")
+
 from modules.tabs.admin import render_admin_tab
 from modules.tabs.about import render_about_tab
 from modules.tabs.explore import render_explore_tab
@@ -61,7 +103,6 @@ st.set_page_config(page_title="BreakoutBuddy — Smart Dashboard", page_icon="�
 st.title("BreakoutBuddy")
 
 conn = duckdb.connect(str(DB_PATH))
-HAS_AGENTS, Orchestrator, _AGENT_ERR = agents_svc.try_import_agents()
 
 # ---------- Thin wrappers used by tabs ----------
 def list_universe_fn(n: int):
@@ -122,17 +163,7 @@ settings = render_sidebar(default_universe=300, default_topn=25, default_agent_w
 tabs = st.tabs(["Dashboard", "Single", "Explore", "Watchlist", "Report", "Agents", "Admin", "About"])
 
 with tabs[0]:
-    # Hide built-in "Quick Actions" button wall (non-destructive CSS)
-    st.markdown(
-        """
-        <style>
-        div:has(> div > p:contains('Quick Actions')) + div { display: none !important; }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    # Render stock dashboard (table, metrics, etc.)
+    # Render dashboard with hooks (dropdown quick explain lives inside dashboard module now)
     render_dashboard_tab(
         settings=settings,
         rank_now_fn=rank_now_fn,
@@ -141,27 +172,6 @@ with tabs[0]:
         compute_regime_fn=compute_regime_fn,
         has_agents=HAS_AGENTS,
     )
-
-    # Our dropdown Quick Action (safe duplicate, lightweight)
-    try:
-        # Run a small rank to get ticker list for dropdown (matches table order)
-        _, _, ranked_for_dropdown, _, _ = rank_now_fn(
-            universe_size=getattr(settings, "universe_size", 300),
-            top_n=getattr(settings, "top_n", 25),
-            sort_by=getattr(settings, "sort_by", None),
-            agent_weight=getattr(settings, "agent_weight", 0.30),
-            settings=settings,
-        )
-        options = ranked_for_dropdown["Ticker"].astype(str).tolist() if not ranked_for_dropdown.empty and "Ticker" in ranked_for_dropdown.columns else []
-        if options:
-            st.markdown("### Quick explain")
-            sel = st.selectbox("Explain which ticker?", options, index=0, key="bb_quick_explain_sel")
-            row = ranked_for_dropdown.loc[ranked_for_dropdown["Ticker"].astype(str) == sel].iloc[0]
-            lines = friendly_lines_fn(row)
-            for ln in lines:
-                st.markdown(f"- {ln}")
-    except Exception:
-        pass
 
 with tabs[1]:
     render_single_ticker(
@@ -180,7 +190,6 @@ with tabs[2]:
     )
 
 with tabs[3]:
-    conn = duckdb.connect(str(DB_PATH))
     render_watchlist_page(
         conn=conn,
         settings=settings,
@@ -204,10 +213,7 @@ with tabs[4]:
         st.error(f"Report tab error: {e}")
 
 with tabs[5]:
-    try:
-        render_agents_tab()
-    except Exception as e:
-        st.info(f"Agents tab unavailable: {e}")
+    render_agents_tab()
 
 with tabs[6]:
     try:
