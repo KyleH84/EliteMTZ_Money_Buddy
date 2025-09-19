@@ -263,15 +263,16 @@ def _load_pages_dynamic():
 
 __pages = _load_pages_dynamic()
 if __pages:
-    __choices = ["Main"] + list(__pages.keys())
-    __choice = st.sidebar.radio("Pages", __choices, index=0)
-    if __choice != "Main":
-        __mod = __pages[__choice]
-        for __fn in ("main","render","run"):
-            __f = getattr(__mod, __fn, None)
-            if callable(__f):
-                __f()
-                st.stop()
+    tab_names = ['Main'] + list(__pages.keys())
+    _tabs = st.tabs(tab_names)
+    # Main tab index 0 will continue below; render extra tabs now
+    for _i, _name in enumerate(tab_names[1:], start=1):
+        with _tabs[_i]:
+            __mod = __pages[_name]
+            _ok = _call_first(__mod, ('render','main','run'))
+            if not _ok:
+                st.write(f"Page '{_name}' loaded, but no entrypoint (main/render/run) found.")
+
         st.write(f"Page '{__choice}' loaded, but no entrypoint (main/render/run) found.")
         st.stop()
 # ---- end dynamic pages ----

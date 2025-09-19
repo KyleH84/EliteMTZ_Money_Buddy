@@ -209,7 +209,10 @@ def _section_csv_qa():
     if not files:
         st.info(f"No CSVs found in {data_root}.")
         return
-    sel = st.selectbox("Pick a CSV", options=[str(p) for p in files])
+    default = next((str(p) for p in files if p.name in ("ranked_latest.csv","ranked.csv","watchlist_snapshot_latest.csv")), str(files[0]))
+    sel = st.selectbox("Pick a CSV", options=[str(p) for p in files], index=[str(p) for p in files].index(default) if files else 0)
+    if st.button("Auto analyze latest"):
+        sel = default
     if st.button("Analyze CSV"):
         with st.spinner("Scanning…"):
             rep = qa.analyze_csv(Path(sel))
@@ -258,3 +261,52 @@ def render_admin_tab(**kwargs):
         _section_csv_qa()
     with tabs[3]:
         _section_maintenance()
+
+
+def _section_regime():
+    st.subheader("Market Regime")
+    try:
+        from modules.regime import compute_regime
+        reg = compute_regime()
+        if isinstance(reg, dict) and reg:
+            cols = st.columns(min(4, max(1, len(reg))))
+            i = 0
+            for k,v in reg.items():
+                with cols[i % len(cols)]:
+                    st.metric(k, value=str(v))
+                i += 1
+        else:
+            st.info("No regime data available.")
+    except Exception as e:
+        st.info(f"Regime unavailable: {e}")
+
+def render_admin_tab(**kwargs):
+    st.header("Admin")
+    tabs = st.tabs(["Agents & Rank", "Local LLMs", "Data QA", "Maintenance", "Market Regime"])
+    with tabs[0]: _section_agents_rank()
+    with tabs[1]: _section_llm()
+    with tabs[2]: _section_csv_qa()
+    with tabs[3]: _section_maintenance()
+    with tabs[4]: _section_regime()
+
+
+    # Extra tools
+    st.subheader("Utilities")
+    colA, colB = st.columns(2)
+    with colA:
+        if st.button("Scan universe now"):
+            try:
+                from modules.engines.runner import quick_scan as _scan
+                n = _scan(limit=500)
+                st.success(f"Scan complete: {n} rows.")
+            except Exception as e:
+                st.error(f"Scan failed: {e}")
+    with colB:
+        if st.button("Health check"):
+            try:
+                from modules.health import run_health_check as _hc
+                rep = _hc()
+                st.json(rep)
+                st.success("Health OK." if rep.get("ok") else "Health reported issues above.")
+            except Exception as e:
+                st.error(f"Health check failed: {e}")

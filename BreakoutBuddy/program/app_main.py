@@ -197,7 +197,7 @@ with tabs[0]:
         rank_now_fn=rank_now_fn,
         friendly_lines_fn=friendly_lines_fn,
         analyze_one_fn=analyze_one_fn,
-        compute_regime_fn=compute_regime_fn,
+        compute_regime_fn=None,
         has_agents=HAS_AGENTS,
     )
 
@@ -235,7 +235,7 @@ with tabs[4]:
             list_universe_fn=list_universe_fn,
             pull_enriched_snapshot_fn=pull_enriched_snapshot_fn,
             enrich_features_fn=enrich_features_fn,
-            compute_regime_fn=compute_regime_fn,
+            compute_regime_fn=None,
         )
     except Exception as e:
         st.error(f"Report tab error: {e}")
