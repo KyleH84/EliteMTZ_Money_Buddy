@@ -1,179 +1,216 @@
+# app_main.py — BreakoutBuddy (restored tabs, Why/Pros-Cons, dropdown quick access)
 from __future__ import annotations
-from pathlib import Path
 
-# ---------- Strict per-app Data/Extras resolver (BreakoutBuddy) ----------
+# ---------- Minimal, app-root-only resolver (Windows/cloud-safe) ----------
 from pathlib import Path
 import os, sys
-BB_HERE     = Path(__file__).resolve()
-BB_APP_ROOT = BB_HERE.parents[1]   # .../BreakoutBuddy
 
-def _bb_cloud_roots():
-    h = Path.home()
-    return [
-        h / "OneDrive",
-        h / "OneDrive - Personal",
-        h / "OneDrive - Wagstaff Law Firm",
-        h / "Dropbox",
-        h / "Google Drive",
-        h / "Library" / "CloudStorage" / "OneDrive",
-        h / "Library" / "CloudStorage" / "Dropbox",
-        h / "Library" / "CloudStorage" / "GoogleDrive",
-    ]
+HERE = Path(__file__).resolve()
 
-def _bb_first_existing(paths):
-    for p in paths:
-        try:
-            p2 = Path(p).expanduser().resolve()
-            if p2.exists():
-                return p2
-        except Exception:
-            pass
-    return None
-
-def bb_resolve_dir(preferred_env_var: str, fallback_name: str):
+def _find_program_dir(start: Path) -> Path:
     """
-    Strict per-app order (NO repo-level fallback):
-      1) Env var (abs or relative)
-      2) BB_APP_ROOT/<name>
-      3) CWD/<name>
-      4) Cloud roots: <BreakoutBuddy>/<name>
-      5) Create BB_APP_ROOT/<name>
+    Walk up from the file location to find the 'program' directory.
+    Falls back to parent if not found.
     """
-    envv = os.environ.get(preferred_env_var, "").strip()
-    if envv:
-        cand = (Path(envv) if os.path.isabs(envv) else (Path.cwd() / envv))
-        if cand.exists():
-            return cand.resolve()
+    p = start
+    for _ in range(6):
+        if p.name.lower() == "program":
+            return p
+        if (p / "program").is_dir():
+            return (p / "program")
+        p = p.parent
+    # Fallback: assume current file lives under .../program/...
+    return start.parent
 
-    hit = _bb_first_existing([BB_APP_ROOT / fallback_name, Path.cwd() / fallback_name])
-    if hit:
-        return hit
+PROGRAM_DIR = _find_program_dir(HERE)
+APP_ROOT    = PROGRAM_DIR.parent
 
-    cands = []
-    for root in _bb_cloud_roots():
-        cands += [
-            root / BB_APP_ROOT.name / fallback_name,
-            root / "Projects" / BB_APP_ROOT.name / fallback_name,
-        ]
-    hit = _bb_first_existing(cands)
-    if hit:
-        return hit
+# Explicit module locations:
+MODULES_DIR = PROGRAM_DIR / "modules"              # e.g. ...\BreakoutBuddy\program\modules
+TABS_DIR    = MODULES_DIR / "tabs"                 # e.g. ...\BreakoutBuddy\program\modules\tabs
 
-    target = (BB_APP_ROOT / fallback_name).resolve()
-    target.mkdir(parents=True, exist_ok=True)
-    return target
+# Optional overrides (ONLY if you set them yourself)
+MODULES_DIR = Path(os.environ.get("BREAKOUTBUDDY_MODULES_DIR", str(MODULES_DIR))).resolve()
+TABS_DIR    = Path(os.environ.get("BREAKOUTBUDDY_TABS_DIR",     str(TABS_DIR))).resolve()
 
-BB_DATA   = bb_resolve_dir("BREAKOUTBUDDY_DATA",   "Data")
-BB_EXTRAS = bb_resolve_dir("BREAKOUTBUDDY_EXTRAS", "extras")
+# Put modules on sys.path (front) so "from modules.tabs import ..." always works
+for p in [str(MODULES_DIR), str(PROGRAM_DIR)]:
+    if p not in sys.path:
+        sys.path.insert(0, p)
 
-bb_extras_src = (BB_EXTRAS / "src")
-if bb_extras_src.exists() and str(bb_extras_src) not in sys.path:
-    sys.path.insert(0, str(bb_extras_src))
+# App-owned data/extras live under APP_ROOT by default (no cloud guessing)
+DATA_DIR   = Path(os.environ.get("BREAKOUTBUDDY_DATA",   str(APP_ROOT / "Data"))).resolve()
+EXTRAS_DIR = Path(os.environ.get("BREAKOUTBUDDY_EXTRAS", str(APP_ROOT / "extras"))).resolve()
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+EXTRAS_DIR.mkdir(parents=True, exist_ok=True)
+
+# Database path (fixed)
+DB_PATH = DATA_DIR / "breakoutbuddy.duckdb"
+
+# Optional: guardrails so you know immediately if paths are wrong
+for must_exist in [MODULES_DIR, TABS_DIR]:
+    if not must_exist.exists():
+        print(f"[BreakoutBuddy] WARNING: Expected directory not found: {must_exist}")
+
 # ---------- end resolver ----------
-import streamlit as st
-from pathlib import Path as _DBG_P
+
+# --- Runtime deps ---
 import duckdb
+import pandas as pd
+import streamlit as st
+
+# --- Modules / services (resolve via MODULES_DIR) ---
 from modules import data as data_mod
 from modules import regime as regime_mod
 from modules.services import enrich as enrich_svc
+from modules.services import scoring as scoring_svc
+from modules.services import agents_service as agents_svc
+
+# Tabs & UI
+from modules.tabs.sidebar import SidebarSettings, render_sidebar
 from modules.tabs.dashboard import render_dashboard_tab
 from modules.ui.watchlist_page import render as render_watchlist_page
 from modules.tabs.report import render_report_tab
 from modules.tabs.agents_tab import render_agents_tab
 from modules.tabs.admin import render_admin_tab
 from modules.tabs.about import render_about_tab
+from modules.tabs.explore import render_explore_tab
+from modules.ui import plain_english as pe_ui
+from modules.ui.single_ticker_analyzer import render as render_single_ticker
 
-
-from pathlib import Path as _P
-
-def _resolve_data_dir_app():
-    here = _P(__file__).resolve()
-    candidates = [
-        here.parents[2] / "Data",          # BreakoutBuddy/Data  (repo-level)
-        here.parent / "Data",              # BreakoutBuddy/program/Data
-        here.parents[3] / "Data",          # extra-safe: one more up
-        _P.cwd() / "Data",                 # current working dir/Data
-    ]
-    for c in candidates:
-        try:
-            if c.exists():
-                return c
-        except Exception:
-            pass
-    return candidates[0]
-
-DATA_DIR = _resolve_data_dir_app()
-try:
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-except Exception:
-    pass
-
-DATA_DIR.mkdir(parents=True, exist_ok=True)
-DB_PATH = DATA_DIR / str(BB_DATA / 'breakoutbuddy.duckdb')
-conn = duckdb.connect(str(DB_PATH))
-
-try:
-    from modules.tabs.sidebar import render_sidebar, SidebarSettings
-    settings = render_sidebar()
-except Exception:
-    class SidebarSettings: pass
-    settings = SidebarSettings()
-    setattr(settings, "top_n", 50)
-    setattr(settings, "universe_size", 300)
-
-HAS_AGENTS = True
-try:
-    import modules.agents.calibration as _  # noqa
-except Exception:
-    HAS_AGENTS = False
-
-st.set_page_config(page_title="BreakoutBuddy", layout="wide")
+# --- App / page config ---
+st.set_page_config(page_title="BreakoutBuddy — Smart Dashboard", page_icon="📈", layout="wide")
 st.title("BreakoutBuddy")
 
-st.sidebar.expander("Debug: DATA_DIR").write({
-    "DATA_DIR": str(DATA_DIR),
-    "exists": DATA_DIR.exists(),
-})
+# --- DB connection ---
+conn = duckdb.connect(str(DB_PATH))
 
-tabs = st.tabs(["Dashboard", "Watchlist", "Report", "Agents", "Admin", "About"])
+# Agents availability
+HAS_AGENTS, Orchestrator, _AGENT_ERR = agents_svc.try_import_agents()
+
+# --- Thin wrappers exposed to tabs (reinstates Why + Pros/Cons + dropdown quick access) ---
+def list_universe_fn(n: int):
+    return data_mod.list_universe(n)
+
+def pull_enriched_snapshot_fn(tickers):
+    return data_mod.pull_enriched_snapshot(tickers)
+
+def enrich_features_fn(tickers, base_df: pd.DataFrame | None = None):
+    return enrich_svc.enrich_features(tickers, base_df)
+
+def friendly_lines_fn(row: pd.Series):
+    # Plain-English "Why" lines for a given ranked row
+    try:
+        return pe_ui.friendly_lines(pd.Series(row))
+    except Exception:
+        return []
+
+def analyze_one_fn(ticker: str = "", *, model=None, prior: float | None = None, **kwargs) -> pd.DataFrame:
+    # allow 'prior_from' alias for prior for backwards-compat
+    if prior is None:
+        prior = kwargs.pop("prior_from", None)
+    if prior is None:
+        prior = 0.50
+    try:
+        return scoring_svc.analyze_one((ticker or "").upper(), model=model, prior=prior)
+    except TypeError:
+        # older signature without prior
+        return scoring_svc.analyze_one((ticker or "").upper())
+    except Exception:
+        return pd.DataFrame()
+
+def compute_regime_fn() -> dict:
+    return regime_mod.compute_regime()
+
+def rank_now_fn(universe_size=None, top_n: int = 25, sort_by: str | None = None, agent_weight: float | None = None, settings: SidebarSettings | None = None, **kwargs):
+    # Build minimal settings object if not provided
+    if settings is None:
+        class _S: pass
+        s = _S()
+        setattr(s, "universe_size", int(universe_size) if universe_size is not None else 300)
+        setattr(s, "top_n", int(top_n))
+        setattr(s, "sort_by", sort_by)
+        setattr(s, "agent_weight", agent_weight)
+    else:
+        s = settings
+        if universe_size is not None:
+            try: s.universe_size = int(universe_size)
+            except Exception: pass
+    snap, regime, ranked, auc, model = scoring_svc.rank_now(s, int(top_n))
+    if sort_by:
+        try:
+            ranked = scoring_svc.apply_sort(ranked, sort_by)
+        except Exception:
+            pass
+    return snap, regime, ranked, auc, model
+
+# --- Sidebar + Settings ---
+settings = render_sidebar(default_universe=300, default_topn=25, default_agent_weight=0.30, has_agents=HAS_AGENTS)
+
+# --- Tabs (restored "Single" and "Explore") ---
+tabs = st.tabs(["Dashboard", "Single", "Explore", "Watchlist", "Report", "Agents", "Admin", "About"])
 
 with tabs[0]:
-    render_dashboard_tab(settings=settings, has_agents=HAS_AGENTS)
+    # Pass hooks so Why/Pros-Cons + ticker dropdown flow returns
+    render_dashboard_tab(
+        settings=settings,
+        rank_now_fn=rank_now_fn,
+        friendly_lines_fn=friendly_lines_fn,
+        analyze_one_fn=analyze_one_fn,
+        compute_regime_fn=compute_regime_fn,
+        has_agents=HAS_AGENTS,
+    )
 
 with tabs[1]:
+    render_single_ticker(
+        settings=settings,
+        analyze_one_fn=analyze_one_fn,
+        friendly_lines_fn=friendly_lines_fn,
+        header=True,
+    )
+
+with tabs[2]:
+    render_explore_tab(
+        settings=settings,
+        list_universe_fn=list_universe_fn,
+        pull_enriched_snapshot_fn=pull_enriched_snapshot_fn,
+        enrich_features_fn=enrich_features_fn,
+    )
+
+with tabs[3]:
     render_watchlist_page(
         conn=conn,
         settings=settings,
-        pull_enriched_snapshot_fn=None,
-        enrich_features_fn=None,
+        pull_enriched_snapshot_fn=pull_enriched_snapshot_fn,
+        enrich_features_fn=enrich_features_fn,
         train_online_fn=None,
         score_snapshot_fn=None,
         header=True,
     )
 
-with tabs[2]:
+with tabs[4]:
     try:
         render_report_tab(
             settings=settings,
-            list_universe_fn=data_mod.list_universe,
-            pull_enriched_snapshot_fn=data_mod.pull_enriched_snapshot,
-            enrich_features_fn=enrich_svc.enrich_features,
-            compute_regime_fn=regime_mod.compute_regime,
+            list_universe_fn=list_universe_fn,
+            pull_enriched_snapshot_fn=pull_enriched_snapshot_fn,
+            enrich_features_fn=enrich_features_fn,
+            compute_regime_fn=compute_regime_fn,
         )
     except Exception as e:
         st.error(f"Report tab error: {e}")
 
-with tabs[3]:
+with tabs[5]:
     try:
         render_agents_tab()
     except Exception as e:
         st.info(f"Agents tab unavailable: {e}")
 
-with tabs[4]:
+with tabs[6]:
     try:
         render_admin_tab(settings=settings)
     except Exception as e:
         st.error(f"Admin tab error: {e}")
 
-with tabs[5]:
+with tabs[7]:
     render_about_tab(data_dir=DATA_DIR, db_path=DB_PATH)
