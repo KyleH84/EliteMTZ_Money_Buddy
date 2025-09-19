@@ -133,13 +133,12 @@ import json
 import math
 import datetime as dt
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
-import inspect, json, math, re
 
-# ---------- Flexible Data/Extras dir resolver (local / parent / cloud-aware) ----------
+# ---------- Strict per-app Data/Extras resolver (AstroLotto) ----------
+from pathlib import Path
+import os, sys
 HERE        = Path(__file__).resolve()
 APP_ROOT    = HERE.parents[1]   # .../AstroLotto
-REPO_ROOT   = APP_ROOT.parent   # repo root
 
 def _cloud_roots():
     h = Path.home()
@@ -166,55 +165,46 @@ def _first_existing(paths):
 
 def resolve_dir(preferred_env_var: str, fallback_name: str):
     """
-    Resolution order:
-      1) Env var (absolute or relative)
+    Strict per-app order (NO repo-level fallback):
+      1) Env var (abs or relative)
       2) APP_ROOT/<name>
-      3) REPO_ROOT/<name>  (parent-level)
-      4) CWD/<name>
-      5) Common cloud roots (<Cloud>/<repo or app>/<name>)
-      6) If nothing exists, create APP_ROOT/<name>
+      3) CWD/<name>
+      4) Common cloud roots: <AstroLotto>/<name>
+      5) Create APP_ROOT/<name>
     """
-    # 1) Env override
     envv = os.environ.get(preferred_env_var, "").strip()
     if envv:
         cand = (Path(envv) if os.path.isabs(envv) else (Path.cwd() / envv))
         if cand.exists():
             return cand.resolve()
 
-    # 2–4) Local candidates
-    hit = _first_existing([APP_ROOT/fallback_name, REPO_ROOT/fallback_name, Path.cwd()/fallback_name])
-    if hit: return hit
+    hit = _first_existing([APP_ROOT / fallback_name, Path.cwd() / fallback_name])
+    if hit:
+        return hit
 
-    # 5) Cloud roots
     cands = []
     for root in _cloud_roots():
         cands += [
-            root/REPO_ROOT.name/fallback_name,
-            root/APP_ROOT.name/fallback_name,
-            root/"Projects"/REPO_ROOT.name/fallback_name,
+            root / APP_ROOT.name / fallback_name,
+            root / "Projects" / APP_ROOT.name / fallback_name,
         ]
     hit = _first_existing(cands)
-    if hit: return hit
+    if hit:
+        return hit
 
-    # 6) Fallback: create inside app
-    d = (APP_ROOT/fallback_name).resolve()
+    d = (APP_ROOT / fallback_name).resolve()
     d.mkdir(parents=True, exist_ok=True)
     return d
 
-# Public constants for the app
-ROOT = Path(".")
 DATA   = resolve_dir("ASTROLOTTO_DATA",   "Data")
 EXTRAS = resolve_dir("ASTROLOTTO_EXTRAS", "extras")
 
-def get_data_dir() -> Path:
-    """Helper for call sites earlier in the file (e.g., Agents pipeline)."""
-    return DATA
-
-# Optional: allow helpers in extras/src
 extras_src = (EXTRAS / "src")
 if extras_src.exists() and str(extras_src) not in sys.path:
     sys.path.insert(0, str(extras_src))
 # ---------- end resolver ----------
+from typing import Any, Dict, List, Optional, Tuple
+import inspect, json, math, re
 
 # Core utilities
 from utilities.probability import compute_number_probs, GAME_RULES

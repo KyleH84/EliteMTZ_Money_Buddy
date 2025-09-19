@@ -1,3 +1,74 @@
+from pathlib import Path
+
+# ---------- Strict per-app Data/Extras resolver (BreakoutBuddy) ----------
+from pathlib import Path
+import os, sys
+BB_HERE     = Path(__file__).resolve()
+BB_APP_ROOT = BB_HERE.parents[1]   # .../BreakoutBuddy
+
+def _bb_cloud_roots():
+    h = Path.home()
+    return [
+        h / "OneDrive",
+        h / "OneDrive - Personal",
+        h / "OneDrive - Wagstaff Law Firm",
+        h / "Dropbox",
+        h / "Google Drive",
+        h / "Library" / "CloudStorage" / "OneDrive",
+        h / "Library" / "CloudStorage" / "Dropbox",
+        h / "Library" / "CloudStorage" / "GoogleDrive",
+    ]
+
+def _bb_first_existing(paths):
+    for p in paths:
+        try:
+            p2 = Path(p).expanduser().resolve()
+            if p2.exists():
+                return p2
+        except Exception:
+            pass
+    return None
+
+def bb_resolve_dir(preferred_env_var: str, fallback_name: str):
+    """
+    Strict per-app order (NO repo-level fallback):
+      1) Env var (abs or relative)
+      2) BB_APP_ROOT/<name>
+      3) CWD/<name>
+      4) Cloud roots: <BreakoutBuddy>/<name>
+      5) Create BB_APP_ROOT/<name>
+    """
+    envv = os.environ.get(preferred_env_var, "").strip()
+    if envv:
+        cand = (Path(envv) if os.path.isabs(envv) else (Path.cwd() / envv))
+        if cand.exists():
+            return cand.resolve()
+
+    hit = _bb_first_existing([BB_APP_ROOT / fallback_name, Path.cwd() / fallback_name])
+    if hit:
+        return hit
+
+    cands = []
+    for root in _bb_cloud_roots():
+        cands += [
+            root / BB_APP_ROOT.name / fallback_name,
+            root / "Projects" / BB_APP_ROOT.name / fallback_name,
+        ]
+    hit = _bb_first_existing(cands)
+    if hit:
+        return hit
+
+    target = (BB_APP_ROOT / fallback_name).resolve()
+    target.mkdir(parents=True, exist_ok=True)
+    return target
+
+BB_DATA   = bb_resolve_dir("BREAKOUTBUDDY_DATA",   "Data")
+BB_EXTRAS = bb_resolve_dir("BREAKOUTBUDDY_EXTRAS", "extras")
+
+bb_extras_src = (BB_EXTRAS / "src")
+if bb_extras_src.exists() and str(bb_extras_src) not in sys.path:
+    sys.path.insert(0, str(bb_extras_src))
+# ---------- end resolver ----------
 
 # temporal_autotune.py
 # Autotunes the Kozyrev coupling kappa using your CSV logs.
@@ -43,7 +114,7 @@ class BBOutcome:  # minimal schema if you roll your own outcomes CSV
     label: float  # 0/1 or regression target
 
 def tune_kappa_breakoutbuddy(
-    logs_csv: str = "Data/bb_temporal_logs.csv",
+    logs_csv: str = str(BB_DATA / 'bb_temporal_logs.csv'),
     outcomes_csv: Optional[str] = None,
     label_col: str = "label",
     kappa_min: float = -5e16,
@@ -168,7 +239,7 @@ def _winner_mass_white(W: np.ndarray, winners: List[int], indexing: str = "1-bas
     return mass
 
 def tune_kappa_astrolotto(
-    logs_csv: str = "Data/temporal_logs.csv",
+    logs_csv: str = str(BB_DATA / 'temporal_logs.csv'),
     results_csv: Optional[str] = None,
     white_col: str = "white_winning",
     special_col: str = "special_winning",
