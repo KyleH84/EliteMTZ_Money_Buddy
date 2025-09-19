@@ -1,51 +1,38 @@
-
+# streamlit_app.py — top-level launcher for AstroLotto & BreakoutBuddy
 from __future__ import annotations
-from pathlib import Path
+
 import runpy
-import sys
+from pathlib import Path
 import streamlit as st
 
-st.set_page_config(page_title="Money Buddy — Cloud", page_icon="💼", layout="wide")
+st.set_page_config(page_title="Elite MTZ — Apps", page_icon="🧭", layout="wide")
 
 ROOT = Path(__file__).resolve().parent
+
+# Map app names to their entry files
 APPS = {
+    # Keep AstroLotto as-is (adjust if your repo layout differs)
     "AstroLotto": ROOT / "AstroLotto" / "programs" / "app_main.py",
-    "BreakoutBuddy": ROOT / "BreakoutBuddy" / "program" / "00_Dashboard.py",
+    # Route BreakoutBuddy to the real multi-tab main (NOT 00_Dashboard.py)
+    "BreakoutBuddy": ROOT / "BreakoutBuddy" / "program" / "app_main.py",
 }
 
-st.title("💼 Money Buddy — Cloud")
-st.caption("Single-entry app that routes to AstroLotto or BreakoutBuddy in the same Streamlit process (cloud-safe).")
+st.title("Elite MTZ — App Launcher")
+st.caption("Pick an app in the sidebar.")
 
 with st.sidebar:
-    st.header("Choose an app")
-    choice = st.radio("App", list(APPS.keys()), index=0)
+    app_name = st.selectbox("Choose app", list(APPS.keys()), index=1 if "BreakoutBuddy" in APPS else 0)
+    st.write("Selected:", app_name)
 
-missing = [name for name, path in APPS.items() if not path.exists()]
-if missing:
-    st.error("Missing entry files for: " + ", ".join(missing))
-    with st.expander("Debug info"):
-        for name, p in APPS.items():
-            st.write(f"{name}: {p}")
+entry = APPS.get(app_name)
+if not entry:
+    st.error(f"Unknown app: {app_name}")
+elif not entry.exists():
+    st.error(f"Entry file not found:\n{entry}")
     st.stop()
 
-with st.expander("Environment / Secrets (diagnostic)"):
-    bridge = st.secrets.get("LLMBRIDGE_URL", None) if hasattr(st, "secrets") else None
-    st.write({"LLMBRIDGE_URL": bool(bridge)})
+# Tiny version stamp so we can confirm cloud is running the right launcher
+st.caption("Launcher build: 2025-09-19 route-to-app_main.py")
 
-st.divider()
-st.subheader(f"▶ {choice}")
-st.caption("Running inline. If you navigate back here, use the sidebar to switch apps.")
-
-script_path = APPS[choice]
-module_dir = str(script_path.parent)
-
-# Prepend the target module directory so 'from X import Y' works for sibling modules.
-if module_dir not in sys.path:
-    sys.path.insert(0, module_dir)
-
-try:
-    runpy.run_path(str(script_path), run_name="__main__")
-except SystemExit:
-    pass
-except Exception as e:
-    st.exception(e)
+# Execute the selected app's entry file in this Streamlit session
+runpy.run_path(str(entry), run_name="__main__")
