@@ -2,10 +2,8 @@
 from __future__ import annotations
 from pathlib import Path
 import runpy
+import sys
 import streamlit as st
-
-# Cloud-only launcher: no subprocesses, no BAT, no local ports.
-# It simply imports and runs the chosen sub-app in-process.
 
 st.set_page_config(page_title="Money Buddy — Cloud", page_icon="💼", layout="wide")
 
@@ -16,14 +14,12 @@ APPS = {
 }
 
 st.title("💼 Money Buddy — Cloud")
-st.caption("Single-entry app that routes to AstroLotto or BreakoutBuddy in the **same Streamlit process** (cloud-safe).")
+st.caption("Single-entry app that routes to AstroLotto or BreakoutBuddy in the same Streamlit process (cloud-safe).")
 
-# Sidebar router
 with st.sidebar:
     st.header("Choose an app")
     choice = st.radio("App", list(APPS.keys()), index=0)
 
-# Health checks + helpful notes
 missing = [name for name, path in APPS.items() if not path.exists()]
 if missing:
     st.error("Missing entry files for: " + ", ".join(missing))
@@ -32,7 +28,6 @@ if missing:
             st.write(f"{name}: {p}")
     st.stop()
 
-# Optional: show secrets info (for debugging)
 with st.expander("Environment / Secrets (diagnostic)"):
     bridge = st.secrets.get("LLMBRIDGE_URL", None) if hasattr(st, "secrets") else None
     st.write({"LLMBRIDGE_URL": bool(bridge)})
@@ -42,14 +37,15 @@ st.subheader(f"▶ {choice}")
 st.caption("Running inline. If you navigate back here, use the sidebar to switch apps.")
 
 script_path = APPS[choice]
+module_dir = str(script_path.parent)
 
-# Execute the target Streamlit app inline
+# Prepend the target module directory so 'from X import Y' works for sibling modules.
+if module_dir not in sys.path:
+    sys.path.insert(0, module_dir)
+
 try:
-    # run_path executes the other script in this same process – Streamlit will render its UI.
-    # We isolate globals minimally to avoid leaking names.
     runpy.run_path(str(script_path), run_name="__main__")
 except SystemExit:
-    # Streamlit sometimes triggers SystemExit during script exec/rerun. Ignore to avoid crash.
     pass
 except Exception as e:
     st.exception(e)
