@@ -53,3 +53,9 @@ BreakoutBuddy/extras/
 !AstroLotto/Data/**
 !BreakoutBuddy/Data/
 !BreakoutBuddy/Data/**
+
+# Ensure app code is tracked (override any earlier patterns)
+!AstroLotto/programs/
+!AstroLotto/programs/**
+!BreakoutBuddy/programs/
+!BreakoutBuddy/programs/**
