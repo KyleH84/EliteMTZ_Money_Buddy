@@ -1,0 +1,3 @@
+App Name: EliteMTZ Breakout Buddy
+Company: EliteMTZ LLC
+Build: v1.0 All‑Alpha Patch

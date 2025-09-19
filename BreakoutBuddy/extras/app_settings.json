@@ -1,0 +1,9 @@
+{
+  "enable_breakout": true,
+  "enable_crosser": true,
+  "enable_box": true,
+  "enable_retail_fade": true,
+  "preset_strategy": "Balanced",
+  "universe_size": 300,
+  "top_n": 50
+}

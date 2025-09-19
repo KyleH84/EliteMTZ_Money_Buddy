@@ -1,0 +1,29 @@
+alpha_map:
+  strategies:
+    breakout_candidates: {enabled: true, notes: "Near 52w high, compression, RS up, RVOL build"}
+    cross_above_5: {enabled: true, notes: "First sustained close > $5 with volume confirm"}
+    cross_above_10: {enabled: true, notes: "First sustained close > $10 with volume confirm"}
+    tight_range_box: {enabled: true, notes: "Low ATR%% days, inside-day clusters — next-day expansion"}
+    retail_fade: {enabled: true, notes: "Abnormal RVOL without news + wick/failed gap"}
+    post_earnings_drift: {enabled: true, notes: "Long strong beats; short failed pops"}
+    busted_growth_shorts: {enabled: true, notes: "Repeated guide cuts; pops into supply"}
+    etp_decay_info: {enabled: true, notes: "Vol/leveraged ETP decay — informational only"}
+    momentum_5_to_10: {enabled: true, notes: "Continuation from $5 toward $10 if RS/vol persist"}
+    momentum_10_to_20: {enabled: true, notes: "Continuation from $10 toward $20"}
+  labeling:
+    horizon_days: 5
+    success_return_pct: 3.0
+    stop_multiple_atr: 2.5
+  learning:
+    enabled: true
+    model: "sgd_logistic"
+    max_train_days: 120
+  objectives:
+    precision_at_k: 20
+    minimize_drawdown_before_target: true
+guardrails:
+  min_price: 2
+  min_adv_usd: 5000000
+  earnings_exclude_days_pre: 2
+  earnings_exclude_days_post: 1
+  exclude_leveraged_inverse: true

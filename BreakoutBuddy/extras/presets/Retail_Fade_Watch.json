@@ -1,0 +1,13 @@
+{
+  "name": "Retail_Fade_Watch",
+  "price_min": 5,
+  "price_max": 200,
+  "cap_buckets": [
+    "Small",
+    "Mid"
+  ],
+  "min_adv_usd": 5000000,
+  "near_high_pct_max": 100,
+  "include_plain_etfs": true,
+  "exclude_leveraged_inverse": true
+}

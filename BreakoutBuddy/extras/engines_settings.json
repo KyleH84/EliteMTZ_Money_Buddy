@@ -1,0 +1,33 @@
+{
+  "breakout": {
+    "hi_lookback": 55,
+    "min_rvol": 1.8,
+    "bbw_pctile_max": 0.3,
+    "min_breakout_atr": 0.75,
+    "trend_ema_fast": 20,
+    "trend_ema_slow": 50
+  },
+  "crosser": {
+    "levels": [
+      5.0,
+      10.0
+    ],
+    "min_base_days": 15,
+    "min_adv": 750000,
+    "max_spread_bps": 25
+  },
+  "box": {
+    "nr_window": [
+      7,
+      21
+    ],
+    "bbw_pctile_max": 0.2,
+    "min_touches": 3,
+    "min_rvol_break": 2.0
+  },
+  "retail_fade": {
+    "gap_min_pct": 6.0,
+    "rsi2_min": 95.0,
+    "require_vwap_break": true
+  }
+}

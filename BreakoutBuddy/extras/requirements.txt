@@ -1,0 +1,33 @@
+# --- Core runtime
+streamlit>=1.36
+pandas>=2.2
+numpy>=1.26
+requests>=2.32
+python-dateutil>=2.9
+pytz>=2025.2
+tqdm>=4.66
+
+# --- Data & storage
+yfinance>=0.2.65
+duckdb>=1.1.0
+
+# --- Scheduling
+APScheduler>=3.11.0
+
+# --- Visualization
+matplotlib>=3.9
+seaborn>=0.13
+plotly>=5.22
+
+# --- Machine Learning / stats
+scikit-learn>=1.5
+joblib>=1.4
+gpt4all>=2.7
+
+# --- Sentiment & NLP
+vaderSentiment>=3.3.2
+textblob>=0.18.0
+
+# --- Parsing / utils (optional but useful)
+beautifulsoup4>=4.12
+lxml>=5.2

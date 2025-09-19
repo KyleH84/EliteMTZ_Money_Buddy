@@ -1,0 +1,13 @@
+
+# Agent configuration (tunable)
+max_headlines: 8
+weights:
+  w0: 0.05
+  w_model: 0.55
+  w_tech: 0.25
+  w_sent: 0.15
+batch:
+  max_concurrency: 6
+  cache_ttl_sec: 3600
+ui:
+  badge_threshold: 0.65

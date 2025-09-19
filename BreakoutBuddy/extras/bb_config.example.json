@@ -1,0 +1,12 @@
+{
+  "kappa": 0.0,
+  "metric_value": 0.0,
+  "updated_at": 0,
+  "scan": {
+    "kappa_min": -5e+16,
+    "kappa_max": 5e+16,
+    "kappa_steps": 41
+  },
+  "metric": "logloss",
+  "label_col": "label"
+}

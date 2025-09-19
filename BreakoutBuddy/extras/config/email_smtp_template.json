@@ -1,0 +1,11 @@
+{
+  "adapter": "smtp",
+  "host": "smtp.example.com",
+  "port": 587,
+  "use_tls": true,
+  "username": "user@example.com",
+  "password": "APP_PASSWORD_OR_TOKEN",
+  "from_email": "signals@example.com",
+  "from_name": "EliteMTZ Breakout Buddy",
+  "status": "DISCONNECTED"
+}

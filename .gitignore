@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# App artifacts
+*_predictions.csv
+cached_*_data.csv
+Data/
+logs/
+*.log
+
+# Streamlit local secrets (don’t commit)
+.streamlit/secrets.toml

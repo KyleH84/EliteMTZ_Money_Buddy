@@ -1,0 +1,33 @@
+app_name: "EliteMTZ Breakout Buddy"
+company_name: "EliteMTZ LLC"
+timezone: "America/Denver"
+schedule:
+  weekdays: [Mon, Tue, Wed, Thu, Fri]
+  time_local: "14:35"
+  honor_early_closes: true
+universe:
+  source: "nasdaq_trader"   # nasdaq_trader | local_csv
+  local_csv: "Data/us_universe.csv"
+  include_plain_etfs: true
+  exclude_leveraged_inverse: true
+filters_default_preset: "Balanced"
+scoring:
+  leaders_min: 75
+  watch_min: 65
+  stop_atr_multiple: 2.5
+learning:
+  enabled: true
+  horizon_days: 5
+  positive_return_pct: 3.0
+  max_train_days: 120
+  model_path: "Data/models/sgd_breakout.pkl"
+email:
+  enabled: false
+  adapter: "gmail"
+  recipients: []
+retention:
+  exports_days: 60
+  backups_days: 14
+ui:
+  quick_scan_universe: "sp500"   # sp500 | quick100 | full_us
+  show_monte_carlo: true
