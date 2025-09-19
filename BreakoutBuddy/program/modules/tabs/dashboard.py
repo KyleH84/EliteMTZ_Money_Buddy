@@ -1,120 +1,205 @@
-
+# program/modules/tabs/dashboard.py
 from __future__ import annotations
-import streamlit as st
+
+from typing import Any, Callable, Optional, Tuple
 import pandas as pd
-from pathlib import Path
-from datetime import datetime
-from modules import explain as explain_mod
+import streamlit as st
 
-COLUMNS_ALL = ["Ticker","Open","High","Low","Close","Volume","Combined","P_up","Risk","RelSPY","RVOL","RSI4","ConnorsRSI","SqueezeHint","ChangePct","AgentBoost_exact","QuickWhy","RiskBadge"]
+# Types for the hooks we expect (duck-typed; no hard dependency)
+RankNowFn = Callable[..., Tuple[pd.DataFrame, dict, pd.DataFrame, Any, Any]]
+FriendlyLinesFn = Callable[[pd.Series], list[str]]
+AnalyzeOneFn = Callable[..., pd.DataFrame]
+ComputeRegimeFn = Callable[[], dict]
 
-def _data_dir() -> Path:
-    here = Path(__file__).resolve()
-    for up in [here, *here.parents]:
-        cand = up / "Data"
-        if cand.is_dir():
-            return cand
-        if up.name == "program":
-            cand2 = up.parent / "Data"
-            if cand2.is_dir():
-                return cand2
-    fb = here.parent / "Data"
-    fb.mkdir(parents=True, exist_ok=True)
-    return fb
-
-def _load_csv(name: str) -> tuple[pd.DataFrame, str]:
-    p = _data_dir() / name
-    if p.exists():
-        try:
-            df = pd.read_csv(p)
-            ts = datetime.fromtimestamp(p.stat().st_mtime).strftime("%Y-%m-%d %H:%M")
-            return df, ts
-        except Exception:
-            return pd.DataFrame(), ""
-    return pd.DataFrame(), ""
-
-def _lift_chip(v: float) -> str:
+def _safe_getattr(obj: Any, name: str, default: Any = None):
     try:
-        x = float(v)
-        if x > 5: return "▲"
-        if x < -5: return "▼"
-        return ""
+        return getattr(obj, name, default)
     except Exception:
-        return ""
+        return default
 
-def _ensure_explanations(df: pd.DataFrame) -> pd.DataFrame:
-    if df.empty: return df
-    qs = []; rb = []
-    for _, row in df.iterrows():
-        exp = explain_mod.explain_for_row(row, allow_local_llm=True)
-        qs.append(exp.get("quick",""))
-        rb.append(exp.get("risk_badge",""))
-    out = df.copy()
-    out["QuickWhy"] = qs
-    out["RiskBadge"] = rb
-    return out
+def _safe_friendly_lines(fn: Optional[FriendlyLinesFn], row: pd.Series) -> list[str]:
+    if fn is None:
+        return []
+    try:
+        return fn(row)
+    except Exception:
+        return []
 
-def _order_cols(df: pd.DataFrame) -> pd.DataFrame:
-    cols = [c for c in COLUMNS_ALL if c in df.columns]
-    return df[cols] if cols else df
+def _simple_pros_cons(row: pd.Series) -> tuple[list[str], list[str]]:
+    """
+    Lightweight Pros/Cons synthesis if a dedicated analyzer isn't available.
 
-def render_dashboard_tab(*, settings=None, **kwargs):
-    st.header("Dashboard")
-    ranked, ts = _load_csv("ranked_latest.csv")
-    if ranked.empty:
-        st.info("No ranked data yet. Go to Admin and run a manual scan & rank once.")
-        return
+    Pros  -> select a few highest positive numeric fields (signals)
+    Cons  -> select a few lowest/negative numeric fields
+    """
+    pros, cons = [], []
+    try:
+        # pick up to 4 numeric columns besides 'Ticker'
+        numerics = row.drop(labels=[c for c in ["Ticker", "ticker"] if c in row.index], errors="ignore")
+        numerics = numerics.dropna()
+        if isinstance(numerics, pd.Series):
+            # Keep only numeric-like
+            numerics = numerics[[k for k, v in numerics.items() if isinstance(v, (int, float))]]
 
-    st.sidebar.subheader("Filters")
-    min_comb = st.sidebar.slider("Min Combined (with agents if present)", 0, 100, 0, 1)
-    min_pup = st.sidebar.slider("Min P_up (%)", 0, 100, 0, 1)
-    only_pos_rel = st.sidebar.checkbox("RelSPY > 0", value=False)
+        if len(numerics) > 0:
+            top_pos = sorted(numerics.items(), key=lambda kv: kv[1], reverse=True)[:4]
+            top_neg = sorted(numerics.items(), key=lambda kv: kv[1])[:4]
 
-    df = ranked.copy()
+            for k, v in top_pos:
+                pros.append(f"{k}: {v:.3f}")
+            for k, v in top_neg:
+                cons.append(f"{k}: {v:.3f}")
+    except Exception:
+        pass
+    return pros, cons
 
-    # Robust Combined_show derivation (avoid float.fillna crash)
-    if "Combined_with_agents" in df.columns:
-        base = pd.to_numeric(df["Combined_with_agents"], errors="coerce")
-    elif "Combined" in df.columns:
-        base = pd.to_numeric(df["Combined"], errors="coerce")
-    elif "Combined_base" in df.columns:
-        base = pd.to_numeric(df["Combined_base"], errors="coerce")
-    else:
-        base = pd.Series(0.0, index=df.index)
-    df["Combined_show"] = base.fillna(0.0)
-
-    # Filters
-    df = df[df["Combined_show"] >= float(min_comb)]
-    if "P_up" in df.columns:
-        pup = pd.to_numeric(df["P_up"], errors="coerce").fillna(0.0) * 100.0
-        df = df[pup >= float(min_pup)]
-    if only_pos_rel and "RelSPY" in df.columns:
-        df = df[pd.to_numeric(df["RelSPY"], errors="coerce").fillna(0.0) > 0.0]
-
-    # Ensure agent columns
-    if "AgentBoost_exact" not in df.columns or "Combined_with_agents" not in df.columns:
+def _analyze_one_safe(fn: Optional[AnalyzeOneFn], ticker: str) -> pd.DataFrame:
+    if fn is None or not ticker:
+        return pd.DataFrame()
+    try:
+        return fn(ticker=ticker)
+    except TypeError:
+        # Support older signature analyze_one_fn(ticker)
         try:
-            from modules.services import agents_service as AS
-            df = AS.enrich_scores(df)
+            return fn(ticker)
         except Exception:
-            if "AgentBoost_exact" not in df.columns:
-                df["AgentBoost_exact"] = 0.0
-            if "Combined_with_agents" not in df.columns:
-                df["Combined_with_agents"] = df.get("Combined", 0.0)
+            return pd.DataFrame()
+    except Exception:
+        return pd.DataFrame()
 
-    st.caption(f"Last ranked: {ts} • Universe: {len(df)} rows")
-    df["Lift"] = df["AgentBoost_exact"].apply(_lift_chip)
-    df = _ensure_explanations(df)
+def _render_regime(regime: Optional[dict]):
+    if not isinstance(regime, dict) or not regime:
+        return
+    cols = st.columns(min(4, max(1, len(regime))))
+    i = 0
+    for k, v in regime.items():
+        with cols[i % len(cols)]:
+            st.metric(k, value=str(v))
+        i += 1
 
-    view = _order_cols(df)
-    st.dataframe(view, height=520, width='stretch')
+def render_dashboard_tab(
+    *,
+    settings: Any,
+    rank_now_fn: Optional[RankNowFn] = None,
+    friendly_lines_fn: Optional[FriendlyLinesFn] = None,
+    analyze_one_fn: Optional[AnalyzeOneFn] = None,
+    compute_regime_fn: Optional[ComputeRegimeFn] = None,
+    has_agents: bool = False,
+) -> None:
+    """
+    Main dashboard:
+      - Top ranked table
+      - Quick explain (dropdown) with Why + Pros/Cons
+      - Optional regime summary
+    """
 
-    # Detail pane: pick a ticker
-    if not df.empty and "Ticker" in df.columns:
-        tickers = list(df["Ticker"].astype(str))
-        sel = st.selectbox("Details for", options=tickers)
-        if sel:
-            row = df[df["Ticker"].astype(str) == sel].iloc[0].to_dict()
-            exp = explain_mod.explain_for_row(row, allow_local_llm=True)
-            st.markdown("### Why (detailed)")
-            st.write(exp.get("detailed",""))
+    st.subheader("BreakoutBuddy ▸ Dashboard")
+    st.caption("Ranked snapshot, quick analyze, simple explain. Clean dropdown instead of the giant button wall.")
+
+    # Pull settings with safe defaults
+    universe_size = _safe_getattr(settings, "universe_size", 300)
+    top_n         = _safe_getattr(settings, "top_n", 25)
+    sort_by       = _safe_getattr(settings, "sort_by", None)
+    agent_weight  = _safe_getattr(settings, "agent_weight", 0.30)
+
+    # Compute regime (optional and fast)
+    regime = None
+    try:
+        if compute_regime_fn:
+            regime = compute_regime_fn()
+    except Exception:
+        regime = None
+
+    if isinstance(regime, dict) and regime:
+        with st.expander("Market Regime", expanded=False):
+            _render_regime(regime)
+
+    # Rank now (core data)
+    ranked = pd.DataFrame()
+    try:
+        if rank_now_fn:
+            _, _, ranked, auc, _ = rank_now_fn(
+                universe_size=universe_size,
+                top_n=top_n,
+                sort_by=sort_by,
+                agent_weight=agent_weight,
+                settings=settings,
+            )
+    except Exception as e:
+        st.error(f"Ranking failed: {e}")
+
+    # Layout: table on the left, explain on the right
+    left, right = st.columns([3, 2])
+
+    with left:
+        st.markdown("### Top ranked")
+        if ranked is None or ranked.empty:
+            st.info("No ranked results to show.")
+        else:
+            # Prefer a 'Ticker' column to be first if present
+            cols = list(ranked.columns)
+            if "Ticker" in cols:
+                cols = ["Ticker"] + [c for c in cols if c != "Ticker"]
+            st.dataframe(
+                ranked[cols],
+                use_container_width=True,
+                hide_index=True,
+            )
+
+    with right:
+        st.markdown("### Quick explain")
+        tickers = []
+        if ranked is not None and not ranked.empty:
+            colname = "Ticker" if "Ticker" in ranked.columns else ("ticker" if "ticker" in ranked.columns else None)
+            if colname:
+                tickers = ranked[colname].astype(str).tolist()
+
+        if not tickers:
+            st.caption("Rank something first to enable quick explain.")
+            return
+
+        sel = st.selectbox("Pick a ticker", tickers, index=0, key="bb_quick_explain_dropdown")
+
+        # Fetch the selected row
+        row = None
+        try:
+            colname = "Ticker" if "Ticker" in ranked.columns else ("ticker" if "ticker" in ranked.columns else None)
+            if colname:
+                row = ranked.loc[ranked[colname].astype(str) == str(sel)].iloc[0]
+        except Exception:
+            row = None
+
+        if row is None:
+            st.warning("Selection not found in ranked results.")
+            return
+
+        # WHY (friendly lines)
+        lines = _safe_friendly_lines(friendly_lines_fn, row)
+        if lines:
+            st.write("**Why**")
+            for ln in lines:
+                st.markdown(f"- {ln}")
+
+        # ANALYZE (optional deeper view)
+        with st.expander("Detailed analysis", expanded=False):
+            detail = _analyze_one_safe(analyze_one_fn, str(sel))
+            if detail is not None and not detail.empty:
+                st.dataframe(detail, use_container_width=True, hide_index=True)
+            else:
+                st.caption("No detailed analysis available.")
+
+        # PROS / CONS (simple synthesis if needed)
+        pros, cons = _simple_pros_cons(row)
+        if pros or cons:
+            c1, c2 = st.columns(2)
+            with c1:
+                st.write("**Pros**")
+                for p in pros[:5]:
+                    st.markdown(f"- {p}")
+            with c2:
+                st.write("**Cons**")
+                for c in cons[:5]:
+                    st.markdown(f"- {c}")
+
+    # Optional footer
+    st.caption("Tip: adjust Top N / Universe in the sidebar to update the dropdown and table.")

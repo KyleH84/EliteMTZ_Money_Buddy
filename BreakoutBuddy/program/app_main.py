@@ -1,17 +1,12 @@
-# app_main.py — BreakoutBuddy (restored tabs, Why/Pros-Cons, dropdown quick access)
+# app_main.py — BreakoutBuddy (tabs restored + dropdown Quick Actions + safe paths)
 from __future__ import annotations
-
-# ---------- Minimal, app-root-only resolver (Windows/cloud-safe) ----------
 from pathlib import Path
 import os, sys
 
+# ---------- Minimal, app-root-only resolver ----------
 HERE = Path(__file__).resolve()
 
 def _find_program_dir(start: Path) -> Path:
-    """
-    Walk up from the file location to find the 'program' directory.
-    Falls back to parent if not found.
-    """
     p = start
     for _ in range(6):
         if p.name.lower() == "program":
@@ -19,47 +14,30 @@ def _find_program_dir(start: Path) -> Path:
         if (p / "program").is_dir():
             return (p / "program")
         p = p.parent
-    # Fallback: assume current file lives under .../program/...
     return start.parent
 
 PROGRAM_DIR = _find_program_dir(HERE)
 APP_ROOT    = PROGRAM_DIR.parent
+MODULES_DIR = Path(os.environ.get("BREAKOUTBUDDY_MODULES_DIR", str(PROGRAM_DIR / "modules"))).resolve()
+TABS_DIR    = Path(os.environ.get("BREAKOUTBUDDY_TABS_DIR",     str(MODULES_DIR / "tabs"))).resolve()
 
-# Explicit module locations:
-MODULES_DIR = PROGRAM_DIR / "modules"              # e.g. ...\BreakoutBuddy\program\modules
-TABS_DIR    = MODULES_DIR / "tabs"                 # e.g. ...\BreakoutBuddy\program\modules\tabs
-
-# Optional overrides (ONLY if you set them yourself)
-MODULES_DIR = Path(os.environ.get("BREAKOUTBUDDY_MODULES_DIR", str(MODULES_DIR))).resolve()
-TABS_DIR    = Path(os.environ.get("BREAKOUTBUDDY_TABS_DIR",     str(TABS_DIR))).resolve()
-
-# Put modules on sys.path (front) so "from modules.tabs import ..." always works
 for p in [str(MODULES_DIR), str(PROGRAM_DIR)]:
     if p not in sys.path:
         sys.path.insert(0, p)
 
-# App-owned data/extras live under APP_ROOT by default (no cloud guessing)
 DATA_DIR   = Path(os.environ.get("BREAKOUTBUDDY_DATA",   str(APP_ROOT / "Data"))).resolve()
 EXTRAS_DIR = Path(os.environ.get("BREAKOUTBUDDY_EXTRAS", str(APP_ROOT / "extras"))).resolve()
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 EXTRAS_DIR.mkdir(parents=True, exist_ok=True)
 
-# Database path (fixed)
 DB_PATH = DATA_DIR / "breakoutbuddy.duckdb"
 
-# Optional: guardrails so you know immediately if paths are wrong
-for must_exist in [MODULES_DIR, TABS_DIR]:
-    if not must_exist.exists():
-        print(f"[BreakoutBuddy] WARNING: Expected directory not found: {must_exist}")
-
-# ---------- end resolver ----------
-
-# --- Runtime deps ---
+# ---------- Runtime imports ----------
 import duckdb
 import pandas as pd
 import streamlit as st
 
-# --- Modules / services (resolve via MODULES_DIR) ---
+# Modules / services
 from modules import data as data_mod
 from modules import regime as regime_mod
 from modules.services import enrich as enrich_svc
@@ -78,17 +56,14 @@ from modules.tabs.explore import render_explore_tab
 from modules.ui import plain_english as pe_ui
 from modules.ui.single_ticker_analyzer import render as render_single_ticker
 
-# --- App / page config ---
+# ---------- App setup ----------
 st.set_page_config(page_title="BreakoutBuddy — Smart Dashboard", page_icon="📈", layout="wide")
 st.title("BreakoutBuddy")
 
-# --- DB connection ---
 conn = duckdb.connect(str(DB_PATH))
-
-# Agents availability
 HAS_AGENTS, Orchestrator, _AGENT_ERR = agents_svc.try_import_agents()
 
-# --- Thin wrappers exposed to tabs (reinstates Why + Pros/Cons + dropdown quick access) ---
+# ---------- Thin wrappers used by tabs ----------
 def list_universe_fn(n: int):
     return data_mod.list_universe(n)
 
@@ -99,14 +74,12 @@ def enrich_features_fn(tickers, base_df: pd.DataFrame | None = None):
     return enrich_svc.enrich_features(tickers, base_df)
 
 def friendly_lines_fn(row: pd.Series):
-    # Plain-English "Why" lines for a given ranked row
     try:
         return pe_ui.friendly_lines(pd.Series(row))
     except Exception:
         return []
 
 def analyze_one_fn(ticker: str = "", *, model=None, prior: float | None = None, **kwargs) -> pd.DataFrame:
-    # allow 'prior_from' alias for prior for backwards-compat
     if prior is None:
         prior = kwargs.pop("prior_from", None)
     if prior is None:
@@ -114,7 +87,6 @@ def analyze_one_fn(ticker: str = "", *, model=None, prior: float | None = None, 
     try:
         return scoring_svc.analyze_one((ticker or "").upper(), model=model, prior=prior)
     except TypeError:
-        # older signature without prior
         return scoring_svc.analyze_one((ticker or "").upper())
     except Exception:
         return pd.DataFrame()
@@ -123,7 +95,6 @@ def compute_regime_fn() -> dict:
     return regime_mod.compute_regime()
 
 def rank_now_fn(universe_size=None, top_n: int = 25, sort_by: str | None = None, agent_weight: float | None = None, settings: SidebarSettings | None = None, **kwargs):
-    # Build minimal settings object if not provided
     if settings is None:
         class _S: pass
         s = _S()
@@ -144,14 +115,24 @@ def rank_now_fn(universe_size=None, top_n: int = 25, sort_by: str | None = None,
             pass
     return snap, regime, ranked, auc, model
 
-# --- Sidebar + Settings ---
+# ---------- Sidebar ----------
 settings = render_sidebar(default_universe=300, default_topn=25, default_agent_weight=0.30, has_agents=HAS_AGENTS)
 
-# --- Tabs (restored "Single" and "Explore") ---
+# ---------- Tabs ----------
 tabs = st.tabs(["Dashboard", "Single", "Explore", "Watchlist", "Report", "Agents", "Admin", "About"])
 
 with tabs[0]:
-    # Pass hooks so Why/Pros-Cons + ticker dropdown flow returns
+    # Hide built-in "Quick Actions" button wall (non-destructive CSS)
+    st.markdown(
+        """
+        <style>
+        div:has(> div > p:contains('Quick Actions')) + div { display: none !important; }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    # Render stock dashboard (table, metrics, etc.)
     render_dashboard_tab(
         settings=settings,
         rank_now_fn=rank_now_fn,
@@ -160,6 +141,27 @@ with tabs[0]:
         compute_regime_fn=compute_regime_fn,
         has_agents=HAS_AGENTS,
     )
+
+    # Our dropdown Quick Action (safe duplicate, lightweight)
+    try:
+        # Run a small rank to get ticker list for dropdown (matches table order)
+        _, _, ranked_for_dropdown, _, _ = rank_now_fn(
+            universe_size=getattr(settings, "universe_size", 300),
+            top_n=getattr(settings, "top_n", 25),
+            sort_by=getattr(settings, "sort_by", None),
+            agent_weight=getattr(settings, "agent_weight", 0.30),
+            settings=settings,
+        )
+        options = ranked_for_dropdown["Ticker"].astype(str).tolist() if not ranked_for_dropdown.empty and "Ticker" in ranked_for_dropdown.columns else []
+        if options:
+            st.markdown("### Quick explain")
+            sel = st.selectbox("Explain which ticker?", options, index=0, key="bb_quick_explain_sel")
+            row = ranked_for_dropdown.loc[ranked_for_dropdown["Ticker"].astype(str) == sel].iloc[0]
+            lines = friendly_lines_fn(row)
+            for ln in lines:
+                st.markdown(f"- {ln}")
+    except Exception:
+        pass
 
 with tabs[1]:
     render_single_ticker(
@@ -178,6 +180,7 @@ with tabs[2]:
     )
 
 with tabs[3]:
+    conn = duckdb.connect(str(DB_PATH))
     render_watchlist_page(
         conn=conn,
         settings=settings,
