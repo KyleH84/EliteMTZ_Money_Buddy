@@ -1,6 +1,39 @@
 # Program/utilities/probability.py (v1.2 context-aware)
 from __future__ import annotations
 import math, os
+
+def _find_date_column(df):
+    """
+    Try hard to locate a date-like column.
+    Matches common names, datetime dtypes, or parseable strings.
+    Returns the column name or None.
+    """
+    import pandas as pd
+    # 1) name-based candidates (case/space-insensitive)
+    name_keys = {"drawdate","draw_date","date","draw_dt","drawtime","draw time","draw-date"}
+    for c in df.columns:
+        k = str(c).strip().lower().replace(" ", "").replace("-", "_")
+        if k in name_keys:
+            return c
+
+    # 2) dtype-based
+    for c in df.columns:
+        try:
+            if pd.api.types.is_datetime64_any_dtype(df[c]):
+                return c
+        except Exception:
+            pass
+
+    # 3) try-to-parse
+    for c in df.columns:
+        try:
+            pd.to_datetime(df[c], errors="raise")
+            return c
+        except Exception:
+            continue
+
+    return None
+
 from typing import Dict, Optional, Tuple, List
 import numpy as np
 import pandas as pd
@@ -62,7 +95,16 @@ def compute_number_probs(df: pd.DataFrame, game: str, halflife_days: float=180.0
     k_white = rules["k_white"]; wmin,wmax = rules["white_min"], rules["white_max"]
     smin,smax = rules["special_min"], rules["special_max"]
     dc = _date_col(df)
-    if dc is None: raise ValueError("No date column (draw_date/date/Date).")
+    if dc is None:
+        dc = _find_date_column(df)
+        if dc is None:
+            # Fallback: synthesize a pseudo date from row order so downstream code can run
+            import pandas as pd, numpy as np
+            df = df.copy()
+            df["__pseudo_date__"] = pd.Timestamp.utcnow().normalize() - pd.to_timedelta(np.arange(len(df))[::-1], unit="D")
+            dc = "__pseudo_date__"
+            print("Warning: No date column detected; using pseudo-date based on row order.")
+
     whites_c, special_c = _guess_cols(df, game)
 
     w_time = _exp_weights(df[dc], halflife_days)
