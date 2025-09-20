@@ -1,4 +1,11 @@
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 # === Agents Layer: Feature Flag ===
 USE_AGENTS = True  # flip False to revert instantly
 
@@ -241,7 +248,7 @@ st.caption("Predict lottery numbers using history, per-ball models, oracle signa
 import importlib
 import pathlib as _pl
 
-_PAGES_DIR = _pl.Path(__file__).parent / "pages"
+_PAGES_DIR = _pl.PROJECT_DIR / "pages"
 
 def _load_pages_dynamic():
     pages = {}

@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 # Program/utilities/ensemble.py
 """
 Shim for v11: provide train_auto / predict_auto expected by app_main.py,
@@ -6,7 +14,6 @@ delegating to Program/training_engine.py (train / predict).
 This avoids missing legacy ensemble logic while keeping the new engine.
 """
 
-from __future__ import annotations
 from pathlib import Path
 import sys
 

@@ -1,0 +1,2940 @@
+{
+  "project_tree": "EliteMTZ_Money_Buddy/\n  .git/\n  AstroLotto/\n  BreakoutBuddy/\n  .gitignore\n  EliteMTZ-Money-Buddy.bat\n  home_main.py\n  requirements.txt\n  runtime.txt\n  streamlit_app.py\n    hooks/\n    info/\n    logs/\n    objects/\n    refs/\n    COMMIT_EDITMSG\n    HEAD\n    config\n    description\n    index\n      applypatch-msg.sample\n      commit-msg.sample\n      fsmonitor-watchman.sample\n      post-update.sample\n      pre-applypatch.sample\n      pre-commit.sample\n      pre-merge-commit.sample\n      pre-push.sample\n      pre-rebase.sample\n      pre-receive.sample\n      prepare-commit-msg.sample\n      push-to-checkout.sample\n      sendemail-validate.sample\n      update.sample\n      exclude\n      refs/\n      HEAD\n        heads/\n        remotes/\n          main\n          origin/\n            main\n      00/\n      01/\n      02/\n      03/\n      04/\n      05/\n      06/\n      07/\n      08/\n      09/\n      0a/\n      0b/\n      0c/\n      0d/\n      0e/\n      0f/\n      10/\n      11/\n      12/\n      13/\n      14/\n      15/\n      16/\n      17/\n      18/\n      19/\n      1a/\n      1b/\n      1c/\n      1d/\n      1e/\n      1f/\n      20/\n      21/\n      22/\n      23/\n      24/\n      25/\n      26/\n      27/\n      28/\n      29/\n      2a/\n      2b/\n      2c/\n      2d/\n      2e/\n      30/\n      31/\n      32/\n      33/\n      34/\n      35/\n      36/\n      37/\n      38/\n      39/\n      3a/\n      3b/\n      3c/\n      3d/\n      3e/\n      3f/\n      40/\n      41/\n      42/\n      43/\n      44/\n      45/\n      46/\n      47/\n      48/\n      49/\n      4a/\n      4b/\n      4c/\n      4d/\n      4e/\n      4f/\n      50/\n      51/\n      53/\n      54/\n      55/\n      56/\n      57/\n      58/\n      59/\n      5a/\n      5b/\n      5c/\n      5d/\n      5e/\n      5f/\n      60/\n      61/\n      62/\n      63/\n      64/\n      65/\n      66/\n      67/\n      68/\n      69/\n      6a/\n      6b/\n      6c/\n      6d/\n      6e/\n      6f/\n      70/\n      71/\n      72/\n      73/\n      74/\n      75/\n      76/\n      77/\n      78/\n      79/\n      7a/\n      7b/\n      7c/\n      7d/\n      7e/\n      7f/\n      80/\n      81/\n      82/\n      83/\n      84/\n      85/\n      86/\n      87/\n      88/\n      89/\n      8a/\n      8b/\n      8c/\n      8d/\n      8e/\n      8f/\n      90/\n      92/\n      93/\n      94/\n      95/\n      96/\n      97/\n      98/\n      99/\n      9a/\n      9b/\n      9c/\n      9d/\n      9e/\n      9f/\n      a0/\n      a1/\n      a2/\n      a4/\n      a5/\n      a6/\n      a7/\n      a8/\n      a9/\n      aa/\n      ab/\n      ac/\n      ae/\n      af/\n      b0/\n      b1/\n      b2/\n      b3/\n      b5/\n      b6/\n      b7/\n      b8/\n      b9/\n      ba/\n      bb/\n      bc/\n      bd/\n      be/\n      bf/\n      c0/\n      c1/\n      c3/\n      c4/\n      c5/\n      c6/\n      c7/\n      c8/\n      c9/\n      ca/\n      cb/\n      cc/\n      cd/\n      cf/\n      d0/\n      d1/\n      d2/\n      d3/\n      d4/\n      d5/\n      d6/\n      d7/\n      d8/\n      d9/\n      da/\n      db/\n      dc/\n      dd/\n      de/\n      e0/\n      e1/\n      e2/\n      e3/\n      e4/\n      e5/\n      e6/\n      e7/\n      e8/\n      e9/\n      ea/\n      eb/\n      ec/\n      ed/\n      ee/\n      ef/\n      f0/\n      f1/\n      f2/\n      f3/\n      f4/\n      f5/\n      f6/\n      f7/\n      f8/\n      f9/\n      fa/\n      fb/\n      fc/\n      fd/\n      fe/\n      ff/\n      info/\n      pack/\n        5160f1dd63ee4f5ff2d64cc7d8be17aea7e6c7\n        91df9fb3a5ff8a14a3012132e9d0327f496dac\n        b25ca2b81b5b32b5bb63434b38715d8d4a94ba\n        92a6954da5a3fc569f173d7e2a1f6039a8439e\n        9c2ceec758e0df0d7cb824419aba8497e6a32e\n        ab82d007d6bbc521ff7541d2a72ec9bba71d41\n        c905c2029c33f52a58205b3b179b8cb08bf2d3\n        d08081e3ab0c5f8ca5b34a53c43e43f0feb5a9\n        d1b88528073cd337782ded11f5e6f4b35af415\n        f44a6e0e6e1215f60a126b23914c04b92b65e0\n        4dc6ee5d255908e31a964d32fde18f85731980\n        985d56bee8f4ff722bc9f5e7e7582e35d0707e\n        d9f0be8bb8409154e246f9291a1826a44b0704\n        86999a052d0aa78c2baa53adb154b5c072814a\n        0b8c8722c72f7babf5f29345a32406b99f33d1\n        4b4f43ac5b1e872c0196f069d665f6f3e95c3c\n        607fb46849270aec99ff5ae32f702811a44045\n        68070f8cc4c0b024310c6a87a3c5c80b11e1a0\n        85c7f610e461b5ffec6d8e31e2000a89500c7f\n        c43b947814e18ed2eec4b2e4aa13756e8c0d25\n        c48a708865435cadebb4958617d10096c44533\n        c64be6b77ecabaf337d3c19a3c1c59c260de72\n        eb8d8883b9616a01f4ad5880026ed15e2e75a8\n        6660ccd30a9e976ee87723a22c92f741d4b148\n        b7f7ef23215829c04f79942f5603eb35d7b22e\n        32677af45de6ae31f97be7057e2719f2d7c0c2\n        4ada25458c87144f973329a866047b6ade1e5e\n        8a602e01637f2bc5d0f44923fbc7af947504c0\n        93175e57f6714126e5c12cca2d7a8a1d923cd6\n        988ad74dea9834b2739d56a1cab63a3192b46b\n        fb69c1d256fe3cdbe0a7bfefa21ac0cd6e05c5\n        19a68bf64788ddceada4541ff656237c15f29a\n        5d2d17aa84c1b248292d0a890994b50ad2673a\n        2499ccdcaba0eb4b25286c9a47c2d7ccedc492\n        172991346df1daba7550201a5592354e796d13\n        a26914115837d2cf6be09629dc6d9864ccb231\n        4f1ca5ddc81eb6c3db868f51623c3fc346a622\n        6dcdb3cfc865e79928ee7ce719eae8e980749d\n        b9efa41c43c9dd7637d0f013ebe5a66d14bc04\n        594daedca91684ec6d202849843a6bc691dd52\n        8ec669eb3ca14df1bc1598b8cd741a82b32aa0\n        cb69a5b9cc563e29219c27e2f4310a41a5e9f9\n        eb6fcffa3b7d59e1812b7b274fe51afda49a5d\n        3bce25d7dddf6c661a6422b9517d6277fa9a95\n        485b706d533e7c58c85eca070e0e8232a6a9eb\n        7ca3ef1c155a502639dcfca4418789607ec38c\n        1a3d7c95810465981bb6be79104ac4c37e130f\n        c63354c90829465b4416f50457f3ecbbd54856\n        aaa1cfa87731922afd4d667d7568f651a89a4b\n        df9611987bf0ad9c23ba190f606408b1a304ad\n        a8778be86ede065e030de9e8b74ea118821dcf\n        c818efd774fbd560d8c76fc24435c31ff29acf\n        0f04cf5ff9fd7c96d1628460c047bfe2e36964\n        12a29ea4d01d15a1550c5153cbcf59b79db4b5\n        3963782806efa17f429399d4630e901da24ae4\n        aeb0d26556c6561dcff643c6531d6ae53b3844\n        e28cb721e0025b6e576b97aad8f0523edfd501\n        ff6ed033c465b6b6eaacaefe7be1e617f44957\n        49fc4aec1bcfca73b6392d913a64c46a7e57a4\n        ac80f2f9527cf3a112d16cccb09ed9e09b19da\n        beca08cf338aeb4ae03def5a10c2113e8dde1f\n        4606768e94d15bcb6d7eda820ce71c65587759\n        50bd5629160aceccac5d0b3a20258a6007675d\n        912bb1dc16b098b7f7a6f5a66f6dea5dc8f247\n        2153fca4c8c0ae26dcc1209e82def971d98a1c\n        5ef53762d7c4ba3a0e7b535949b70f542c78fc\n        b966cc9da8ae3fb1ab847e29b0952b84b9f91c\n        7422d96b50bb415c16e74960b223fb230064ff\n        77d4bd8cb45fa52d69fe7bbbe683370a2af71b\n        a512d1cf41f53ade5ab48b2e670c575433a467\n        b2da6970135d4d84dab7d2d51a1fb0f50fef44\n        c5fcb2428b6dabeb5e71350aa5027b472f244f\n        3db1adf3be4b820e10145c745e752904c750ff\n        4e2a3fc90b03f80071c439e4307975d37a64f6\n        b21bec08f85c21fad88a5512c1474c0a1a0d8c\n        5f70760d09df0a865a26a4d523b864ecc78fb8\n        1ce23ba3145be82af7923968035342eb358607\n        31c996a1699fab3157e288c0560587b5a48809\n        a0c84486dafab1d9bbf86ed42dc5025bdf0e05\n        a5975248fe9b1d59baec9a246603a4e5dcbf95\n        237fde8bb902b17085339754475b54f9d3cc8b\n        4cd0dbd66d4391641099dd7f71adb2e57da979\n        2cdd00e3dc0d4445448f9755bd6a9f2cdfa1fe\n        55780eda5b3a36b22d9fe38e7bb202d1e8d92b\n        7b47a56427f2f6aa972e563938357355caf6cc\n        9201cfd1b4887e26ca03c125a3706ec6f1ce81\n        99556ecdffb3f0d6ca17ea6917e800b82ab3ef\n        cfd5d19aae93721a6dddad437e53ec0d84dd4b\n        e72476294c12c81b9f693bb9e08c4aed88ae62\n        331e32dd2e68311c36aa713192d2c540349846\n        677fc367ef2f1033cc24af0d82c5748caead26\n        30cc3f27abf616779489314961eb564ca772cf\n        3297426d16751ccbc0a64677cd8258fbd09eb8\n        361823610100a9ed6b6bef0e7500d1719ca342\n        7c9931b4ae10512754dc87b7bd11db5586ce8e\n        bb1f2e9167e10b35d1ae8a184b6a1cc72050ce\n        c47c0b78561da2b37bf3444c6db359b8a44c58\n        dbbbe26d2a1ba87d78366dd43d5758100395f3\n        e438625578072c1715ab50753a94d9fddf19fc\n        2d1fa92d61c6903997beb89c126c85e6ba2323\n        48d3747971a32e2d62d19ac619000b5f0a314a\n        6fafc217c53418da811a43c478e1a516ddbbde\n        f5eed8bb2772cc8e354ad7a373c0205b6097ab\n        1a1ea0b7e24ae74affab3037115634404ee1d6\n        986d2604bb108160dd9f048a02eae20e10c08c\n        c7a4d9564b3f9c1be78decaf620de771b89da2\n        e93d158e7f9555448b45b16ebb532e9e81a9f4\n        1fc017f46df3b125da17af2d4d145a46922b13\n        4684fe26af60fcead3160b1fb444dc337ef063\n        4dc02beaac5efe2745acb69ee12d0206000bad\n        748f3435693b5b1f1703299c0539ab4b5abd5c\n        9fcd5ac983b729a946de10a1f29e878e8871eb\n        ae5487557f9db97dbc66fea193dc5e6faf3cd1\n        e073403f400e19699adecb8d6ae1adcd17d482\n        2bb7180069e59aa5533d1cd814572ddf36a29d\n        f2ae7089a1263499bc2cab1fee6b28307ee94a\n        3311fd303ef69a099b9e81b52da238158d7715\n        952bda7afd4016640fec7640b6c5e4afb6df71\n        b4cfb3f2c007961044e1e3f0510cd925d504dc\n        ec3767b731bf8f7efd7eb6614d740a84ea8328\n        089b6b0eff4ef2cbab51c388f62cdd05676478\n        4ce7277c04e8a628d7d1701b6fb35d43ac726d\n        595da07df1127f52bfc169f327bbe34a3f233c\n        8a98b502d3c1b8f1538d0bf63c16c3a4f14ab0\n        0b2f52dd997cb283705163973ca102c3954cf6\n        cc6aab44d9cfa47d17a5dd2bac6c2249b05ed4\n        e7a8a2887ffff2ccc04c9c93fc809c16cf477f\n        c22f9b257b16a8c8e829f2b4b16e9745983eae\n        c8bc0b84ab09b6002ff4c31c22dd91106ccdae\n        fecf6813ce0b7a43796b942aff49b387c1e2e7\n        e231c6c19426b3017f8ba262a463809ca1e37b\n        245373e67b0d7578a9b97a30d2ee2316c1727e\n        0d7d5e1e92d56088a7db3f4b7770824b7b3c72\n        28b15257ff864989b33c5b0907f6d175346a2c\n        53b02855080da7beccca9456247129e0dd0e31\n        6a53c9913b871e01562084ef351a0aadb5b181\n        6fe0342a2b73af21e4511c9ad11427c9588097\n        7a564d75b8bae092c5711e23e149405cdfd94a\n        ef02cfc830e659ee78f264933890c4adcbcc51\n        f69cb0261b7334e80001f27b0605429b6f3689\n        1be611d66f7e4290d8d13bbaf9f53bdf1e90cc\n        5e5ed907a8268fed279074b3c82514f0fba866\n        978a39da873e83bf6e51ff7974fedbd317fb90\n        cdffa3b11cc66db2c992f681a87b25a724153a\n        020c33f2d39a97d558ea4fdf919be0e895195e\n        0adfe719068cf5e173836875699d986b832d41\n        0b388269accae937c38ee80b603c2acbc6e007\n        e70ba8d8dfd2a1c000b71c66ec4cba8aa12901\n        0bee9e56c6b181284baa9b717ea572aad3ad38\n        28a1fef46df2ed17ddc7f884f505a0e625818c\n        604976fe6c7bfc765eba319dbd0631e50ea16b\n        d27cc514a1f4cf293deeb0d4e223055f52cc85\n        df45f832886a1673e87551b1162733251f3d05\n        e5ded4cea5bbd1177047dde080b64d9c425948\n        6fa6b0fdb867ff3a74b67ad414534efbc9ce4d\n        a1d47ae241458a7fca1a37f5057099d9ee7aed\n        d9ff1bbf7ed8ee24c027cd658c34c3186cc4d7\n        3c22847f3c8c3dad9dc0a311f4006ab6fab541\n        bb6b46833d8b28b5afd7550a69396bfbd759df\n        c61cc266727f1b07c82b3d0156955670c7140c\n        45cab80fa25704c3d7833b309c7c2efbb2dbd8\n        94f9228d40bcc6c5bc6fa51f01bc5cd7c3d49d\n        c38fb708b4e258333a15fe08229e50882b2acc\n        7ab94c313240bc27cd3d3ee793b3fd0d7adfb6\n        a35bb79ee7e30ac93a81fc6547d2d5ce07db2f\n        1e38b99060d291816dfeadc92106555180c3da\n        95989955c3d32aee4850716780dfd84df6c5b8\n        c47ae78e8ec65dee06dca5095b5ba1c9a56578\n        d3e884129f01cea86c6a3d848b4091a66714cb\n        4b80484dbfe93d9d7cdc5735be3306cb7d5faf\n        d7b77c8c6007f055231620c282da4a0e29525d\n        25129324b9e213abe0bfc176717bec28e1652c\n        3ee5bf0c04f5ea22d496a28188e2b5bfd61919\n        7e70fc6a8a13398632cb5e09aab567675fa227\n        8e3b802510daf63d66181e6d87e326b9500b48\n        34c619cc559e9d8f0c047e4987a3a3fb0ce792\n        47f89431db2ac10767698502325a9b91043a49\n        c4e5164ab4fb16b7613cf3f14c7de493e63eb9\n        39ca3e6a89a70d963d8cc59c4eab5d69cececf\n        c7ebf32f36cdf23106c2f77a44628b3ef816fa\n        8c0b84b7e4917d89ee2f4585cd83c7acabc71e\n        b307714b6c2dc6244b6a8fa50ad826790e2c1c\n        bb235058c63b5c73ab7599f9df3b873f9ac09c\n        c76d06b56a22abaae08d4d05aa8a9734ee27c5\n        a866ec9c841deef3b7c600354ccfe8270aee21\n        0100ec1bfaf9b687a90139dcb3deb26a98ddae\n        2a3a9e6ac9f3e1926e682a0045c5d1851039f4\n        90e31a566f27930b0bf4a8f731a3b22c45446d\n        9457e28a269d79c6f689aec7560b69590dd807\n        0329c890233cf9c60cbc94bf3bb74f7f84b63e\n        abb4d94ad2caebd3b180d397a3779a0b8690b4\n        f77af33672a98f21561bbd519a91fc14b2f842\n        14ff9c7247b047f41cc619a92ad4d154812919\n        2a8a7c215e126fe4a94a114d003722ccecb0d0\n        39359ec72162581386296f25a7dfd091f14787\n        4c080c6dab76ade1d0ac398c9f2af7692adcf1\n        aadaef509cda1bee3164ffa55896067796fd14\n        04fe06776948a3d7065c1e7a35e80d60a3c75c\n        1a8700ddd6ae349e34148b634ab5085f423225\n        81bd70aa7329df68c19b472f0529c880a004fc\n        b38ed7352a696dde9a878239eb01bc3c2812b6\n        2b3b9b70030fcb631f753db14ba9f7dccab64a\n        cd63a74e19ee0f7ca2e1ae9e38025c10bb763b\n        8164dd9dcb7fc57d36dd2dd4574601010442b4\n        6f9545a405ccd15e843105763ba448d75ef8d6\n        74745d38d33d40b94b852d44cf7262b39a9def\n        b0657898ab77d18c61eb5fe3d113e3745c94bb\n        9cb9b35eb32e55911efa6d9f2804705ed61982\n        7cf17100c84f96c814722bc3eb867976947f6b\n        8c57b73a2a9a6c92ff3d5011b5ccf2844cca5e\n        5eca085292aa9b22d8483f348ccd29ffedaacc\n        8d08ff1b66a613f401141de077f519bbbc35aa\n        b47098caf9b60b2058b2d4e87a206e13ecddcc\n        22a7e8a48d5133c2dc2674975ca33ead078db6\n        56190eadce9221c0adafc64b81196098d1cfca\n        7d097e46baa3beff00d37f1c1533175a5cd094\n        aa4034decd110d391547f0ac19316119a46e69\n        8c3a8511b83ba74a87b8bf0969f2530ff74596\n        036fc43022603794b817f8e594a506d37a7a45\n        211b18a795368a4b3bfb8da3fb03cd25529ec9\n        94af475f26b4dfc04067ef8d1878a2b2792c85\n        0ee60be0e441e340d54503948203a0e0cabf70\n        898ca601359c5419ee0cd651a684ac88ebc18d\n        b9afffd2846320135ce2d21cc2b3227125ef3d\n        18865e92c7cda94f4e50492b04104e4f5b1514\n        1dbce62983f769a2e47aa2e7bdf34b7b980e6e\n        382406fd4f360416739c80b9f905e260e62d3d\n        76ef6ddf1d394951b56908c8ab6fc095973a15\n        d3e9cb608044106272b96c5270d9099ef2987f\n        d845a69dbcc5a931924f69a866df9024619d27\n        5dc6feab5dbf5ecf29e0319bbff2b4ce6e5f3e\n        e35097113ac180c451b395f2f082dc81a64663\n        1771793537204ddc3cf80645f780a72a4fbaaf\n        4da15d52510a4d51abcd27cc9e90c83031749c\n        740168f25658c999336af4745905265c172bb2\n        b8f8d467a1e104b5ccc7cba9334327e522028b\n        c18dba392aa95ac6e17b6708285c5aa7f6fb74\n        bc05a60c501af1d5d9a3ca0b8acf9c123138be\n        fcc1f02237d327804e2ce5dd7fb0c42f51cc5f\n        2bdb02e0cee78d29566c5d8c350491b3cf6b21\n        446fe1721c5c5b127b3f7a03d4f3d5bb36967d\n        b0e4d05a9708c3a9a5b8002ef9c98cbf049e64\n        c5a78d1c5e7be11c5d8af528ae313c72f4e3dd\n        d5bf42547f6613572ca6351a0dd8dc9544d084\n        5346bc97c857cfd1890d8f658334ae3b1caf65\n        e7e685113eed7035b64de8442b51e3a10dc7e1\n        2f4c6d067fee11570d4e530409bb75b5ee0baf\n        8ad80baa494555bfb09f04a69ab9f06b7a5290\n        07c4304e6c4e0dd1013deaf0dc8f1bcd43bd2b\n        99ab1cccbac74a2840cb24819cf825143a37bc\n        e1b3559c30c3b802d8c12e905ddda57a4e6203\n        f635c10d28fb664f822a6c8841d5712e1bcb9c\n        7adb97f162a632899164da7c6fa22650af0639\n        ccc4aac211d2be4eb6a8702b4a88301d2c08ea\n        103f1aa28b20c61bf1be984779cab79499487a\n        a28ab9197041f5626dcf3a088a9863758c9a5d\n        b05c6a876bbc510c7dc2a9307d63009d302b9c\n        26ddf01fe9793bdfabb6905924c06a031d98b3\n        a3db00f5f90ecd7ddd82b5b05e34e2a6ae3df3\n        cd243588ba40bf65e2aeb372615812cad43400\n        dd6992112fc855625e96f1b315fb82250f2f55\n        bb27f226b0a743e321c3136743f2c35133abe4\n        af9536a4053de5c088fc1bcd1b1bd7b3301510\n        55fd7be52c6e285447dc2d480384c1d1ae0316\n        8d1595911bac1d636569846661d661b20d3422\n        e0489e2ef81906dbfa2a7c57fc832869fdac98\n        020c4be11b0ade397a8a4b05860d999318dd62\n        8aead5f119aa2a2cae7c225a8c26fce807b418\n        04e8526f925d1cfe91c20f6646dbc31b2eff35\n        663703ec71dcce7b13b15caacbf939775884b8\n        8a6a11fa5b12cd830da88ba83dd0334f22a0af\n        97ba5e5f5684759c9a496bb4c3beb9ed684c8e\n        d216173c54c2921aea4446d8acdc3aca5470f6\n        d22767532cc0ee38a2d96cae3e041938a20b04\n        ffac5c7cc37169cd0e5b4757aa915668486b3c\n        eef3bf1eab3b80a0b6fa9d06a97fba22a4f6cf\n        20bc91e53377eeea665ad64c1376d185c1b41a\n        304fda0b1e068c2b1e2e626780f2c7ca11da01\n        3ef462ef0bb0a06a4f2e8b5ffcda2a779d049b\n        51c7335a36a8ffe1872db91c2df3d85c2ca36c\n        837f054f45915f6610650ab2ec8cab7fdb69a9\n        9f8e65395f03066604cf8e1b3bd88ac76b1572\n        e534f2db2e9930a622f0a48d43641a457817d7\n        f3410ae03555f27b7e4335c57881262356261e\n        679d3a8c6731122bcd2844f4818d4c614e4e47\n        05ebcba54348826c517710214f163aa68659ad\n        2206cdac813267b97752a65fa05cb9d42628e4\n        2c4b7a949aa788560dee2cb8bab5b5d4a17cdd\n        731f036fc2e62cd16b91bcb5253db1e98c9740\n        bc9f29ceea69630b5d48ba5869444e5f25dbb6\n        db88a0e04c5c11b39987d6fb9e93ec80ffa064\n        dc931326364c3c6aec428247bece4d26288e4b\n        1a86f36cbf4f6b1d9c2a01d63ee6b9ecf77840\n        ed5810131553e3ff7c2b5d9272739e138fe7df\n        10ae5bc57dadff37b31c183ade0e9ead64f330\n        a80a0c9a30a03f31d1632c8b01dfd47a6bb194\n        d75c7cb4d27ac1bbff5a56638277286a2ba36a\n        1edd141ec7b5bd42436f133fee3da86e51c80d\n        52490c47372ab74facb0325428b9cf479f0f1a\n        ad43266b5f0bf788ff58f7a5e0eb7b4d1b4360\n        1082f7c900a8842adc9c7869a774c69333fcea\n        299f58e947126928260293fbd56f6b47c0230b\n        b3c5e2279b0e83601ee29390955f0ea08b05ab\n        ebc4e9a6781ccc9471bcef1e9f9887e98e5e0e\n        89938c3a71c75b3122aea39cccfdd9a26c7668\n        d41c7565a8a8b05cc71987a512df1fb9540885\n        3f48ed907303856aa360ea456b71c6352d8619\n        7d3f912a0515da1bcf0c98b2c68180fad46c3a\n        8061eee9b38c4a2987b38d9cbf6d01b2816779\n        228fc1959fa29116a8b751350e552801fafbbf\n        4dcf911254da9cc70fd6d269189490da21986a\n        d55732b019ea7e30373c97039754b8dfe47e2c\n        51c9b2d15fe3406fca870a9fb7f252bf9d3c03\n        7d9f6ab0a4ed4e4d3810ca76d6f596c6769f30\n        ac37b5d2bac6f415c56efd4c6ba6d52126fc5e\n        d06754b9fea9d350a48d683dca95884f01b063\n        d761b195e52e64d4fae05211b11f5d3a89b1c8\n        e2050dfd3069573e3dd4f7e3e06a0706387205\n        10671f4be4da52554f27579e238338c70286d5\n        fa49c3f1a22e4a33c575910c756c4525b661d1\n        5032902c84ab554abb4b03cc1386ca7420ebc9\n        5358c404c50cf0e8c9247b5803b5d48f1930f2\n        931c087a4f5b374c35d61a84e6cb601372a5cb\n        a6567d0c2a497fed65fd4a6d2b5ebf8316a173\n        37f549b696c94abbf140bb8bf2b003e26351a1\n        5fa45baa84273e99ebc45a713d853b50a1943d\n        ad1aec852636dbc5f31dc4e515d1fe374085c7\n        535c59295a7346f6b23ab670d1c758731be40b\n        7afcd98de1aacbcbe0265606a0ff21e81b3f83\n        f7881eaab314c515e479375c002bb75ad2ddab\n        2138d97e5136cb1207e7829ca2c7a4cfbc3b94\n        498401b9d4283d3bd2185d8f0e6821cbccb40e\n        b6272a7cafcf1278197b7158d779d3bfa6b732\n        c751ccd90c13820d460abb523672a0303462e8\n        3a95cfbfde45af42de1e1a3027e75fb1a55236\n        3c20704a2d6a18d008e8425656065445b35bd4\n        27871480fe64c700b9f24e70798a67ffdf19c6\n        9e6a27234269770e14067140236f3358a3a785\n        b6ecf85bd3b0852ee901330554370787d90281\n        d75101cff4239182d03e9c3ba583aa6e3a0137\n        e3985f9c5da97a64bbeca8d9dbd116f0c44a79\n        efd6b268cc8a1d21ffe585fe2e6fd21238af74\n        30e0923041f1c1207c6cd1c737f3eccd1c5cc2\n        f2ca702f05ae62e384b3f4e30b893436165bcf\n        3e67dae0c8520dcbbf5729fd19391ffb52ba69\n        b6e71d40581f76712f25479851092c491d0c03\n        ccd223e6ab7705591e611559ba6c7d1641fd48\n        e8d5ffb4dbad40d215905daa72370820679471\n        0de1fa8eabc4cf6e7f5ce1ac2ff62280c59487\n        a48e87d747d67733d91d965779eb97e9f14167\n        e6ea64d199d399db1d89b37c4741d40649e9c2\n        027face2a0eacf6d6496c3d12db00055f60045\n        a38616d8e11b5f99662ba375be7cab3a09e411\n        b3ff63e50baac32ba56e2e90bbb42b8b222039\n        5b732f868d1650397b5be31d731ee4192595a9\n        7297bc04072f7c979b4c2e616571ac505aaae9\n        3121413addffe51e856798664f3e9408d1f9c7\n        ba7072eb460cafc148f89eba0e45a0032835f9\n        f5dc3e8af0dd8e38fd133cd63e9f5602705d52\n        1810c64946ee1f5eda8fcd28966a208d258076\n        5ae22c400beea96026b45b8ee90b0e769fc5c6\n        ede9df62821fa86ab43cb174e04b0d87c264ed\n        0bb47f9b7d7f41f147357255b16e27813e29de\n        4f5a358fbdb1164a7282f2150ceb396209d65a\n        bced7125805df1534010d1a5c63884787db677\n        f6c20bb6fc7f38675f191eba10f102a69f0f9a\n        2df28b4e4d0d3c309a00c9fec57c52470fff81\n        4f0197891ff89eb44ae71e2f5d426f6a39d187\n        7d628036c94dcde6caac27d26a946f02627a21\n        9e170b75b674afa12460684b6e23638dfa6fc1\n        c019e824659db2f1d4202753ff90f92135e27b\n        2d2cb264919ee6dfe3f0c2148569ac0ce5f6a7\n        7d8cb26669bb4e48b73917e5a03f74bd268154\n        2ecb7a44775df620dccb3a28499be54c191a8e\n        7bc59e2488e97e2e2532992d92060eb48d207e\n        eeb5e8d17f837098e2679d3bd9e6b16c47df27\n        ff99a5f8154fbdbe14053003d9d7c50e456cb9\n        08927cc40d870f8fc9c7cc2e91d6115d2f5c28\n        e75ec6ca1c8c700794f98828ecd7a5286a91c9\n        f5bdc011c030dadffba407e0f6cafc5235cdb7\n        1494cbcfbeb866cbd4ae6abb7586af51e9452c\n        ac942411af2e4c9e5c42c1341d7481208433b5\n        b0f52960c653490fc6d6a68ff15a668a3f7939\n        f35ccf27843396a21d3f687b7a01cd4fae6d17\n        f4beb5dcbb55cb177c7b86f68c64bb1e96b96a\n        7786ab9eb1b95ba4ec5fe7f1b665f297497a3c\n        20199155486b7305daf10c0a82806acadb11b0\n        e7d9db7ee730f4e6f3c08e6dfdd78585dcf8a0\n        08bea8b99d5ce957b19a3eb9f40f2eaced670b\n        232908ed823876499f8a244d6af79155fa83bc\n        4541de1e505e7a2094f73faf99ac4b91b1edd3\n        34b7323847207ca2227bbd3ac305703dbeea61\n        54516921ddcac2acef8734ec0e03941bcdc846\n        210a4b00d7e34ebbe52ab49f612fbfc5ad9558\n        561573a8c85c35e9717e85e42fd5f0a11dc5b8\n        71885a8445b0f054882b1c09fd8b476d9a206f\n        3af8cb3ec4e0460feb08765db05a7b814d86ae\n        ff378014ab18e5d49695b225de5418ec5876c4\n        01f9a952e608d41e40a52ef36139f3b7d69bed\n        464c09df1220b88c1682f917e864cc7a854969\n        82d5e6b622a4e72df4412eadb49fdcc412d1b8\n        c1f7fa9e318420c382856d064b8d8db6a8d4b3\n        8018c617d4814831689211f776120baa78a8da\n        9cdfe7e81abc74b33e733b8aba23dd2bf26eed\n        a1d85f6bb86e76b8025767e9e9a4845d33eeb9\n        dc22588f8e4e8223a6bf2ac934bb35924addb1\n        3431a4249beaf541536f9e10bdc6f58617d93a\n        e5c6dceae483e1040c3ade491e1df40f62513c\n        797319cb111f0514fabed81bc4f252b5033373\n        8f2ef628aa4a697ae9ad78834051461790a7ed\n        92eb2cbac368b9357a40b06be124aeed04406f\n        d60bded92d9df92ed5d20acd9fce8a73e2f9d6\n        12fa2a6db03091cb8e376f9694a579587fc60d\n        b09fd23efef289635ea717f3e854c81eeeaa11\n        672e23d9342f1dcdf8480126a7edb781af91ef\n        3fce5eb4a4232f726e99d97464260f6a1dd5a4\n        7100ca861a83660c7e8764008c1de89969c035\n        b01eb847d9f3351ddf76af6a76fc5de5af65a6\n        e19eb4c0ed0325b947242159d26f9c886585da\n        e6d26d346e2132f95e00c4032bbf2da706fba9\n        062eb18437931e7b04c93dc96479a4ca18f705\n        292613b03629f5de9781a8cf83bdf113662f53\n        ae3ba1772e390b2c24cd08486026784dfced40\n        d1e5a6568f3296b52c7d2ef39a345d50f9916e\n        fbeb6c49a6a0987259c7ab35aef601061f4a97\n        191e72274dc07918ade6e1fab49534ff812fdf\n        2414f25b03f358a6da0415347e355bd6e8858d\n        48bd9655ce48e7ed9ba099c89845719422301e\n        8dadd95f6aa1894ce3a32a66ede57c74888654\n        ba149caed7bbbbb43023b84076647708e4b70f\n        dd53517169184f1d0fc15bad91806ab0cab853\n        7f1de8ac2eb9b6d2ac96560c7b9671dda2dbaa\n        8c411775b98567445fbf6287b1771c3fcebd03\n        7bb95285237afd1471f17ec7a82b1557e0b19a\n        253f2d7cdd0e7675c50723aa5cef03c498699f\n        b404f078d1b94c5ef2eb6d82b22926915cf070\n        02a08c83c84c01130baed4430caa4c40594ce0\n        357df0c340def64869d0ee5940b247796f44a8\n        d1716914775a4a9e59e1ad8f2394959bfa0953\n        395ec2e17655986150089b309d19fb8c2d7c8f\n        b08301239cf34cb218bbbb60f584ecce7d73a5\n        f80f54a8d0a22e8926da29892e12f56d6cec68\n        972d72232e51ce3bc40c69ecc52485bf50f0ac\n        975832ff5fbc20540ec2816c93869c68f5536b\n        d6e5d3fb7e32b24bfe64c9e19de4968fa6ec65\n        edd6cc825bd2b759774e7cfa1b4e9a0066c5e8\n        20be5773f63a092e269eb557f53d9ae9aaa439\n        c148fc00c4e2df70ee165cecd0cd44d6a6e6f6\n        33f6883771a74b55f7c274991d06a4b1b684e9\n        fc84d355a7ab3826f436026bd01a48b7cd90f8\n        29b2805dedeeab96ab7557c0a50c45679116e7\n        c408df21b2a18f75258cfa9bbc0eac1c1c8923\n        6add08931fd85554b5bf676ceb43a93590c14c\n        76793ddf3df7fbf0f5a3e3d83770979f8012c7\n        be50aae36a8b081f752f5ed541b0b811e859f7\n        d593c97cec94d1608e493716f06840fe300899\n        f13f1e1886187d1e92bfef36699a5d1a3eceed\n        555f248eb1c68e77372beab3446c7b3bc261af\n        c1d0bb353a591b347678599d9c415131084867\n        078cc1106c30408b6db36f23adeab71d313eea\n        0a39ed25ab1057173fd00dc147bca49c29bd8a\n        4f4e3383a70341ab27afaa25b891f1a9d11e6c\n        9da092fdcd835fdbaebccf2cd6a00c2b609e8d\n        ca53860a09a72660c3caabe15eaf8325b3b397\n        ef0b50c18077beaa65785c2bde179a69af3c2b\n        f67e708385c2e5a87671cc21f1e2f59cc71fcc\n        6f53f205c133eebed6d399c461d2052ab2a892\n        b1d61561e3f2b7b2b3ed362a53f2ae2b4c8c7f\n        1566a363a77256ef5030809bdc12cde57d6004\n        379458e96087846f506edbe6d5f4d71ea6bcfc\n        581d5342b424022ae308006c06e8d326801eb0\n        9d21fba3ab1c5b50a86d0eaa5eaf33189468aa\n        d2bb291a3b0fdae2ab79f7a1fc93fc60233cbf\n        f3733d0e4a4706a24d6b4d71398b098229a8dc\n        1a19372a0192036cd242dba9944d5b4104befd\n        4734ba57f9bb62536dd9b845cdcc755d16c1f6\n        6574e31abaf7e263fb9f9a614fad379252681b\n        2192d3582d7be80243eda0b36425f2fa84e182\n        778e08990c38f1c32d2374f3664e13d1688a10\n        4cc8506733ec15059fb3f11ac6ce2521297dcc\n        6252f2daaf719d63a9d481b945ca4e53eac8f7\n        670811d297c389595281659cf884e23586237c\n        dbcf26544097ba8d259890d10b49e6f73f8ae9\n        161ffd9946f0587246ef32f2067c526599e8a3\n        56e06c280cda51288d10093f556d00c086ad18\n        7d746c96658f54cc40cf96b53a8469f7c3fb0a\n        9758c36ade2798bf2c7873cdbf17225895fb58\n        b8728ec985d7defcf3402fd5c27a520654deb6\n        e2eeb494079bc57caa08614f381bd058837aa3\n        f94e673fe9aa6f9e3d13e11239d0a5904fdbe2\n        3dc2d7c513b7c6246c921802af866150adeb6a\n        08e83c53d056264d8ba46def4ebb3950dd3f09\n        2ec2555f5bc246990d564410f97b566e71f347\n        4e6446d68c18881ca93bfc7d251ef1027d8da1\n        54c54ccef7591c72337f0d98b5087e54dbf0b7\n        67717a6262e076252546c38aba3deb10eceb8e\n        706754e5e711de7f53e4f7ae93170cf195aae3\n        87dc328ae1ef5ce5cdb9ae0f092c506fc2cd71\n        e8c5617256c4c42fe82318b7c8a732f2007a39\n        7c0bb93620bcbe905995ff88c0eb9754cac84e\n        ad3bcfced83a9dc4d65a61e09f7f25b4e35ee3\n        d4627a400b47d5ce1a4018490713f7f6e4388e\n        f96757d906b157d0def17b9a5874ad97658aee\n        97a3a9814e108ac8a4e7ada025bef5a942e0eb\n        eef08f7303a5a3e5f5cac4c0ef8a41c3e073e5\n        761e5b563a94294dddfee079cb90b6b522a4d2\n        db4f238d25c583dd0a243ff0c40e189cc183c5\n        cce6a88d155e97827e09f0920226a938e380c3\n        e283e05748fb4ac6ea20d9b1bf16be97685c45\n        f237dde8628796ae120db5169bc4faf287f3f9\n        0d52fda5de5cafd080d8631a5ba0647596dbe2\n        daa4e11573e8efdd383d716949e9cf44f2b84c\n        e6ac47e1d5362304dc4727524771b25ef55b1e\n        9e9f4fde0bf9436800efa277bc97f553cccf42\n        a40ba30e7b18140108131608e4c1d2273a0366\n        ac0d72469778e8124588c984becc28a136d163\n        d6673961b4d9b458a59b69971386ce76f7ea4a\n        15732eec57ac1fc2f6e14ade98de4ef68d0cda\n        27f85550088a898930c065a64731f6ede90951\n        a38ca4e1dc35434400bb00d6a2ad157e72a392\n        b583c4d642189d5d9c5711388a7a207457023c\n        89a25db38221491fdf725b7646a72eaf505999\n        c8aa4279f7e163027c09122e15040fda9b43e9\n        e454dd877450602718634d520ba7a1edf107a8\n        f900970f46af83ba83bc2fa64b39371296b21b\n        2c051be3392ee4e4288635f44571a392ba4161\n        d6c37aeb4132e903714e9fb9331190028c9bc5\n        096c70c120f14b9953343d083580e4ae06cc38\n        221649eaadab01444eb822db3bba6c96843b50\n        4867d9ed1ce2bb3ee0893fad0257f012ceca9a\n        b96e11b98471603a83c7bdecd4a198929a6bcf\n        b97c27d08e34b310e66a31794981ebadebe449\n        df74ecd94cd5350a044d9c288fa8f4e35dfb12\n        3ef23befbcd47c6315a577918b919de3f5271c\n        9bb58afa2d416bc18888bcd367cfaecfea2d14\n        82045d7903a9c048340cf12b5f77362d151ec5\n        17b17f1f3451527334ea4271d5800015653c0c\n        898a75b4d1dad8052cbcfc1f5c3d99ff96c76b\n        5e81d54592692622274a4d2354900c88d3985a\n        4e2eff7baae8b4645a40d247ed8b320fe11b46\n        e44405ea3dc27c749815f665fce782436b8545\n        beb317502fd55e5a96366aa999dae4f9ca47fb\n        fee3ec97355317332ef4e3d2fabbf06b340de5\n        9f399e444fb356b83fa5989f82de7c792145c3\n        73e9e7ca12dd134e4fdcd556d533ec936bf7e4\n        7c7f8f7c4f6c0fb3b8ca7be13429407110fea1\n        de9709bba967fc7ff7023467b6cf7024ebfa76\n        efbda7d1985313eecdd777373d75e0ad40249c\n        1c3529a0629809862e65c5929f9753454d7160\n        3326bff6cfe2d357f409f823fa3a464b83356f\n        73c8d215a81f9b8a8fa4e758501007ca230c1d\n        8311de8b1d101785914de58ae48ca9f747122a\n        ce168676be90e70628e6902b6fae65872f6328\n        faa9f12aabbd2fce7cedf501392fecea1dacce\n        6dab235b7d63377120a01d693bc14c3eaf49bf\n        acac2f9cd5e77f16e5b21432a6bc442d7d85ae\n        b1bce6e880c56328134bf6839ca9d5664b009e\n        645f216941a5c70270ce26372d037fd5ad6b41\n        854d1a0575d3227a66b5392abafbfd1e0c0b48\n        9cb0662403f420116f6f279cc3c434920bd5a9\n        611efa9084ec3c425efc99e091910800fc2e8d\n        b99c6771bd19d41f11c88d6e2f30b8b4c41ab5\n        e4975a5b05e884195965def7d055f84d0287cd\n        ce8f60d2f35c95f2e6ace950d2bef3b3206fed\n        100e0d1109eea67af1d2bf2949c6188e25986f\n        103a750785cc928ef7b5c70a48fd8b0b771b65\n        4d5a6815f8b409922e3bd8ab1d65bc84dcf9df\n        5d6cf97e1d4094b63a15efead0d70adb878d5a\n        f1c904d71d8e79196eef2baa91e41e1d743905\n        5db0ff1bdc960bcca4782d055006c211bbc4ea\n        b390de484155600d6e13a9aa70f907753cccc5\n        f2c4e76e89dfa8c1d4d38f7fd00d5e7d8666b6\n        fed935b999bb721fbaceab28d64fec1dc9c984\n        1c7a48a93c13fb1f77fdf19cf3faf1f5f9946a\n        980c1fb419fc0f262d3ef31b5a9427ecaa6e4f\n        7c24340085d9113af9d11cd0c454bd6a340396\n        73ee4db3431e0725cc4b10b4694debe016d030\n        775dc91e588e390a2111db19ca40e7c0342f53\n        810fa9ee193a43a88f8dfc35c54be19be5900a\n        91d116f10e79c8d51763ff4d15e20540d5978a\n        13afa67c7321bb9e6bd784e579ca8ed85b9f79\n        1f759d7b3eace4236119667ed125d0f4fd5284\n        60fe49eaddbc43ce4d1d7167303388abe6e69c\n        61c89b91f23cf06b1c59793b1f248582f01f0c\n        674421428f2296e704c59923d80ec74c7d2a93\n        01eab45558a4dccad29cc4a99f49972f394077\n        78fda22ab300be4fc8381c6aa4438a2721290c\n        12a50d0e4d56a5692749938c653debf0c5fda9\n        189159070eed5978e679ab6c9bdab92f8e318d\n        21ba59186c4df44b4044cb1395c1fd1d98d245\n        d84f91a8ebe6a097b87b63b870210cc300ffb0\n        80eadd41a0369d036a38602cf469f9b5506fc5\n        a7b573f02190477a5f127f5b7f0254c584d518\n        375fa7cc6aec33ee7fe53716b790e3ba1306c3\n        634451e6599742bfb5ae525a31774bfa2c6854\n        93ff36b50adc7a32bcb7a735be742e0726a28f\n        dbb4f190ea18f3ba25bed555c0d0b6201b7ca1\n        9dc3051b72919703c6297381eb914cc779ac8d\n        87f11d7d2fada0cb0f1f7025674c5182d24913\n        07f436ad7ccaee0ed731707630e2fd62b628ca\n        fbebafdb0f061541a3b5a217f55c64b3cc88e8\n        feb3ced5f04dce9d6286d6852c9be4f97557e4\n        540e4973264d3bffc2d57f8b8232659d0c9c9c\n        60baa418e2ab96174b729b1f4ecbadf190070e\n        23427566198c15835788e540317accb15c8134\n        95e629fc1090ed7836eca672ac9e1abb5b06ea\n        9a1eef2f6539f844701bd181b690e113b7bcaa\n        5962df175dbe2b9c861ed9d9b603c75e03b230\n        cf17faaaf9e4755848c208c89a76d333a99a81\n        0d0ece44b6d9a9c4d089a7a9ab0b5e6c1c6e44\n        5d7244d1826e9767abbba3b685b025c7fafa9a\n        fd89dbab265a57671334febecf5f34f47e0d50\n        137a65546ac3207a802ca79407f073100deb0a\n        71a4cbb24865daec62a3dca0fb7ab9163d5ee4\n        bcf9885ba9395c5fa3739d748084da5b2d3523\n        ce71dfebbdecd03c78e1ac3c19f6512398eb58\n        3590148d1b8a70ebab9d7eb64f588c73c86452\n        960429f71b8e4dac448481de4b432201d48e09\n        53244f6df40e448fc3e19e9de5eea0e5ddd9a7\n        a3abd9580a20caab6c6ebad47728338629425d\n        00b96a1f636199140282704442b220911dcd51\n        1a6485b683611d570543912d4aff362c9ba332\n        ce4f37f0af02132e5405115f1b7dde0231d204\n        553e033b297bd2555087856653390b4b199281\n        7fd82ba4d421b3c689ba78220e7746f000bc1a\n        dd469993876e989bc73902d2350413b6d95da4\n        1072621598d0738483d29dea620d8222022efb\n        496d6db28ca33e13dc3bcc66e134d140168fe7\n        5bdc87759b0ff881ac69f69828c11544224e60\n        780e6291ea41948a7cbbd30b6983c1a133c84c\n        a4eb8af793d86563ace6264ef5b53524f27d6c\n        24386c816109d3b905228dcbe6ff8c4f13e44a\n        d72854f89db9e290d3eca4eabe1135535f8063\n        fa3ab06e1f99d330d539073b71ea65bb333bbd\n        0081455286c170c33538ff412e729d094821eb\n        01dc32aefa07330ecbed8e562aed32d9306ebc\n        9de29bb2d1d6434b8b29ae775ad8c2e48c5391\n        e70d966756d1ba24c0d58d2fde8ff18039ace5\n        89e96e141301e4d25d8adecbd3ca8688503ae9\n        e3460316406e7ad66672d23b009c239fb9a667\n        4c9e90d2b72451325aaa461c94b3823eb60126\n        5aadb3e96f4f8e5bd92225381e0f64e7558034\n        b2410d1a7901a0d11ca33a2b989b6e90ff2c8d\n        4fbc4dbf1c53b610dc5c46e2c347fbb93d2061\n        e190cb448234e6a4a768008eecc6d8ce7dac76\n        f45dc1d8879bcabceada1384040f493ff327cf\n        40b7385dcc0fc70183de6098716b28fd13b4b4\n        67990e6bbb2f0434de57b3c53584082c74b5b6\n        828f973343e978fc82f23ab2650ffaecb3c4d3\n        b9ad9ed83b96cefa1dccc16f640213f77e5939\n        bfbae39c74e755dbf72acf0fc11ea39265fcfd\n        5b5830e54bbc09cf3ba4ade3c729a279029f06\n        88643f1a91686e2e3fe4d156676c1d90cc6231\n        1e731cbdd34ed2f6ddc7a315f2de2ad4cb3c08\n        216168e4b9f23f83386ffe3d4737a01ce02149\n        bdfb39b39cc73c0b1e0a6a76e48ef2005903f3\n        fb174c9f6f963a90a1452e0ace31d1c5d7ce41\n        211f8f46c5e6431d0fdd9dbea62f849615a996\n        4aefd4da97019f13a33dbcdc6b695ad61e8afc\n        0c2d2efe1df565bae459bfaf8a4416a3677b47\n        1cdfb41c6e73567b224fb13e85a1d1b81f1d18\n        6772cb52c214f92333736ba78740f217d1a687\n        601e999ad61ab4c5b7411589b1003bac459717\n        82cf36e0e2a364e132aef71098fc4944e90087\n        d413889b9ddaa27eea401e0fb40a8f7311c3d6\n        f0bfed6f0686590bb4e24c00b195dd698b8b12\n        429ec7ecc12abfe68b0b434fd714ce7c936059\n        4600acdd923f9d1e6e72ccd1588c8df2361dd1\n        83d65c1af96bf58923646071eeb919ca24a13b\n        c832993d3f94544b7a759547306e3d671d6e52\n        edd51447700e383b57f7b140ffc04cdd66f75b\n        f5c149af3f71e6f0c522a4cc9f15ac2f4abf4f\n        590ab6f8faeae5e765e100cb6804c833dda325\n        9c782f9533f96f7f3f122ea2c7688dc7bc0e01\n        d97bbfd77a0bd3248f58f65d7d46fb1f81dce4\n        14b74c5f2fbd0a3b33874cf5c6cf4719ee9bbf\n        c9910533f72957502c5aec4478c1ef29b23dec\n        23a45d57a9e2c091479d3326c586b1de7ac584\n        4e2c42e338db37d19105550c9bfd9856e19232\n        57f531439f428530122e13ccdebbe0e01194ef\n        5a22fc73b5fd6a50a3f6b6b6887eeb69673fd9\n        0fb0796cc6073eeb37ec23bf2da938f5086a4e\n        2583b48c672b70e6611c0ee25597cea65152bd\n        0914caf1697b4f0d3fff79b2e92ccf5848f23c\n        6c740d8577bd896e4fade8e176eec95c919398\n        b90b1c39b57e0531be0181af9c6e36dcc15a2c\n        dc9ceea48fa5df2eee7b710e4d8970b6e7b3a4\n        9605d169415e19ce2897ca1d79886a792d8283\n        f22c31ef35dd53914e75efaf00b25bfb6da27c\n        1dee446cbc856e9d909273de67dfee5aa3a7f1\n        26423672b224d3ee9bac274cb3b891bdc27de1\n        601a47303a8ed429356e9050a9126969d457c8\n        8b0f63b952c73aee3a39c50aaed5627305ec8a\n        73c06c2948483d2b8a2246cc3ce2ec29565ac5\n        0910ec233676b4c7396bd220314b7fe9bfd3b0\n        a1f4266729a48d41944958f1c8706a592a5214\n        120eee551170b590e279c1835352dcabf011c7\n        87d7ccb562d3f2ce14aee0819d644d296e50fa\n        aafbee9d5ca2d41e0a0c806d0c5ded8ed57ec7\n        011d0a97936c673c98cbd3042c5a12dfec0486\n        80624a99998dbe9427bdc1d9925cafe5fc7fbf\n        bba99ba178035a33d2975697753dae8bbfbc10\n        248dc3e282a7b1a119dc20b0e8b90e53c9a201\n        31e8b1c487e1b2283a56f751fe396bdc3481d7\n        429a8f6ab9e3e63897240b6a7f81f833c87783\n        aaf4d5485c4adb16853d5d20fc12cae52e808f\n        d3e81c181848eb75b010105bd67e398ca2f333\n      heads/\n      remotes/\n      tags/\n        main\n        origin/\n          main\n    Data/\n    extras/\n    programs/\n    .gitignore\n    Launch-AstroLotto.bat\n    pyvenv.cfg\n      backup/\n      backups/\n      cache/\n      logs/\n      models/\n      reports/\n      cached_cash5_data.csv\n      cached_colorado_lottery_data.csv\n      cached_luckyforlife_data.csv\n      cached_megamillions_data.csv\n      cached_pick3_data.csv\n      cached_pick3_evening_data.csv\n      cached_pick3_midday_data.csv\n      cached_powerball_data.csv\n      cash5_model.json\n      cash5_predictions.csv\n      colorado_lottery_predictions.csv\n      colorado_model.json\n      colorado_predictions.csv\n      colorado_predictions.csv.bak-20250906-095740\n      last_cash5_refresh.txt\n      last_colorado_refresh.txt\n      last_luckyforlife_refresh.txt\n      last_megamillions_refresh.txt\n      last_pick3_refresh.txt\n      last_powerball_refresh.txt\n      luckyforlife_model.json\n      luckyforlife_predictions.csv\n      markets.json\n      megamillions_model.json\n      megamillions_predictions.csv\n      megamillions_predictions.migrated.20250816-125610.csv\n      model_eval_luckyforlife.json\n      model_eval_powerball.json\n      moon.json\n      oracle_runtime_log.csv\n      pick3_model.json\n      pick3_predictions.csv\n      powerball_model.json\n      powerball_model.pkl\n      powerball_predictions.csv\n      raw_cash5.csv\n      raw_colorado.csv\n      raw_luckyforlife.csv\n      raw_pick3.csv\n      raw_powerball.csv\n      space_weather.json\n      weird_flags.json\n        cached_cash5_data.20250906-162740.csv\n        cached_colorado_lottery_data.20250906-162740.csv\n        cached_pick3_data.20250906-111612.csv\n        cached_pick3_data.20250906-111717.csv\n        cached_pick3_data.20250906-162727.csv\n        cached_pick3_data.20250906-162756.csv\n        cached_pick3_data.20250906-163750.csv\n        cached_pick3_data.20250906-163851.csv\n        cached_pick3_data.20250912-161502.csv\n        jackpots.json\n        last_cash5_refresh.txt\n        last_colorado_refresh.txt\n        last_luckyforlife_refresh.txt\n        last_megamillions_refresh.txt\n        last_pick3_refresh.txt\n        last_powerball_refresh.txt\n        cash5_model.json\n        colorado_model.json\n        luckyforlife_model.json\n        megamillions_model.json\n        pick3_model.json\n        powerball_model.json\n        Diagnostics_2025-09-05.md\n      ephemeris_cache/\n      AstroLotto.docx\n      Enable_GPU_Extras_v2.bat\n      Launch_AstroLotto.command\n      README_features.txt\n      al_config.example.json\n      de421.bsp\n      features.json\n      future_secret.txt\n      patch_title_to_v14_7.py\n      requirements.txt\n      requirements_min.txt\n      retrograde.json\n      user_prefs.json\n      v14_flags.json\n      version.txt\n        de421.bsp\n      Data/\n      __pycache__/\n      agent/\n      agents/\n      config/\n      engine/\n      features/\n      maintenance/\n      pages/\n      predictors/\n      scripts/\n      services/\n      static/\n      tests/\n      tools/\n      ui/\n      utilities/\n      utils/\n      visuals/\n      Launch_AstroLotto.bat\n      __init__.py\n      __init___2.py\n      __init___3.py\n      __init___4.py\n      __init___5.py\n      __init___6.py\n      about.py\n      admin.py\n      admin_csvqa_APPEND.txt\n      app_main.py\n      astro_doctor.py\n      astrology.py\n      astrolotto_temporal_integration.py\n      auto_layout.py\n      backfill_engine.py\n      backfill_runner_helper.py\n      backfill_sanity_check.py\n      backfill_standardizer.py\n      boot_heal.py\n      cash5_predictor.py\n      cash5_predictor_core.py\n      cash5_updates.py\n      chaos.py\n      chaos_signals.py\n      climatology.csv\n      colorado_lottery_predictor.py\n      colorado_lottery_predictor_core.py\n      colorado_updates.py\n      common_core.py\n      config.py\n      context_weight.py\n      cosmic_format.py\n      cosmic_weather.py\n      coverage.py\n      dev_panels.py\n      diagnostics.py\n      diversity.py\n      draw_schedule.py\n      draws.py\n      ensemble.py\n      ensemble_2.py\n      ensure_layout_once.py\n      eval.py\n      fallback_predict.py\n      feature_builder.py\n      feature_cache.py\n      features.py\n      features_cosmic.py\n      features_numeric.py\n      future_feed.py\n      health.py\n      heuristic_presets.py\n      heuristics.py\n      heuristics_pick3.py\n      historical_backfill.py\n      history_normalizer.py\n      history_utils.py\n      hot_cold.py\n      intelligence.py\n      io_routing.py\n      io_routing_2.py\n      jackpots.py\n      jackpots_ui.py\n      kp_index.csv\n      live_report.py\n      logger.py\n      lucky_for_life_predictor.py\n      lucky_for_life_predictor_core.py\n      lucky_updates.py\n      mega_millions_predictor.py\n      mega_millions_predictor_core.py\n      mega_updates.py\n      meta_temporal_ensemble.py\n      ml_baseline.py\n      model.py\n      model_eval.py\n      model_learners.py\n      model_loader.py\n      model_trainers.py\n      model_training.py\n      models.py\n      montecarlo.py\n      montecarlo_2.py\n      numerology.py\n      oracle.py\n      oracle_autofill.py\n      oracle_live_feeds.py\n      oracle_mode.py\n      oracle_scaling.py\n      page_consolidator.py\n      pick3_predictor.py\n      pick3_predictor_core.py\n      pick3_pro.py\n      pick3_updates.py\n      pmi.py\n      powerball_predictor.py\n      powerball_predictor_core.py\n      powerball_updates.py\n      predict_ui_common.py\n      prediction_core.py\n      predictor_bridge.py\n      predictor_core_base.py\n      probability.py\n      probability_2.py\n      quantum_echo.py\n      refresh.py\n      repair.py\n      retrograde.json\n      safety_runtime.py\n      schema_sanity.py\n      setup_helper.py\n      simple_predict.py\n      sitecustomize.py\n      smart_features.py\n      smart_predict.py\n      smart_predict_v2.py\n      special_weights.py\n      startup_orchestrator.py\n      startup_orchestrator_2.py\n      temporal_agent.py\n      temporal_autotune.py\n      ticket_select.py\n      ticket_select_2.py\n      train_update.py\n      training_engine.py\n      ui_cosmic.py\n      user_prefs.json\n      utils.py\n      v14_flags.json\n      v14_sidebar.py\n      validation.py\n      version.txt\n      weather.py\n      weather_source.py\n      wrs.py\n        tools/\n        langchain_lottery_agent.py\n          _common.py\n          frequency_tool.py\n          ml_tool.py\n          pattern_tool.py\n          stats_tool.py\n          viz_tool.py\n        __init__.py\n        ev_agent.py\n        explainer_agent.py\n        mc_agent.py\n        ops_agent.py\n        oracle_agent.py\n        pipeline.py\n        state.py\n        supervisor.py\n        v14_flags.json\n        version.txt\n        oracle_cache.json\n        ev_mode.py\n        meta_selector.py\n        __init__.py\n        health.py\n        models.py\n        refresh.py\n        page_consolidator.py\n        __init__.py\n        about.py\n        admin.py\n        agent.py\n        autotune.py\n        glossary.py\n        __init__.py\n        ensemble.py\n        montecarlo.py\n        test_harness.py\n        cash5_updates.py\n        colorado_updates.py\n        csv_qa.py\n        local_llm.py\n        lucky_updates.py\n        mega_updates.py\n        pick3_updates.py\n        powerball_updates.py\n        climatology.csv\n        kp_index.csv\n        retrograde.json\n        big_patch_selftest.py\n        __init__.py\n        health_check.py\n        normalize_models.py\n        intentions.py\n        __init__.py\n        alignment.py\n        archetypal_engine.py\n        astrology.py\n        backfill_runner_helper.py\n        backfill_standardizer.py\n        boot_heal.py\n        cash5_predictor_core.py\n        chaos.py\n        chaos_signals.py\n        colorado_lottery_predictor_core.py\n        common_core.py\n        config.py\n        context_weight.py\n        cosmic_format.py\n        cosmic_weather.py\n        coverage.py\n        dev_panels.py\n        diagnostics.py\n        diversity.py\n        draw_schedule.py\n        draws.py\n        ensemble.py\n        ephemeris.py\n        etl_build_features.py\n        eval.py\n        fallback_predict.py\n        feature_builder.py\n        features.py\n        features_cosmic.py\n        features_numeric.py\n        future_feed.py\n        heuristic_presets.py\n        heuristics.py\n        heuristics_pick3.py\n        historical_enrichment.py\n        hot_cold.py\n        intelligence.py\n        io_routing.py\n        jackpots.py\n        jackpots_ui.py\n        live_report.py\n        logger.py\n        lucky_for_life_predictor_core.py\n        mega_millions_predictor_core.py\n        ml_baseline.py\n        model.py\n        model_loader.py\n        montecarlo.py\n        multiverse_overlays.py\n        numerology.py\n        oracle.py\n        oracle_autofill.py\n        oracle_data.py\n        oracle_engine.py\n        oracle_live_feeds.py\n        oracle_mode.py\n        oracle_scaling.py\n        per_ball_ml.py\n        per_ball_trainer.py\n        performance_tracker.py\n        pick3_predictor_core.py\n        pick3_pro.py\n        planetary_alignment.py\n        pmi.py\n        powerball_predictor_core.py\n        predict_ui_common.py\n        prediction_core.py\n        predictor_bridge.py\n        predictor_core_base.py\n        probability.py\n        qrng.py\n        quantum_echo.py\n        quantum_predictor.py\n        repair.py\n        retrocausal_feedback.py\n        sacred_geometry.py\n        safety_runtime.py\n        schema_sanity.py\n        simple_predict.py\n        smart_features.py\n        smart_predict.py\n        smart_predict_v2.py\n        special_weights.py\n        startup_orchestrator.py\n        ticket_select.py\n        ui_cosmic.py\n        utils.py\n        v14_sidebar.py\n        weather.py\n        weather_source.py\n        wrs.py\n        __init__.py\n        history_utils.py\n        model_eval.py\n        model_learners.py\n        model_trainers.py\n        timeline_viz.py\n        __init__.cpython-313.pyc\n        app_main.cpython-313.pyc\n    Data/\n    extras/\n    program/\n    Launch-BreakoutBuddy.bat\n    smoke_test.py\n      cache/\n      email_outbox/\n      predictions/\n      agent_weights.json\n      bb_snapshot.csv\n      bb_temporal_logs.csv\n      breakoutbuddy.duckdb\n      buddy.duckdb\n      buddy.duckdb.wal\n      llm_config.json\n      ranked_latest.csv\n      snapshot_latest.csv\n      us_universe.csv\n      watchlist.csv\n      watchlist_snapshot_latest.csv\n        yf/\n          AAPL_1y_1d.csv\n          ABNB_1y_1d.csv\n          ADBE_1y_1d.csv\n          AMAT_1y_1d.csv\n          AMD_1y_1d.csv\n          AMZN_1y_1d.csv\n          AVGO_1y_1d.csv\n          BABA_1y_1d.csv\n          BAC_1y_1d.csv\n          CRM_1y_1d.csv\n          CSCO_1y_1d.csv\n          CVX_1y_1d.csv\n          DIS_1y_1d.csv\n          F_1y_1d.csv\n          GM_1y_1d.csv\n          GOOGL_1y_1d.csv\n          HD_1y_1d.csv\n          IBM_1y_1d.csv\n          INTC_1y_1d.csv\n          IWM_1y_1d.csv\n          JPM_1y_1d.csv\n          KO_1y_1d.csv\n          LCID_1y_1d.csv\n          MA_1y_1d.csv\n          META_1y_1d.csv\n          MRK_1y_1d.csv\n          MSFT_1y_1d.csv\n          MU_1y_1d.csv\n          NFLX_1y_1d.csv\n          NKE_1y_1d.csv\n          NVDA_1y_1d.csv\n          ORCL_1y_1d.csv\n          PEP_1y_1d.csv\n          PFE_1y_1d.csv\n          PLTR_1y_1d.csv\n          PYPL_1y_1d.csv\n          QCOM_1y_1d.csv\n          QQQ_1y_1d.csv\n          RIVN_1y_1d.csv\n          SHOP_1y_1d.csv\n          SOFI_1y_1d.csv\n          SPY_1y_1d.csv\n          TSLA_1y_1d.csv\n          TXN_1y_1d.csv\n          T_1y_1d.csv\n          UBER_1y_1d.csv\n          UNH_1y_1d.csv\n          VZ_1y_1d.csv\n          V_1y_1d.csv\n          XOM_1y_1d.csv\n        2025-09-16.csv\n      _recommended/\n      branding/\n      config/\n      presets/\n      app_settings.json\n      bb_config.example.json\n      engines_settings.json\n      requirements.txt\n        branding.txt\n        agents.yaml\n        alpha_map.yaml\n        app.yaml\n        email_gmail_template.json\n        email_smtp_template.json\n        Balanced.json\n        Box_Plays_Daily.json\n        Fresh_Thresholds.json\n        Retail_Fade_Watch.json\n        app_settings.json\n        engines_settings.json\n      modules/\n      00_Dashboard.py\n      app_main.py\n      cli.py\n        agents/\n        engines/\n        services/\n        tabs/\n        ui/\n        __init__.py\n        advisor.py\n        alphamap.py\n        backtest.py\n        charting.py\n        crowding.py\n        data.py\n        db_admin.py\n        edge_tracker.py\n        email_adapter.py\n        explain.py\n        features.py\n        glossary.py\n        health.py\n        indicators.py\n        labels.py\n        learner.py\n        learning.py\n        meta_temporal_ensemble.py\n        metrics.py\n        montecarlo.py\n        nlq.py\n        page_about.py\n        page_agents.py\n        page_autotune_bb.py\n        page_report.py\n        ranking.py\n        regime.py\n        report.py\n        reporting.py\n        scanner.py\n        scheduler.py\n        scoring.py\n        second_order.py\n        temporal_agent.py\n        temporal_autotune.py\n        universe.py\n        watchlist.py\n          __init__.py\n          auto_tune.py\n          base.py\n          cache.py\n          calibration.py\n          cap_lock.py\n          config.py\n          data_agent.py\n          dyn_cap.py\n          hashers.py\n          orchestrator.py\n          pattern_agent.py\n          registry.py\n          selftest.py\n          sentiment_agent.py\n          tech_agent.py\n          technical_agent.py\n          ui_bits.py\n          utils_data.py\n          volatility_agent.py\n          __init__.py\n          runner.py\n          __init__.py\n          agents_service.py\n          augment_csv.py\n          context.py\n          csv_qa.py\n          enrich.py\n          local_llm.py\n          news_free.py\n          ohlcv_cache.py\n          scoring.py\n          secret_loader.py\n          temporal.py\n          __init__.py\n          about.py\n          admin.py\n          admin_csvqa_README.txt\n          admin_patch_note.py\n          agents_tab.py\n          dashboard.py\n          dashboard_table_patch.py\n          explore.py\n          report.py\n          scanner.py\n          sidebar.py\n          watchlist.py\n          __init__.py\n          plain_english.py\n          single_ticker_analyzer.py\n          title.py\n          watchlist_page.py\n          watchlist_table_patch.py",
+  "compile_errors_original": {
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/csv_qa.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/services/csv_qa.py\", line 164\n    \"including 3-6 bullets (issues + suggested fixes). Avoid technical jargon; target a power user.\n    ^\nSyntaxError: unterminated string literal (detected at line 164)",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/cli.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/cli.py\", line 73\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/db_admin.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/db_admin.py\", line 73\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/temporal_autotune.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/temporal_autotune.py\", line 83\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/watchlist.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/watchlist.py\", line 72\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/calibration.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/calibration.py\", line 73\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/cap_lock.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/cap_lock.py\", line 73\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/dyn_cap.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/dyn_cap.py\", line 73\nSyntaxError: from __future__ imports must occur at the beginning of the file"
+  },
+  "imports_detected": {
+    "EliteMTZ_Money_Buddy/home_main.py": [
+      "__future__",
+      "os",
+      "pathlib",
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/streamlit_app.py": [
+      "__future__",
+      "runpy",
+      "pathlib",
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/extras/patch_title_to_v14_7.py": [
+      "pathlib",
+      "re"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/about.py": [
+      "__future__",
+      "json",
+      "pathlib",
+      "datetime",
+      "streamlit",
+      "utilities.config"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/admin.py": [
+      "streamlit",
+      "pathlib",
+      "sys",
+      "programs.features.health",
+      "programs.features.refresh",
+      "programs.features.health",
+      "programs.features.refresh",
+      "pandas",
+      "programs.features.refresh",
+      "programs.utils.model_trainers",
+      "programs.utils.model_eval",
+      "programs.tools.health_check",
+      "programs.maintenance.page_consolidator",
+      "programs.features.refresh",
+      "streamlit",
+      "programs.services"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/app_main.py": [
+      "__future__",
+      "datetime",
+      "agents.state",
+      "agents.pipeline",
+      "sys",
+      "importlib",
+      "streamlit",
+      "streamlit",
+      "astrolotto_temporal_integration",
+      "pandas",
+      "numpy",
+      "os",
+      "csv",
+      "json",
+      "math",
+      "datetime",
+      "pathlib",
+      "pathlib",
+      "os",
+      "typing",
+      "inspect",
+      "utilities.probability",
+      "utilities.fallback_predict",
+      "utilities.per_ball_ml",
+      "utilities.oracle_engine",
+      "utilities.oracle_data",
+      "engine.meta_selector",
+      "engine.ev_mode",
+      "ui.intentions",
+      "visuals.timeline_viz",
+      "utilities",
+      "importlib",
+      "pathlib",
+      "streamlit",
+      "temporal_autotune",
+      "programs.utilities.config",
+      "utilities.config",
+      "numpy",
+      "numpy",
+      "math",
+      "time",
+      "time",
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/astrology.py": [
+      "__future__",
+      "datetime",
+      "math",
+      "typing",
+      "ephem"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/astrolotto_temporal_integration.py": [
+      "__future__",
+      "temporal_autotune"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/astro_doctor.py": [
+      "os",
+      "pathlib"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/auto_layout.py": [
+      "pathlib",
+      "json"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_engine.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas",
+      "utilities",
+      "history_normalizer",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_runner_helper.py": [
+      "__future__",
+      "pathlib",
+      "importlib",
+      "pandas",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_sanity_check.py": [
+      "__future__",
+      "sys",
+      "pathlib",
+      "pandas",
+      "datetime"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_standardizer.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas",
+      "pandas",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/boot_heal.py": [
+      "__future__",
+      "pathlib",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cash5_predictor.py": [
+      "__future__",
+      "typing",
+      "streamlit",
+      "pandas",
+      "utilities.predict_ui_common"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cash5_predictor_core.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "numpy",
+      "pathlib",
+      ".predictor_core_base",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cash5_updates.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "typing",
+      "pandas",
+      "requests",
+      "bs4",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/chaos.py": [
+      "random",
+      "datetime"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/chaos_signals.py": [
+      "__future__",
+      "pathlib",
+      "datetime",
+      "hashlib"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/colorado_lottery_predictor.py": [
+      "__future__",
+      "typing",
+      "streamlit",
+      "pandas",
+      "utilities.predict_ui_common",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/colorado_lottery_predictor_core.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "pathlib",
+      ".predictor_core_base",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/colorado_updates.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "typing",
+      "pandas",
+      "requests",
+      "bs4",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/common_core.py": [
+      "__future__",
+      "math",
+      "pathlib",
+      "typing",
+      "pandas",
+      ".features",
+      "glob"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/config.py": [
+      "__future__",
+      "pathlib",
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/context_weight.py": [
+      "__future__",
+      "datetime",
+      "pandas",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cosmic_format.py": [
+      "__future__",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cosmic_weather.py": [
+      "__future__",
+      "datetime",
+      "typing",
+      ".",
+      ".features_cosmic",
+      ".weather_source"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/coverage.py": [
+      "__future__",
+      "typing",
+      ".diversity"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/dev_panels.py": [
+      "__future__",
+      "typing",
+      "streamlit",
+      "pandas",
+      ".smart_features_v2",
+      ".montecarlo_v2"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/diagnostics.py": [
+      "__future__",
+      "json",
+      "pathlib",
+      "typing",
+      "pandas",
+      "json"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/diversity.py": [
+      "__future__",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/draws.py": [
+      "__future__",
+      "csv",
+      "datetime",
+      "typing",
+      "requests",
+      "pandas",
+      "bs4",
+      "datetime",
+      "re",
+      "re",
+      "datetime"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/draw_schedule.py": [
+      "__future__",
+      "datetime",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ensemble.py": [
+      "__future__",
+      "typing",
+      "random",
+      "pandas",
+      "..utilities.smart_features_v2",
+      "..utilities.wrs",
+      "..utilities.pmi"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ensemble_2.py": [
+      "__future__",
+      "pathlib",
+      "sys",
+      "training_engine",
+      "training_engine",
+      "training_engine"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ensure_layout_once.py": [
+      "__future__",
+      "os",
+      "pathlib"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/eval.py": [
+      "__future__",
+      "numpy",
+      "pandas",
+      "typing",
+      ".model"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/fallback_predict.py": [
+      "__future__",
+      "typing",
+      "random",
+      "pandas",
+      ".smart_features",
+      ".smart_features"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features.py": [
+      "__future__",
+      "os",
+      "pathlib",
+      "typing",
+      "pandas",
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features_cosmic.py": [
+      "__future__",
+      "datetime",
+      "pathlib",
+      "json",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features_numeric.py": [
+      "__future__",
+      "typing",
+      "numpy",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/feature_builder.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "numpy",
+      ".features_numeric",
+      ".features_cosmic",
+      ".weather_source",
+      ".draw_schedule"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/feature_cache.py": [
+      "__future__",
+      "os",
+      "pathlib",
+      "typing",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/future_feed.py": [
+      "__future__",
+      "pathlib",
+      "json",
+      "typing",
+      ".config"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/health.py": [
+      "__future__",
+      "pathlib",
+      "dataclasses",
+      "typing",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/heuristics.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "pandas",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/heuristics_pick3.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "numpy",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/heuristic_presets.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "datetime"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/historical_backfill.py": [
+      "__future__",
+      "os",
+      "pathlib",
+      "typing",
+      "pandas",
+      "requests"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/history_normalizer.py": [
+      "__future__",
+      "shutil",
+      "pathlib",
+      "typing",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/history_utils.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "numpy",
+      "collections",
+      "pandas",
+      "collections",
+      "pandas",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/hot_cold.py": [
+      "typing",
+      "pandas",
+      "pathlib",
+      "re",
+      "datetime",
+      "utilities.smart_features",
+      "utilities.smart_features"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/intelligence.py": [
+      "__future__",
+      "typing",
+      "random",
+      "datetime",
+      "collections",
+      "numpy",
+      "sklearn.ensemble"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/io_routing.py": [
+      "__future__",
+      "os",
+      "pathlib"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/io_routing_2.py": [
+      "__future__",
+      "os",
+      "pathlib",
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/jackpots.py": [
+      "__future__",
+      "pathlib",
+      "json",
+      "typing",
+      "requests",
+      "bs4"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/jackpots_ui.py": [
+      "streamlit",
+      "."
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/live_report.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "re",
+      "requests"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/logger.py": [
+      "__future__",
+      "csv",
+      "pathlib",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/lucky_for_life_predictor.py": [
+      "__future__",
+      "typing",
+      "streamlit",
+      "pandas",
+      "utilities.predict_ui_common"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/lucky_for_life_predictor_core.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "numpy",
+      "pathlib",
+      ".predictor_core_base",
+      "random",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/lucky_updates.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "typing",
+      "pandas",
+      "requests",
+      "bs4",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/mega_millions_predictor.py": [
+      "__future__",
+      "typing",
+      "streamlit",
+      "pandas",
+      "utilities.predict_ui_common",
+      "utilities.cosmic_format"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/mega_millions_predictor_core.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "pathlib",
+      ".predictor_core_base",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/mega_updates.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "historical_backfill",
+      "typing",
+      "pandas",
+      "requests",
+      "bs4",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/meta_temporal_ensemble.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "math",
+      "temporal_agent"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ml_baseline.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "sklearn.linear_model",
+      "collections"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model.py": [
+      "__future__",
+      "typing",
+      "os",
+      "numpy",
+      "pandas",
+      "joblib",
+      "uuid",
+      "sklearn.linear_model",
+      "sklearn.preprocessing",
+      "sklearn.pipeline",
+      "sklearn.calibration",
+      "lightgbm",
+      "xgboost",
+      "catboost",
+      "autogluon.tabular"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/models.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "programs.features.refresh",
+      "programs.utils.model_trainers"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_eval.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_learners.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "numpy",
+      "pathlib",
+      "autogluon.tabular",
+      "sklearn.ensemble"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_loader.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "os",
+      "autogluon.tabular"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_trainers.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "programs.tools.normalize_models",
+      "programs.training_engine"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_training.py": [
+      "os",
+      "utilities.features",
+      "utilities.model",
+      "utilities.eval",
+      "argparse"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/montecarlo.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "..utilities.smart_features_v2",
+      "..utilities.montecarlo_v2"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/montecarlo_2.py": [
+      "__future__",
+      "typing",
+      "random",
+      "pandas",
+      ".smart_features",
+      "collections"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/numerology.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle.py": [
+      "__future__",
+      "typing",
+      "hashlib"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_autofill.py": [
+      "__future__",
+      "typing",
+      ".oracle_live_feeds",
+      "."
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_live_feeds.py": [
+      "__future__",
+      "requests",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_mode.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "pathlib",
+      "json"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_scaling.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/page_consolidator.py": [
+      "__future__",
+      "pathlib",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_predictor.py": [
+      "__future__",
+      "typing",
+      "streamlit",
+      "pandas",
+      "utilities.predict_ui_common"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_predictor_core.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "numpy",
+      "pathlib",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_pro.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "collections",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_updates.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "typing",
+      "pandas",
+      "requests",
+      "bs4"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pmi.py": [
+      "__future__",
+      "typing",
+      "math",
+      "pandas",
+      "collections"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/powerball_predictor.py": [
+      "__future__",
+      "typing",
+      "streamlit",
+      "importlib",
+      "pandas",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/powerball_predictor_core.py": [
+      "__future__",
+      "typing",
+      "math",
+      "pandas",
+      ".features",
+      "utilities.features"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/powerball_updates.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "typing",
+      "pandas",
+      "requests",
+      "bs4",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/prediction_core.py": [
+      "__future__",
+      "typing",
+      "pathlib",
+      "json",
+      ".smart_predict_v2",
+      ".smart_features",
+      ".diversity",
+      "pandas",
+      "importlib",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictor_bridge.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas",
+      ".feature_builder",
+      ".model_loader",
+      ".features_numeric",
+      ".chaos_signals",
+      ".probability",
+      "os",
+      "pandas",
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictor_core_base.py": [
+      "__future__",
+      "typing",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predict_ui_common.py": [
+      "__future__",
+      "typing",
+      "importlib"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/probability.py": [
+      "__future__",
+      "math",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/probability_2.py": [
+      "__future__",
+      "math",
+      "typing",
+      "numpy",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/quantum_echo.py": [
+      "__future__",
+      "pathlib",
+      "json",
+      "typing",
+      ".config"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/refresh.py": [
+      "__future__",
+      "pathlib",
+      "importlib"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/repair.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas",
+      "csv"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/safety_runtime.py": [
+      "__future__",
+      "typing",
+      "pathlib",
+      "csv",
+      ".smart_features",
+      "utilities.smart_features",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/schema_sanity.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/setup_helper.py": [
+      "__future__",
+      "os",
+      "pathlib",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/simple_predict.py": [
+      "__future__",
+      "pandas",
+      "pathlib",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/sitecustomize.py": [
+      "__future__",
+      "os",
+      "pathlib",
+      "pandas",
+      "importlib"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/smart_features.py": [
+      "__future__",
+      "typing",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/smart_predict.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      ".montecarlo"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/smart_predict_v2.py": [
+      "__future__",
+      "typing",
+      "random",
+      "pandas",
+      ".smart_features",
+      ".wrs",
+      ".pmi",
+      ".diversity",
+      "collections",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/special_weights.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "collections"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/startup_orchestrator.py": [
+      "__future__",
+      "pathlib",
+      "datetime"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/startup_orchestrator_2.py": [
+      "__future__",
+      "pathlib",
+      "datetime",
+      ".config",
+      "..training_engine"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/temporal_agent.py": [
+      "__future__",
+      "dataclasses",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/temporal_autotune.py": [
+      "__future__",
+      "json",
+      "math",
+      "dataclasses",
+      "typing",
+      "numpy",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ticket_select.py": [
+      "__future__",
+      "numpy",
+      "typing",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ticket_select_2.py": [
+      "__future__",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/training_engine.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/train_update.py": [
+      "argparse",
+      "utilities.ensemble",
+      "historical_backfill"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ui_cosmic.py": [
+      "__future__",
+      "streamlit",
+      "datetime",
+      ".cosmic_weather"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils.py": [
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/v14_sidebar.py": [
+      "__future__",
+      "logging",
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/validation.py": [
+      "__future__",
+      "pandas",
+      "numpy",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/weather.py": [
+      "__future__",
+      "typing",
+      "math",
+      "streamlit",
+      "pgeocode",
+      "requests"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/weather_source.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "json",
+      "pandas",
+      "meteostat",
+      "meteostat",
+      "pandas",
+      "pandas",
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/wrs.py": [
+      "__future__",
+      "typing",
+      "math"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/__init__.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/__init___2.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/__init___3.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/__init___4.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/__init___5.py": [
+      ".",
+      ".",
+      "."
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/__init___6.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/langchain_lottery_agent.py": [
+      "__future__",
+      "typing",
+      ".tools.frequency_tool",
+      ".tools.pattern_tool",
+      ".tools.ml_tool",
+      ".tools.stats_tool",
+      ".tools.viz_tool"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/frequency_tool.py": [
+      "__future__",
+      "pandas",
+      "._common"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/ml_tool.py": [
+      "__future__",
+      "pandas",
+      "sklearn.ensemble",
+      "sklearn.model_selection",
+      "sklearn.metrics",
+      "._common"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/pattern_tool.py": [
+      "__future__",
+      "pandas",
+      "._common"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/stats_tool.py": [
+      "__future__",
+      "pandas",
+      "._common"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/viz_tool.py": [
+      "__future__",
+      "pandas",
+      "plotly.express",
+      "._common"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/_common.py": [
+      "__future__",
+      "pathlib",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/ev_agent.py": [
+      "typing",
+      ".state"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/explainer_agent.py": [
+      "__future__",
+      ".state",
+      "programs.services.local_llm",
+      "programs.services"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/mc_agent.py": [
+      "random",
+      "typing",
+      ".state"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/ops_agent.py": [
+      "datetime"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/oracle_agent.py": [
+      ".state",
+      "statistics"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/pipeline.py": [
+      "json",
+      "pathlib",
+      "datetime",
+      ".state",
+      ".supervisor",
+      ".oracle_agent",
+      ".mc_agent",
+      ".ev_agent",
+      ".explainer_agent",
+      ".ops_agent"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/state.py": [
+      "dataclasses",
+      "datetime",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/supervisor.py": [
+      ".state"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/__init__.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/engine/ev_mode.py": [
+      "__future__",
+      "typing",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/engine/meta_selector.py": [
+      "__future__",
+      "typing",
+      "numpy",
+      "datetime",
+      "hashlib",
+      "utilities.probability",
+      "utilities.quantum_predictor",
+      "utilities.archetypal_engine",
+      "utilities.retrocausal_feedback",
+      "utilities.per_ball_trainer",
+      "utilities.per_ball_ml",
+      "utilities.sacred_geometry",
+      "utilities.performance_tracker",
+      "utilities.qrng"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features/health.py": [
+      "__future__",
+      "pathlib",
+      "dataclasses",
+      "typing",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features/models.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "programs.features.refresh",
+      "programs.utils.model_trainers"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features/refresh.py": [
+      "__future__",
+      "pathlib",
+      "importlib"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features/__init__.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/maintenance/page_consolidator.py": [
+      "__future__",
+      "pathlib",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/about.py": [
+      "__future__",
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/admin.py": [
+      "streamlit",
+      "pathlib",
+      "pandas",
+      "numpy",
+      "shutil",
+      "sys",
+      "programs.utilities.per_ball_ml",
+      "utilities.per_ball_ml",
+      "programs.utilities.backfill_runner_helper",
+      "utilities.backfill_runner_helper",
+      "programs.features.refresh",
+      "programs.utilities.oracle_data",
+      "utilities.oracle_data",
+      "programs.utilities.oracle_data",
+      "utilities.oracle_data"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/agent.py": [
+      "__future__",
+      "importlib",
+      "pathlib",
+      "streamlit",
+      "matplotlib.pyplot",
+      "pandas",
+      "streamlit.runtime.scriptrunner"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/autotune.py": [
+      "streamlit",
+      "os",
+      "numpy",
+      "matplotlib.pyplot",
+      "temporal_autotune",
+      "pandas",
+      "temporal_autotune",
+      "json"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/glossary.py": [
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/__init__.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictors/ensemble.py": [
+      "__future__",
+      "typing",
+      "random",
+      "pandas",
+      "..utilities.smart_features_v2",
+      "..utilities.wrs",
+      "..utilities.pmi"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictors/montecarlo.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "..utilities.smart_features_v2",
+      "..utilities.montecarlo_v2"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictors/__init__.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/scripts/test_harness.py": [
+      "datetime",
+      "numpy",
+      "pandas",
+      "utilities.probability",
+      "engine.meta_selector"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/cash5_updates.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "typing",
+      "pandas",
+      "requests",
+      "bs4",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/colorado_updates.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "typing",
+      "pandas",
+      "requests",
+      "bs4",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/csv_qa.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas",
+      "numpy",
+      "math",
+      "json",
+      ".local_llm"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/local_llm.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "json",
+      "gpt4all",
+      "gpt4all",
+      "os",
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/lucky_updates.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "typing",
+      "pandas",
+      "requests",
+      "bs4",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/mega_updates.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "historical_backfill",
+      "typing",
+      "pandas",
+      "requests",
+      "bs4",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/pick3_updates.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "typing",
+      "pandas",
+      "requests",
+      "bs4"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/powerball_updates.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "typing",
+      "pandas",
+      "requests",
+      "bs4",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/tests/big_patch_selftest.py": [
+      "__future__",
+      "json",
+      "pathlib",
+      "programs.utilities.planetary_alignment",
+      "programs.utilities.historical_enrichment",
+      "programs.agent.langchain_lottery_agent"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/tools/health_check.py": [
+      "__future__",
+      "typing",
+      "programs.features.health"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/tools/normalize_models.py": [
+      "__future__",
+      "typing",
+      "programs.utils.model_trainers"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/tools/__init__.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ui/intentions.py": [
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/alignment.py": [
+      "__future__",
+      "math",
+      "typing",
+      "pathlib",
+      "skyfield.api",
+      "skyfield.framelib",
+      ".ephemeris",
+      "numpy",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/archetypal_engine.py": [
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/astrology.py": [
+      "__future__",
+      "datetime",
+      "math",
+      "typing",
+      "ephem"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/backfill_runner_helper.py": [
+      "__future__",
+      "pathlib",
+      "importlib",
+      "pandas",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/backfill_standardizer.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas",
+      "pandas",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/boot_heal.py": [
+      "__future__",
+      "pathlib",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/cash5_predictor_core.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "numpy",
+      "pathlib",
+      ".predictor_core_base",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/chaos.py": [
+      "random",
+      "datetime"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/chaos_signals.py": [
+      "__future__",
+      "pathlib",
+      "datetime",
+      "hashlib"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/colorado_lottery_predictor_core.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "pathlib",
+      ".predictor_core_base",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/common_core.py": [
+      "__future__",
+      "math",
+      "pathlib",
+      "typing",
+      "pandas",
+      ".features",
+      "glob"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/config.py": [
+      "__future__",
+      "pathlib",
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/context_weight.py": [
+      "__future__",
+      "datetime",
+      "pandas",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/cosmic_format.py": [
+      "__future__",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/cosmic_weather.py": [
+      "__future__",
+      "datetime",
+      "typing",
+      ".",
+      ".features_cosmic",
+      ".weather_source"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/coverage.py": [
+      "__future__",
+      "typing",
+      ".diversity"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/dev_panels.py": [
+      "__future__",
+      "typing",
+      "streamlit",
+      "pandas",
+      ".smart_features_v2",
+      ".montecarlo_v2"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/diagnostics.py": [
+      "__future__",
+      "json",
+      "pathlib",
+      "typing",
+      "pandas",
+      "json"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/diversity.py": [
+      "__future__",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/draws.py": [
+      "__future__",
+      "csv",
+      "datetime",
+      "typing",
+      "requests",
+      "pandas",
+      "bs4",
+      "datetime",
+      "re",
+      "re",
+      "datetime"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/draw_schedule.py": [
+      "__future__",
+      "datetime",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ensemble.py": [
+      "__future__",
+      "pathlib",
+      "sys",
+      "training_engine",
+      "training_engine",
+      "training_engine"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ephemeris.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "skyfield.api",
+      "importlib.resources",
+      "naif_de440"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/etl_build_features.py": [
+      "__future__",
+      "math",
+      "dataclasses",
+      "pathlib",
+      "typing",
+      "pandas",
+      "numpy",
+      "utilities.oracle_data",
+      "utilities.alignment"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/eval.py": [
+      "__future__",
+      "numpy",
+      "pandas",
+      "typing",
+      ".model"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/fallback_predict.py": [
+      "__future__",
+      "typing",
+      "random",
+      "pandas",
+      ".smart_features",
+      ".smart_features"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/features.py": [
+      "__future__",
+      "os",
+      "pathlib",
+      "typing",
+      "pandas",
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/features_cosmic.py": [
+      "__future__",
+      "datetime",
+      "pathlib",
+      "json",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/features_numeric.py": [
+      "__future__",
+      "typing",
+      "numpy",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/feature_builder.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "numpy",
+      ".features_numeric",
+      ".features_cosmic",
+      ".weather_source",
+      ".draw_schedule"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/future_feed.py": [
+      "__future__",
+      "pathlib",
+      "json",
+      "typing",
+      ".config"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/heuristics.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "pandas",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/heuristics_pick3.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "numpy",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/heuristic_presets.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "datetime"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/historical_enrichment.py": [
+      "__future__",
+      "datetime",
+      "pathlib",
+      "typing",
+      "pandas",
+      "numpy",
+      "utilities.oracle_data",
+      "utilities.planetary_alignment"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/hot_cold.py": [
+      "typing",
+      "pandas",
+      "pathlib",
+      "re",
+      "datetime",
+      "utilities.smart_features",
+      "utilities.smart_features"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/intelligence.py": [
+      "__future__",
+      "typing",
+      "random",
+      "datetime",
+      "collections",
+      "numpy",
+      "sklearn.ensemble"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/io_routing.py": [
+      "__future__",
+      "os",
+      "pathlib",
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/jackpots.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "json",
+      "requests",
+      "bs4"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/jackpots_ui.py": [
+      "streamlit",
+      "."
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/live_report.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "re",
+      "requests"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/logger.py": [
+      "__future__",
+      "csv",
+      "pathlib",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/lucky_for_life_predictor_core.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "numpy",
+      "pathlib",
+      ".predictor_core_base",
+      "random",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/mega_millions_predictor_core.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "pathlib",
+      ".predictor_core_base",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ml_baseline.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "sklearn.linear_model",
+      "collections"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/model.py": [
+      "__future__",
+      "typing",
+      "os",
+      "numpy",
+      "pandas",
+      "joblib",
+      "uuid",
+      "sklearn.linear_model",
+      "sklearn.preprocessing",
+      "sklearn.pipeline",
+      "sklearn.calibration",
+      "lightgbm",
+      "xgboost",
+      "catboost",
+      "autogluon.tabular"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/model_loader.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "os",
+      "autogluon.tabular"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/montecarlo.py": [
+      "__future__",
+      "typing",
+      "random",
+      "pandas",
+      ".smart_features",
+      "collections"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/multiverse_overlays.py": [
+      "__future__",
+      "datetime",
+      "typing",
+      "pathlib",
+      "numpy",
+      ".probability",
+      ".quantum_predictor",
+      ".archetypal_engine",
+      ".retrocausal_feedback",
+      "pandas",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/numerology.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle.py": [
+      "__future__",
+      "typing",
+      "hashlib"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_autofill.py": [
+      "__future__",
+      "typing",
+      ".oracle_live_feeds",
+      "."
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_data.py": [
+      "__future__",
+      "json",
+      "math",
+      "time",
+      "datetime",
+      "pathlib",
+      "typing",
+      "urllib.request",
+      "ssl"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_engine.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "datetime",
+      "utilities.oracle_data",
+      "utilities.alignment"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_live_feeds.py": [
+      "__future__",
+      "requests",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_mode.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "pathlib",
+      "json"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_scaling.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/performance_tracker.py": [
+      "__future__",
+      "json",
+      "math",
+      "csv",
+      "datetime",
+      "dataclasses",
+      "pathlib",
+      "typing",
+      "pandas",
+      "json",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/per_ball_ml.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/per_ball_trainer.py": [
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/pick3_predictor_core.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "numpy",
+      "pathlib",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/pick3_pro.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "collections",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/planetary_alignment.py": [
+      "__future__",
+      "math",
+      "shutil",
+      "datetime",
+      "typing",
+      "naif_de440",
+      "importlib.resources",
+      "skyfield.api",
+      "skyfield.api"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/pmi.py": [
+      "__future__",
+      "typing",
+      "math",
+      "pandas",
+      "collections"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/powerball_predictor_core.py": [
+      "__future__",
+      "typing",
+      "math",
+      "pandas",
+      ".features",
+      "utilities.features"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/prediction_core.py": [
+      "__future__",
+      "typing",
+      "pathlib",
+      "json",
+      ".smart_predict_v2",
+      ".smart_features",
+      ".diversity",
+      "pandas",
+      "importlib",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/predictor_bridge.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas",
+      ".feature_builder",
+      ".model_loader",
+      ".features_numeric",
+      ".chaos_signals",
+      ".probability",
+      "os",
+      "pandas",
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/predictor_core_base.py": [
+      "__future__",
+      "typing",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/predict_ui_common.py": [
+      "__future__",
+      "typing",
+      "importlib"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/probability.py": [
+      "__future__",
+      "math",
+      "numpy",
+      "pandas",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/qrng.py": [
+      "__future__",
+      "os",
+      "typing",
+      "requests"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/quantum_echo.py": [
+      "__future__",
+      "pathlib",
+      "json",
+      "typing",
+      ".config"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/quantum_predictor.py": [
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/repair.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas",
+      "csv"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/retrocausal_feedback.py": [
+      "numpy",
+      "dataclasses",
+      "pathlib",
+      "pandas",
+      "datetime"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/sacred_geometry.py": [
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/safety_runtime.py": [
+      "__future__",
+      "typing",
+      "pathlib",
+      "csv",
+      ".smart_features",
+      "utilities.smart_features",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/schema_sanity.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/simple_predict.py": [
+      "__future__",
+      "pandas",
+      "pathlib",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/smart_features.py": [
+      "__future__",
+      "typing",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/smart_predict.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      ".montecarlo"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/smart_predict_v2.py": [
+      "__future__",
+      "typing",
+      "random",
+      "pandas",
+      ".smart_features",
+      ".wrs",
+      ".pmi",
+      ".diversity",
+      "collections",
+      "random"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/special_weights.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "collections"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/startup_orchestrator.py": [
+      "__future__",
+      "pathlib",
+      "datetime",
+      ".config",
+      "..training_engine"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ticket_select.py": [
+      "__future__",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ui_cosmic.py": [
+      "__future__",
+      "streamlit",
+      "datetime",
+      ".cosmic_weather"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/utils.py": [
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/v14_sidebar.py": [
+      "__future__",
+      "json",
+      "pathlib",
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/weather.py": [
+      "__future__",
+      "typing",
+      "math",
+      "streamlit",
+      "pgeocode",
+      "requests"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/weather_source.py": [
+      "__future__",
+      "dataclasses",
+      "datetime",
+      "pathlib",
+      "json",
+      "pandas",
+      "meteostat",
+      "meteostat",
+      "pandas",
+      "pandas",
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/wrs.py": [
+      "__future__",
+      "typing",
+      "math"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/__init__.py": [
+      ".",
+      ".",
+      "."
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/history_utils.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "numpy",
+      "collections",
+      "pandas",
+      "collections",
+      "pandas",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/model_eval.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/model_learners.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "numpy",
+      "pathlib",
+      "autogluon.tabular",
+      "sklearn.ensemble"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/model_trainers.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "programs.tools.normalize_models",
+      "programs.training_engine"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/__init__.py": [],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/visuals/timeline_viz.py": [
+      "matplotlib.pyplot",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/smoke_test.py": [
+      "pathlib",
+      "pathlib",
+      "os",
+      "json",
+      "pandas",
+      "program.modules.services"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/00_Dashboard.py": [
+      "pathlib",
+      "pathlib",
+      "os",
+      "streamlit",
+      "pandas",
+      "numpy",
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/app_main.py": [
+      "__future__",
+      "pathlib",
+      "os",
+      "duckdb",
+      "pandas",
+      "streamlit",
+      "modules",
+      "modules",
+      "modules.services",
+      "modules.services",
+      "modules.services",
+      "modules.tabs.sidebar",
+      "modules.tabs.dashboard",
+      "modules.ui.watchlist_page",
+      "modules.tabs.report",
+      "modules.tabs.agents_tab",
+      "modules.tabs.admin",
+      "modules.tabs.about",
+      "modules.tabs.explore",
+      "modules.ui",
+      "modules.ui.single_ticker_analyzer"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/cli.py": [
+      "pathlib",
+      "pathlib",
+      "os",
+      "__future__",
+      "argparse",
+      ".modules.agents.orchestrator",
+      ".modules.db_admin",
+      ".modules.agents.calibration",
+      ".modules.agents.auto_tune",
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/advisor.py": [
+      "__future__",
+      "math"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/alphamap.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/backtest.py": [
+      "__future__",
+      "pandas",
+      "numpy",
+      "yfinance"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/charting.py": [
+      "datetime",
+      "typing",
+      "pandas",
+      "yfinance",
+      "plotly.graph_objects",
+      "plotly.subplots",
+      "plotly.graph_objects",
+      "plotly.subplots",
+      "numpy",
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/crowding.py": [
+      "__future__",
+      "pandas",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/data.py": [
+      "__future__",
+      "os",
+      "pathlib",
+      "pathlib",
+      "os",
+      "math",
+      "pandas",
+      "numpy",
+      "duckdb",
+      "yfinance",
+      "modules.services.ohlcv_cache",
+      "re"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/db_admin.py": [
+      "pathlib",
+      "pathlib",
+      "os",
+      "__future__",
+      "duckdb",
+      ".agents.cache"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/edge_tracker.py": [
+      "__future__",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/email_adapter.py": [
+      "__future__",
+      "typing",
+      "pathlib",
+      "pathlib",
+      "os",
+      "os",
+      "email.message"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/explain.py": [
+      "__future__",
+      "typing",
+      "math",
+      ".services",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/features.py": [
+      "__future__",
+      "pathlib",
+      "pathlib",
+      "os",
+      "typing",
+      "pandas",
+      "duckdb"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/glossary.py": [
+      "__future__"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/health.py": [
+      "__future__",
+      "pathlib",
+      "json",
+      "modules"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/indicators.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/labels.py": [
+      "__future__",
+      "pandas",
+      "numpy",
+      "yfinance"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/learner.py": [
+      "__future__",
+      "pandas",
+      "numpy",
+      "typing",
+      "sklearn.linear_model",
+      "sklearn.metrics",
+      "sklearn.calibration"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/learning.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/meta_temporal_ensemble.py": [
+      "typing",
+      "dataclasses",
+      "math",
+      "temporal_agent"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/metrics.py": [
+      "__future__",
+      "pathlib",
+      "pathlib",
+      "os",
+      "pandas",
+      ".labels",
+      "datetime"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/montecarlo.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/nlq.py": [
+      "__future__",
+      "pandas",
+      "re"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_about.py": [
+      "pathlib",
+      "pathlib",
+      "os",
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_agents.py": [
+      "pathlib",
+      "pathlib",
+      "os",
+      "streamlit",
+      "pandas",
+      "numpy",
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_autotune_bb.py": [
+      "pathlib",
+      "pathlib",
+      "os",
+      "streamlit",
+      "numpy",
+      "matplotlib.pyplot",
+      "os",
+      "temporal_autotune"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_report.py": [
+      "pathlib",
+      "pathlib",
+      "os",
+      "streamlit",
+      "pandas",
+      "numpy",
+      "io"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ranking.py": [
+      "__future__",
+      "numpy",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/regime.py": [
+      "__future__",
+      "pandas",
+      "yfinance",
+      "math"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/report.py": [
+      "__future__",
+      "pandas",
+      ".explain"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/reporting.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/scanner.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/scheduler.py": [
+      "__future__",
+      "datetime",
+      "pandas",
+      ".agents.orchestrator",
+      ".agents.orchestrator"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/scoring.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/second_order.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/temporal_agent.py": [
+      "__future__",
+      "dataclasses",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/temporal_autotune.py": [
+      "pathlib",
+      "pathlib",
+      "os",
+      "__future__",
+      "json",
+      "math",
+      "dataclasses",
+      "typing",
+      "numpy",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/universe.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/watchlist.py": [
+      "pathlib",
+      "pathlib",
+      "os",
+      "__future__",
+      "typing",
+      "duckdb"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/__init__.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/auto_tune.py": [
+      "__future__",
+      "typing",
+      "pathlib",
+      "json",
+      "pandas",
+      "numpy",
+      ".registry",
+      "numpy",
+      "numpy",
+      "numpy"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/base.py": [
+      "__future__",
+      "dataclasses",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/cache.py": [
+      "__future__",
+      "pathlib",
+      "pathlib",
+      "os",
+      "typing",
+      "duckdb",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/calibration.py": [
+      "pathlib",
+      "pathlib",
+      "os",
+      "__future__",
+      "typing",
+      "numpy",
+      "pandas",
+      "duckdb",
+      "datetime",
+      ".cache",
+      "..labels"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/cap_lock.py": [
+      "pathlib",
+      "pathlib",
+      "os",
+      "__future__",
+      "typing",
+      "duckdb",
+      ".cache"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/config.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/data_agent.py": [
+      "asyncio",
+      "pandas",
+      "yfinance",
+      ".base"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/dyn_cap.py": [
+      "pathlib",
+      "pathlib",
+      "os",
+      "__future__",
+      "typing",
+      "duckdb",
+      "pandas",
+      ".cache"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/hashers.py": [
+      "__future__",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/orchestrator.py": [
+      "__future__",
+      "dataclasses",
+      "typing",
+      "math",
+      "modules.agents.technical_agent",
+      "modules.agents.sentiment_agent"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/pattern_agent.py": [
+      "__future__",
+      "typing",
+      ".base"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/registry.py": [
+      "__future__",
+      "typing",
+      ".base",
+      "."
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/selftest.py": [
+      "__future__",
+      "asyncio",
+      ".agents.orchestrator"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/sentiment_agent.py": [
+      "__future__",
+      "typing",
+      "re",
+      "vaderSentiment.vaderSentiment",
+      "yfinance"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/technical_agent.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "numpy",
+      "modules.services.ohlcv_cache"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/tech_agent.py": [
+      "__future__",
+      "typing",
+      ".base"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/ui_bits.py": [
+      "agents.ui_bits"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/utils_data.py": [
+      "__future__",
+      "pathlib",
+      "pathlib",
+      "os",
+      "pathlib",
+      "typing",
+      "numpy",
+      "pandas",
+      "modules.features"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/volatility_agent.py": [
+      "__future__",
+      "typing",
+      ".base"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/__init__.py": [
+      ".base"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/engines/runner.py": [
+      "__future__",
+      "pathlib",
+      "pandas",
+      "modules",
+      "modules.services"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/engines/__init__.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/agents_service.py": [
+      "__future__",
+      "pandas",
+      "modules.agents.orchestrator"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/augment_csv.py": [
+      "__future__",
+      "pandas",
+      "pathlib",
+      "modules.explain"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/context.py": [
+      "__future__",
+      "dataclasses",
+      "pathlib",
+      "typing"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/csv_qa.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "pandas",
+      "numpy",
+      "json",
+      ".local_llm"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/enrich.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "modules"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/local_llm.py": [
+      "__future__",
+      "pathlib",
+      "typing",
+      "json",
+      "os",
+      "gpt4all",
+      "gpt4all",
+      "os",
+      "json",
+      "json"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/news_free.py": [
+      "__future__",
+      "typing",
+      "yfinance"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/ohlcv_cache.py": [
+      "__future__",
+      "pathlib",
+      "pandas",
+      "time",
+      "yfinance",
+      "pathlib"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/scoring.py": [
+      "__future__",
+      "pandas",
+      "pathlib",
+      "modules.services",
+      "modules",
+      "modules"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/secret_loader.py": [
+      "__future__",
+      "os",
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/temporal.py": [
+      "__future__",
+      "pandas",
+      "modules.temporal_agent"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/__init__.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/about.py": [
+      "__future__",
+      "streamlit",
+      "pathlib",
+      "pathlib",
+      "os"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/admin.py": [
+      "__future__",
+      "streamlit",
+      "pathlib",
+      "pathlib",
+      "os",
+      "pandas",
+      "modules.agents.auto_tune",
+      "modules.agents.auto_tune",
+      "modules.agents.auto_tune",
+      "modules.services.scoring",
+      "modules.services",
+      "modules.services",
+      "shutil",
+      "modules.regime",
+      "modules.engines.runner",
+      "modules.health"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/admin_patch_note.py": [
+      "streamlit",
+      "modules.services",
+      "modules.engines.runner",
+      "modules.health"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/agents_tab.py": [
+      "__future__",
+      "streamlit",
+      "pandas",
+      "modules.agents.orchestrator",
+      "asyncio"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/dashboard.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/dashboard_table_patch.py": [
+      "__future__",
+      "streamlit",
+      "pandas",
+      "modules.explain",
+      "modules.services.augment_csv"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/explore.py": [
+      "__future__",
+      "streamlit",
+      "pathlib",
+      "pandas",
+      "modules"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/report.py": [
+      "__future__",
+      "streamlit",
+      "pandas",
+      "pathlib",
+      "modules"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/scanner.py": [
+      "__future__",
+      "streamlit",
+      "pandas"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/sidebar.py": [
+      "__future__",
+      "dataclasses",
+      "streamlit",
+      "modules.glossary"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/watchlist.py": [
+      "__future__",
+      "streamlit",
+      "modules.ui.watchlist_page"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/__init__.py": [],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/plain_english.py": [
+      "__future__",
+      "typing",
+      "pandas",
+      "modules"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/single_ticker_analyzer.py": [
+      "__future__",
+      "io",
+      "pandas",
+      "streamlit",
+      "modules",
+      "modules",
+      "modules.services"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/title.py": [
+      "__future__",
+      "streamlit"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/watchlist_page.py": [
+      "__future__",
+      "streamlit",
+      "pandas",
+      "pathlib",
+      "datetime",
+      "yfinance",
+      "modules",
+      "modules.services",
+      "modules",
+      "modules"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/watchlist_table_patch.py": [
+      "__future__",
+      "streamlit",
+      "pandas",
+      "modules.explain"
+    ],
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/__init__.py": []
+  },
+  "frameworks_detected": {
+    "streamlit": [
+      "EliteMTZ_Money_Buddy/home_main.py",
+      "EliteMTZ_Money_Buddy/streamlit_app.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/about.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/admin.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/app_main.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/cash5_predictor.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/colorado_lottery_predictor.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/dev_panels.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/features.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/jackpots_ui.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/lucky_for_life_predictor.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/mega_millions_predictor.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_predictor.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/powerball_predictor.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/ui_cosmic.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/v14_sidebar.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/weather.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/about.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/admin.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/agent.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/autotune.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/glossary.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/ui/intentions.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/dev_panels.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/features.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/jackpots_ui.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ui_cosmic.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/v14_sidebar.py",
+      "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/weather.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/00_Dashboard.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/app_main.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/charting.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_about.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_agents.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_autotune_bb.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_report.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/secret_loader.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/about.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/admin.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/admin_patch_note.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/agents_tab.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/dashboard.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/dashboard_table_patch.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/explore.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/report.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/scanner.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/sidebar.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/watchlist.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/single_ticker_analyzer.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/title.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/watchlist_page.py",
+      "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/watchlist_table_patch.py"
+    ],
+    "flask": [],
+    "fastapi": [],
+    "gradio": []
+  },
+  "absolute_path_hits": {
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/io_routing_2.py": [
+      "\\\\\\\\",
+      "\\\\/",
+      "\\\\/",
+      "\\\\/",
+      "\\\\/"
+    ],
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/io_routing.py": [
+      "\\\\\\\\",
+      "\\\\/",
+      "\\\\/",
+      "\\\\/",
+      "\\\\/"
+    ]
+  },
+  "chosen_entrypoint": "EliteMTZ_Money_Buddy/home_main.py",
+  "wrapper_notes": "Created streamlit_app.py wrapper that loads `EliteMTZ_Money_Buddy/home_main.py`.",
+  "fixed_compile_errors": {
+    "EliteMTZ_Money_Buddy/home_main.py": "File \"EliteMTZ_Money_Buddy/home_main.py\", line 49\n    with (PROJECT_DIR / \"data\").mkdir(exist_ok=True, parents=True);\n                                                                  ^\nSyntaxError: invalid syntax",
+    "EliteMTZ_Money_Buddy/streamlit_app.py": "File \"EliteMTZ_Money_Buddy/streamlit_app.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/about.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/about.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/app_main.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/app_main.py\", line 1302\n    with (PROJECT_DIR / \"data\").mkdir(exist_ok=True, parents=True);\n                                                                  ^\nSyntaxError: invalid syntax",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/astrology.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/astrology.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/astrolotto_temporal_integration.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/astrolotto_temporal_integration.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_runner_helper.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_runner_helper.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_sanity_check.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_sanity_check.py\", line 26\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_standardizer.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_standardizer.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/boot_heal.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/boot_heal.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cash5_predictor.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/cash5_predictor.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cash5_predictor_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/cash5_predictor_core.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cash5_updates.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/cash5_updates.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/chaos_signals.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/chaos_signals.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/colorado_lottery_predictor.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/colorado_lottery_predictor.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/colorado_lottery_predictor_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/colorado_lottery_predictor_core.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/colorado_updates.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/colorado_updates.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/common_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/common_core.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/config.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/config.py\", line 72\n    with (PROJECT_DIR / \"data\").mkdir(exist_ok=True, parents=True);\n                                                                  ^\nSyntaxError: invalid syntax",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/context_weight.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/context_weight.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cosmic_format.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/cosmic_format.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cosmic_weather.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/cosmic_weather.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/coverage.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/coverage.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/dev_panels.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/dev_panels.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/diagnostics.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/diagnostics.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/diversity.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/diversity.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/draws.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/draws.py\", line 74\n    with (PROJECT_DIR / \"data\").mkdir(exist_ok=True, parents=True);\n                                                                  ^\nSyntaxError: invalid syntax",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/draw_schedule.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/draw_schedule.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ensemble.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/ensemble.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ensemble_2.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/ensemble_2.py\", line 16\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ensure_layout_once.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/ensure_layout_once.py\", line 25\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/eval.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/eval.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/fallback_predict.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/fallback_predict.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/features.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features_cosmic.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/features_cosmic.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features_numeric.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/features_numeric.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/feature_builder.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/feature_builder.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/feature_cache.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/feature_cache.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/future_feed.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/future_feed.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/health.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/health.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/heuristics.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/heuristics.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/heuristics_pick3.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/heuristics_pick3.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/heuristic_presets.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/heuristic_presets.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/historical_backfill.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/historical_backfill.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/history_normalizer.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/history_normalizer.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/history_utils.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/history_utils.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/intelligence.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/intelligence.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/io_routing.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/io_routing.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/io_routing_2.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/io_routing_2.py\", line 13\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/jackpots.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/jackpots.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/live_report.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/live_report.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/logger.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/logger.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/lucky_for_life_predictor.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/lucky_for_life_predictor.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/lucky_for_life_predictor_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/lucky_for_life_predictor_core.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/lucky_updates.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/lucky_updates.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/mega_millions_predictor.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/mega_millions_predictor.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/mega_millions_predictor_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/mega_millions_predictor_core.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/mega_updates.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/mega_updates.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/meta_temporal_ensemble.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/meta_temporal_ensemble.py\", line 14\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ml_baseline.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/ml_baseline.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/model.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/models.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/models.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_eval.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/model_eval.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_learners.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/model_learners.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_loader.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/model_loader.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_trainers.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/model_trainers.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/montecarlo.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/montecarlo.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/montecarlo_2.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/montecarlo_2.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/oracle.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_autofill.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_autofill.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_live_feeds.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_live_feeds.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_mode.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_mode.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/page_consolidator.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/page_consolidator.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_predictor.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_predictor.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_predictor_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_predictor_core.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_pro.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_pro.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_updates.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_updates.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pmi.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/pmi.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/powerball_predictor.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/powerball_predictor.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/powerball_predictor_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/powerball_predictor_core.py\", line 14\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/powerball_updates.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/powerball_updates.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/prediction_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/prediction_core.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictor_bridge.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/predictor_bridge.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictor_core_base.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/predictor_core_base.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predict_ui_common.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/predict_ui_common.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/probability.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/probability.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/probability_2.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/probability_2.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/quantum_echo.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/quantum_echo.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/refresh.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/refresh.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/repair.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/repair.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/safety_runtime.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/safety_runtime.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/schema_sanity.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/schema_sanity.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/setup_helper.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/setup_helper.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/simple_predict.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/simple_predict.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/sitecustomize.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/sitecustomize.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/smart_features.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/smart_features.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/smart_predict.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/smart_predict.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/smart_predict_v2.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/smart_predict_v2.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/special_weights.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/special_weights.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/startup_orchestrator.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/startup_orchestrator.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/startup_orchestrator_2.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/startup_orchestrator_2.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/temporal_agent.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/temporal_agent.py\", line 15\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/temporal_autotune.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/temporal_autotune.py\", line 19\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ticket_select.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/ticket_select.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ticket_select_2.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/ticket_select_2.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/training_engine.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/training_engine.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/train_update.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/train_update.py\", line 36\n    with (PROJECT_DIR / \"data\").mkdir(exist_ok=True, parents=True);\n                                                                  ^\nSyntaxError: invalid syntax",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ui_cosmic.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/ui_cosmic.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/v14_sidebar.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/v14_sidebar.py\", line 13\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/validation.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/validation.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/weather.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/weather.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/weather_source.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/weather_source.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/wrs.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/wrs.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/langchain_lottery_agent.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/agent/langchain_lottery_agent.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/frequency_tool.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/frequency_tool.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/ml_tool.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/ml_tool.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/pattern_tool.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/pattern_tool.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/stats_tool.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/stats_tool.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/viz_tool.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/viz_tool.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/_common.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/_common.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/explainer_agent.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/agents/explainer_agent.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/engine/ev_mode.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/engine/ev_mode.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/engine/meta_selector.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/engine/meta_selector.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features/health.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/features/health.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features/models.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/features/models.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features/refresh.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/features/refresh.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/maintenance/page_consolidator.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/maintenance/page_consolidator.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/about.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/pages/about.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/agent.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/pages/agent.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/autotune.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/pages/autotune.py\", line 84\n    with (PROJECT_DIR / \"data\").mkdir(exist_ok=True, parents=True);\n                                                                  ^\nSyntaxError: invalid syntax",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictors/ensemble.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/predictors/ensemble.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictors/montecarlo.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/predictors/montecarlo.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/cash5_updates.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/services/cash5_updates.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/colorado_updates.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/services/colorado_updates.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/csv_qa.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/services/csv_qa.py\", line 171\n    \"including 3-6 bullets (issues + suggested fixes). Avoid technical jargon; target a power user.\n    ^\nSyntaxError: unterminated string literal (detected at line 171)",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/local_llm.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/services/local_llm.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/lucky_updates.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/services/lucky_updates.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/mega_updates.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/services/mega_updates.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/pick3_updates.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/services/pick3_updates.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/powerball_updates.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/services/powerball_updates.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/tests/big_patch_selftest.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/tests/big_patch_selftest.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/tools/health_check.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/tools/health_check.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/tools/normalize_models.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/tools/normalize_models.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/alignment.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/alignment.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/astrology.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/astrology.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/backfill_runner_helper.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/backfill_runner_helper.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/backfill_standardizer.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/backfill_standardizer.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/boot_heal.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/boot_heal.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/cash5_predictor_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/cash5_predictor_core.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/chaos_signals.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/chaos_signals.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/colorado_lottery_predictor_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/colorado_lottery_predictor_core.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/common_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/common_core.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/config.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/config.py\", line 72\n    with (PROJECT_DIR / \"data\").mkdir(exist_ok=True, parents=True);\n                                                                  ^\nSyntaxError: invalid syntax",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/context_weight.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/context_weight.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/cosmic_format.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/cosmic_format.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/cosmic_weather.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/cosmic_weather.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/coverage.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/coverage.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/dev_panels.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/dev_panels.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/diagnostics.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/diagnostics.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/diversity.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/diversity.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/draws.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/draws.py\", line 74\n    with (PROJECT_DIR / \"data\").mkdir(exist_ok=True, parents=True);\n                                                                  ^\nSyntaxError: invalid syntax",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/draw_schedule.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/draw_schedule.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ensemble.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ensemble.py\", line 16\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ephemeris.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ephemeris.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/etl_build_features.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/etl_build_features.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/eval.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/eval.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/fallback_predict.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/fallback_predict.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/features.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/features.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/features_cosmic.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/features_cosmic.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/features_numeric.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/features_numeric.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/feature_builder.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/feature_builder.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/future_feed.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/future_feed.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/heuristics.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/heuristics.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/heuristics_pick3.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/heuristics_pick3.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/heuristic_presets.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/heuristic_presets.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/historical_enrichment.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/historical_enrichment.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/intelligence.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/intelligence.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/io_routing.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/io_routing.py\", line 13\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/jackpots.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/jackpots.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/live_report.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/live_report.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/logger.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/logger.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/lucky_for_life_predictor_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/lucky_for_life_predictor_core.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/mega_millions_predictor_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/mega_millions_predictor_core.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ml_baseline.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ml_baseline.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/model.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/model.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/model_loader.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/model_loader.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/montecarlo.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/montecarlo.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/multiverse_overlays.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/multiverse_overlays.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_autofill.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_autofill.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_data.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_data.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_engine.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_engine.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_live_feeds.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_live_feeds.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_mode.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_mode.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/performance_tracker.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/performance_tracker.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/pick3_predictor_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/pick3_predictor_core.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/pick3_pro.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/pick3_pro.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/planetary_alignment.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/planetary_alignment.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/pmi.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/pmi.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/powerball_predictor_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/powerball_predictor_core.py\", line 14\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/prediction_core.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/prediction_core.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/predictor_bridge.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/predictor_bridge.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/predictor_core_base.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/predictor_core_base.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/predict_ui_common.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/predict_ui_common.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/probability.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/probability.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/qrng.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/qrng.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/quantum_echo.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/quantum_echo.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/repair.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/repair.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/safety_runtime.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/safety_runtime.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/schema_sanity.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/schema_sanity.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/simple_predict.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/simple_predict.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/smart_features.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/smart_features.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/smart_predict.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/smart_predict.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/smart_predict_v2.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/smart_predict_v2.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/special_weights.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/special_weights.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/startup_orchestrator.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/startup_orchestrator.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ticket_select.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ticket_select.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ui_cosmic.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ui_cosmic.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/v14_sidebar.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/v14_sidebar.py\", line 13\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/weather.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/weather.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/weather_source.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/weather_source.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/wrs.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/wrs.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/history_utils.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utils/history_utils.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/model_eval.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utils/model_eval.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/model_learners.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utils/model_learners.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/model_trainers.py": "File \"EliteMTZ_Money_Buddy/AstroLotto/programs/utils/model_trainers.py\", line 10\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/app_main.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/app_main.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/cli.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/cli.py\", line 80\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/advisor.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/advisor.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/backtest.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/backtest.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/crowding.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/crowding.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/data.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/data.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/db_admin.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/db_admin.py\", line 80\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/edge_tracker.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/edge_tracker.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/email_adapter.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/email_adapter.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/explain.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/explain.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/features.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/features.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/glossary.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/glossary.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/health.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/health.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/labels.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/labels.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/learner.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/learner.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/metrics.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/metrics.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/nlq.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/nlq.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_autotune_bb.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_autotune_bb.py\", line 111\n    with (PROJECT_DIR / \"data\").mkdir(exist_ok=True, parents=True);\n                                                                  ^\nSyntaxError: invalid syntax",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ranking.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ranking.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/regime.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/regime.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/report.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/report.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/scheduler.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/scheduler.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/temporal_agent.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/temporal_agent.py\", line 15\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/temporal_autotune.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/temporal_autotune.py\", line 90\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/watchlist.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/watchlist.py\", line 79\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/auto_tune.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/auto_tune.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/base.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/base.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/cache.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/cache.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/calibration.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/calibration.py\", line 80\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/cap_lock.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/cap_lock.py\", line 80\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/dyn_cap.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/dyn_cap.py\", line 80\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/hashers.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/hashers.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/orchestrator.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/orchestrator.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/pattern_agent.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/pattern_agent.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/registry.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/registry.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/selftest.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/selftest.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/sentiment_agent.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/sentiment_agent.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/technical_agent.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/technical_agent.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/tech_agent.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/tech_agent.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/utils_data.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/utils_data.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/volatility_agent.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/volatility_agent.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/engines/runner.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/engines/runner.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/agents_service.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/agents_service.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/augment_csv.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/augment_csv.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/context.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/context.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/csv_qa.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/csv_qa.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/enrich.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/enrich.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/local_llm.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/local_llm.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/news_free.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/news_free.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/ohlcv_cache.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/ohlcv_cache.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/scoring.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/scoring.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/secret_loader.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/secret_loader.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/temporal.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/temporal.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/about.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/about.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/admin.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/admin.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/agents_tab.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/agents_tab.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/dashboard.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/dashboard.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/dashboard_table_patch.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/dashboard_table_patch.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/explore.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/explore.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/report.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/report.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/scanner.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/scanner.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/sidebar.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/sidebar.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/watchlist.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/watchlist.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/plain_english.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/plain_english.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/single_ticker_analyzer.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/single_ticker_analyzer.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/title.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/title.py\", line 8\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/watchlist_page.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/watchlist_page.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file",
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/watchlist_table_patch.py": "File \"EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/watchlist_table_patch.py\", line 9\nSyntaxError: from __future__ imports must occur at the beginning of the file"
+  }
+}

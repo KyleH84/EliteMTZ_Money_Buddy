@@ -1,4 +1,11 @@
 
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+
 # train_update.py - v10.3.6
 # Automates: backfill -> train AUTO ensemble for all games -> print summary
 import argparse, os, json

@@ -1,3 +1,10 @@
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 # Optional UI helpers: proxy to top-level agents.ui_bits if present.
 try:
     from agents.ui_bits import confidence_meter  # type: ignore

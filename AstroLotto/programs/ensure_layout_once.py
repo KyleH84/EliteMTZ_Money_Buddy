@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 """
 ensure_layout_once.py
 Run this once (or leave it in place; it's safe) to enforce the directory layout:
@@ -15,7 +23,6 @@ Run this once (or leave it in place; it's safe) to enforce the directory layout:
 If folders are missing, they're created. If "models" exists under Data, it's moved to Extras/models.
 No deletes; only creates or moves to the correct spot.
 """
-from __future__ import annotations
 import os, shutil, json
 from pathlib import Path
 

@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 # Program/utilities/config.py
 """
 Config module used by ensemble/future_feed, app_main, etc.
@@ -10,7 +18,6 @@ Exports:
 - save_user_config(cfg: dict) -> None
 """
 
-from __future__ import annotations
 from pathlib import Path
 import os, json, tempfile, shutil
 

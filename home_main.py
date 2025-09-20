@@ -1,5 +1,12 @@
-# home_main.py (launcher with logs, BAT→Direct fallback, cleaner, and Recreate .venv)
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+# home_main.py (launcher with logs, BAT→Direct fallback, cleaner, and Recreate .venv)
 import os, sys, time, socket, subprocess, webbrowser, shutil
 from pathlib import Path
 import streamlit as st

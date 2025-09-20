@@ -1,9 +1,16 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 # utilities/io_routing.py — v3.3
 # Forward-looking routing for CSVs & backups:
 # - WRITES: Any CSV aimed at Program/, data/, csv/, csvs/, datasets/, or backups/ → Data/ (backups → Data/backups/)
 # - READS: Fallback to Data/ (and Data/backups/) if file not found
 # - mkdir: Redirect creation of those dirs to Data/ so stray folders aren't created in root/Program
-from __future__ import annotations
 import os, re, builtins
 from pathlib import Path
 
@@ -33,7 +40,7 @@ def _data_dir() -> Path:
 
 def _is_rel(p: Path) -> bool:
     try:
-        return not p.is_absolute() and not str(p).startswith(("\\\\", "/"))
+        return not p.is_absolute() and not str(p).startswith((f"{PROJECT_DIR}/data/\\\\", "/"))
     except Exception:
         return True
 
@@ -44,7 +51,7 @@ def _first_index_in(p: Path, name_set: set[str], max_depth: int | None = None) -
     parts = p.parts
     depth = len(parts) if max_depth is None else min(len(parts), max_depth)
     for i in range(depth):
-        comp = parts[i].strip("\\/").strip().strip(".").lower()
+        comp = parts[i].strip(f"{PROJECT_DIR}/data/").strip().strip(".").lower()
         if comp in name_set:
             return i
     return -1
@@ -112,7 +119,7 @@ def _route_write_path(orig: Path) -> str:
     # Relative routing by first segment
     if _is_rel(orig):
         if parts:
-            head = parts[0].strip("\\/").strip().strip(".").lower()
+            head = parts[0].strip(f"{PROJECT_DIR}/data/").strip().strip(".").lower()
             tail = Path(*parts[1:]) if len(parts) > 1 else Path("")
             if head in _BACKUP_NAMES:
                 target = d / "backups" / tail
@@ -171,7 +178,7 @@ def _try_read_fallback(file, mode: str) -> str | None:
         parts = list(p.parts)
         if not parts:
             return None
-        head = parts[0].strip("\\/").strip().strip(".").lower()
+        head = parts[0].strip(f"{PROJECT_DIR}/data/").strip().strip(".").lower()
         tail = Path(*parts[1:]) if len(parts) > 1 else Path(p.name)
         if head in _BACKUP_NAMES:
             cand = d / "backups" / tail
@@ -243,7 +250,7 @@ def install() -> None:
         if _is_rel(p):
             parts = p.parts
             if parts:
-                head = parts[0].strip("\\/").strip().strip(".").lower()
+                head = parts[0].strip(f"{PROJECT_DIR}/data/").strip().strip(".").lower()
                 tail = Path(*parts[1:]) if len(parts) > 1 else Path("")
                 if head in _BACKUP_NAMES:
                     return str((d / "backups" / tail))

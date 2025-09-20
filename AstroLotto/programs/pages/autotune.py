@@ -1,4 +1,11 @@
 
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+
 # page_autotune_al.py
 import streamlit as st
 import os
@@ -74,7 +81,7 @@ if run and 'best' in locals():
     if st.button("Save best κ as default"):
         try:
             os.makedirs("Data", exist_ok=True)
-            with open(cfg_path,"w",encoding="utf-8") as f:
+            with open(cfg_path, "w",encoding="utf-8") as f:
                 json.dump({"best_kappa": best["kappa"], "objective": best["objective"]}, f, indent=2)
             st.success(f"Saved to {cfg_path}")
         except Exception as e:

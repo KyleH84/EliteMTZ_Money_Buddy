@@ -1,5 +1,12 @@
-# app_main.py — BreakoutBuddy (hardened, 8 tabs, dropdown quick explain, rank_now dict fix)
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+# app_main.py — BreakoutBuddy (hardened, 8 tabs, dropdown quick explain, rank_now dict fix)
 
 from pathlib import Path
 import os, sys

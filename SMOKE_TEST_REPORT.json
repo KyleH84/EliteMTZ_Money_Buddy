@@ -1,0 +1,1854 @@
+{
+  "imports": {
+    "EliteMTZ_Money_Buddy/AstroLotto/extras/patch_title_to_v14_7.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/__init___2.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/__init___3.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/__init___4.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/__init___5.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/__init___6.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/about.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/admin.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/langchain_lottery_agent.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/_common.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/frequency_tool.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/ml_tool.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/pattern_tool.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/stats_tool.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agent/tools/viz_tool.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/ev_agent.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/explainer_agent.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/mc_agent.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/ops_agent.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/oracle_agent.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/pipeline.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/state.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/agents/supervisor.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/app_main.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/astro_doctor.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/astrology.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/astrolotto_temporal_integration.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/auto_layout.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_engine.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'utilities'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_runner_helper.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_sanity_check.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/backfill_standardizer.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/boot_heal.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cash5_predictor.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cash5_predictor_core.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cash5_updates.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/chaos.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/chaos_signals.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/colorado_lottery_predictor.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/colorado_lottery_predictor_core.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/colorado_updates.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/common_core.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/config.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/context_weight.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cosmic_format.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/cosmic_weather.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/coverage.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/dev_panels.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'EliteMTZ_Money_Buddy.AstroLotto.programs.smart_features_v2'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/diagnostics.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/diversity.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/draw_schedule.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/draws.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/engine/ev_mode.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/engine/meta_selector.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'utilities'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ensemble.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'EliteMTZ_Money_Buddy.AstroLotto.utilities'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ensemble_2.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'training_engine'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ensure_layout_once.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/eval.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/fallback_predict.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/feature_builder.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/feature_cache.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features/health.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features/models.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features/refresh.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features_cosmic.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/features_numeric.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/future_feed.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/health.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/heuristic_presets.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/heuristics.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/heuristics_pick3.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/historical_backfill.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/history_normalizer.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/history_utils.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/hot_cold.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/intelligence.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/io_routing.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/io_routing_2.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/jackpots.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/jackpots_ui.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/live_report.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/logger.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/lucky_for_life_predictor.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/lucky_for_life_predictor_core.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/lucky_updates.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/maintenance/page_consolidator.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/mega_millions_predictor.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/mega_millions_predictor_core.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/mega_updates.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'historical_backfill'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/meta_temporal_ensemble.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ml_baseline.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_eval.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_learners.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_loader.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_trainers.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/model_training.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'utilities'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/models.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/montecarlo.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'EliteMTZ_Money_Buddy.AstroLotto.utilities'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/montecarlo_2.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/numerology.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_autofill.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_live_feeds.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_mode.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/oracle_scaling.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/page_consolidator.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/about.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/admin.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/agent.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/autotune.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pages/glossary.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_predictor.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_predictor_core.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_pro.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pick3_updates.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/pmi.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/powerball_predictor.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/powerball_predictor_core.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'utilities'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/powerball_updates.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predict_ui_common.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/prediction_core.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ImportError: cannot import name 'long_short_blend' from 'EliteMTZ_Money_Buddy.AstroLotto.programs.special_weights' (/mnt/data/EliteMTZ_Money_Buddy_PERFECT/EliteMTZ_Money_Buddy/AstroLotto/programs/special_weights.py)"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictor_bridge.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictor_core_base.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictors/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictors/ensemble.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'EliteMTZ_Money_Buddy.AstroLotto.programs.utilities.smart_features_v2'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/predictors/montecarlo.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'EliteMTZ_Money_Buddy.AstroLotto.programs.utilities.smart_features_v2'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/probability.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/probability_2.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/quantum_echo.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/refresh.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/repair.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/safety_runtime.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/schema_sanity.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/scripts/test_harness.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'utilities'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/cash5_updates.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/colorado_updates.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/csv_qa.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/local_llm.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/lucky_updates.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/mega_updates.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'historical_backfill'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/pick3_updates.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/services/powerball_updates.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/setup_helper.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/simple_predict.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/sitecustomize.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/smart_features.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/smart_predict.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'EliteMTZ_Money_Buddy.AstroLotto.utilities'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/smart_predict_v2.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ImportError: cannot import name 'long_short_blend' from 'EliteMTZ_Money_Buddy.AstroLotto.programs.special_weights' (/mnt/data/EliteMTZ_Money_Buddy_PERFECT/EliteMTZ_Money_Buddy/AstroLotto/programs/special_weights.py)"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/special_weights.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/startup_orchestrator.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/startup_orchestrator_2.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/temporal_agent.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/temporal_autotune.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/tests/big_patch_selftest.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ticket_select.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ticket_select_2.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/tools/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/tools/health_check.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/tools/normalize_models.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/train_update.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'utilities'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/training_engine.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ui/intentions.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/ui_cosmic.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/alignment.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'skyfield'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/archetypal_engine.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/astrology.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/backfill_runner_helper.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/backfill_standardizer.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/boot_heal.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/cash5_predictor_core.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/chaos.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/chaos_signals.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/colorado_lottery_predictor_core.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/common_core.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/config.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/context_weight.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/cosmic_format.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/cosmic_weather.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/coverage.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/dev_panels.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'EliteMTZ_Money_Buddy.AstroLotto.programs.utilities.smart_features_v2'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/diagnostics.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/diversity.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/draw_schedule.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/draws.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ensemble.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'training_engine'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ephemeris.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'skyfield'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/etl_build_features.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'utilities'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/eval.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/fallback_predict.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/feature_builder.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/features.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/features_cosmic.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/features_numeric.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/future_feed.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/heuristic_presets.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/heuristics.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/heuristics_pick3.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/historical_enrichment.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/hot_cold.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/intelligence.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/io_routing.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/jackpots.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/jackpots_ui.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/live_report.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/logger.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/lucky_for_life_predictor_core.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/mega_millions_predictor_core.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ml_baseline.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/model.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/model_loader.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/montecarlo.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/multiverse_overlays.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/numerology.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_autofill.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_data.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_engine.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'utilities'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_live_feeds.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_mode.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/oracle_scaling.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/per_ball_ml.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/per_ball_trainer.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/performance_tracker.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/pick3_predictor_core.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/pick3_pro.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/planetary_alignment.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/pmi.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/powerball_predictor_core.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/predict_ui_common.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/prediction_core.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ImportError: cannot import name 'long_short_blend' from 'EliteMTZ_Money_Buddy.AstroLotto.programs.utilities.special_weights' (/mnt/data/EliteMTZ_Money_Buddy_PERFECT/EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/special_weights.py)"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/predictor_bridge.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/predictor_core_base.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/probability.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/qrng.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/quantum_echo.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/quantum_predictor.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/repair.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/retrocausal_feedback.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/sacred_geometry.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/safety_runtime.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/schema_sanity.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/simple_predict.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/smart_features.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/smart_predict.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/smart_predict_v2.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ImportError: cannot import name 'long_short_blend' from 'EliteMTZ_Money_Buddy.AstroLotto.programs.utilities.special_weights' (/mnt/data/EliteMTZ_Money_Buddy_PERFECT/EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/special_weights.py)"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/special_weights.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/startup_orchestrator.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ticket_select.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/ui_cosmic.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/utils.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/v14_sidebar.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/weather.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/weather_source.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utilities/wrs.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/history_utils.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/model_eval.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/model_learners.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils/model_trainers.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/utils.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/v14_sidebar.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/validation.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/visuals/timeline_viz.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/weather.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/weather_source.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/AstroLotto/programs/wrs.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/00_Dashboard.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/app_main.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'duckdb'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/cli.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'yfinance'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/advisor.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/auto_tune.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/base.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/cache.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'duckdb'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/calibration.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'duckdb'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/cap_lock.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'duckdb'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/config.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/data_agent.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'yfinance'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/dyn_cap.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'duckdb'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/hashers.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/orchestrator.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'yfinance'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/pattern_agent.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/registry.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/selftest.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'EliteMTZ_Money_Buddy.BreakoutBuddy.program.modules.agents.agents'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/sentiment_agent.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/tech_agent.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/technical_agent.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'yfinance'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/ui_bits.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/utils_data.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'duckdb'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/agents/volatility_agent.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/alphamap.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/backtest.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'yfinance'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/charting.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'yfinance'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/crowding.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/data.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'duckdb'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/db_admin.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'duckdb'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/edge_tracker.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/email_adapter.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/engines/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/engines/runner.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/explain.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/features.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'duckdb'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/glossary.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/health.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/indicators.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/labels.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'yfinance'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/learner.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/learning.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/meta_temporal_ensemble.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/metrics.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'yfinance'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/montecarlo.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/nlq.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_about.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_agents.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_autotune_bb.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/page_report.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ranking.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/regime.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'yfinance'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/report.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ImportError: cannot import name 'alpha_density' from 'EliteMTZ_Money_Buddy.BreakoutBuddy.program.modules.explain' (/mnt/data/EliteMTZ_Money_Buddy_PERFECT/EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/explain.py)"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/reporting.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/scanner.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/scheduler.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/scoring.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/second_order.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/agents_service.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/augment_csv.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/context.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/csv_qa.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/enrich.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'duckdb'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/local_llm.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/news_free.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/ohlcv_cache.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'yfinance'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/scoring.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/secret_loader.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/services/temporal.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/about.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/admin.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/admin_patch_note.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/agents_tab.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/dashboard.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/dashboard_table_patch.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/explore.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/report.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/scanner.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/sidebar.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/tabs/watchlist.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/temporal_agent.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/temporal_autotune.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/__init__.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/plain_english.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/single_ticker_analyzer.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/title.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/watchlist_page.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/ui/watchlist_table_patch.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/universe.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/program/modules/watchlist.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'duckdb'"
+    },
+    "EliteMTZ_Money_Buddy/BreakoutBuddy/smoke_test.py": {
+      "compiled": true,
+      "imported": true,
+      "error": ""
+    },
+    "EliteMTZ_Money_Buddy/home_main.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    },
+    "EliteMTZ_Money_Buddy/streamlit_app.py": {
+      "compiled": true,
+      "imported": false,
+      "error": "ModuleNotFoundError: No module named 'streamlit'"
+    }
+  },
+  "summary": {
+    "files": 369,
+    "compiled_ok": 369,
+    "imported_ok": 281
+  }
+}

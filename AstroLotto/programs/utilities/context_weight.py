@@ -1,5 +1,12 @@
-# Program/utilities/context_weight.py
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+# Program/utilities/context_weight.py
 from datetime import datetime, timezone
 import pandas as pd
 import numpy as np

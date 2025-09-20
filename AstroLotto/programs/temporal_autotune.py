@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 
 # temporal_autotune.py
 # Autotunes the Kozyrev coupling kappa using your CSV logs.
@@ -9,7 +17,6 @@
 # Author: Chad (for Kyle)
 # License: MIT
 
-from __future__ import annotations
 import json
 import math
 from dataclasses import dataclass
