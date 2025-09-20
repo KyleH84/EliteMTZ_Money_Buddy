@@ -1,3 +1,10 @@
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 # Admin page (v14.6+ UI upgrade)
 import streamlit as st
 from pathlib import Path

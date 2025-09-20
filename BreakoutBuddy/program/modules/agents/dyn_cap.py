@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 from pathlib import Path
 
 # ---------- Strict per-app Data/Extras resolver (BreakoutBuddy) ----------
@@ -70,7 +78,6 @@ if bb_extras_src.exists() and str(bb_extras_src) not in sys.path:
     sys.path.insert(0, str(bb_extras_src))
 # ---------- end resolver ----------
 
-from __future__ import annotations
 from typing import Optional
 import duckdb
 import pandas as pd

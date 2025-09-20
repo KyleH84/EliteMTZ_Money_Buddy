@@ -1,10 +1,17 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 
 # meta_temporal_ensemble.py
 # General meta-ensemble that queries N members, applies temporal correction per member,
 # then combines into one prediction. Works for scalar or vector outputs.
 # License: MIT
 
-from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict, Any, Callable, List, Optional, Tuple, Union, Sequence
 import math

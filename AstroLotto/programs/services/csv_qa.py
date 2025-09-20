@@ -1,5 +1,12 @@
-
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+
 from pathlib import Path
 from typing import Dict, Any, List, Tuple
 import pandas as pd
@@ -123,11 +130,11 @@ def summarize_for_humans(qa: Dict[str, Any]) -> str:
     if qa.get("rows", 0) == 0:
         return f"{qa.get('path')}: file is empty or unreadable."
     rows = qa["rows"]; cols = qa["cols"]
-    msg = [f"{qa.get('path')}: {rows} rows × {cols} columns."]
+    msg = [f"{qa.get('path')}: {rows} rows Ã {cols} columns."]
     # big missing cols
     bad = [c for c,p in (qa.get("missing",{}).get("pct",{}) or {}).items() if p >= 0.3]
     if bad:
-        msg.append(f"{len(bad)} columns have ≥30% missing: {', '.join(sorted(bad)[:8])}{'…' if len(bad)>8 else ''}.")
+        msg.append(f"{len(bad)} columns have â¥30% missing: {', '.join(sorted(bad)[:8])}{'...' if len(bad)>8 else ''}.")
     # duplicates
     d = qa.get("duplicates", 0)
     if d:
@@ -135,21 +142,21 @@ def summarize_for_humans(qa: Dict[str, Any]) -> str:
     # constants
     consts = qa.get("constant_cols", [])
     if consts:
-        msg.append(f"{len(consts)} columns are constant (no variance): {', '.join(sorted(consts)[:8])}{'…' if len(consts)>8 else ''}.")
+        msg.append(f"{len(consts)} columns are constant (no variance): {', '.join(sorted(consts)[:8])}{'...' if len(consts)>8 else ''}.")
     # outliers
     outs = qa.get("outliers_gt4sd", {})
     heavy = [c for c,n in outs.items() if isinstance(n,int) and n>0]
     if heavy:
-        msg.append(f"Potential outliers in: {', '.join(sorted(heavy)[:10])}{'…' if len(heavy)>10 else ''}.")
+        msg.append(f"Potential outliers in: {', '.join(sorted(heavy)[:10])}{'...' if len(heavy)>10 else ''}.")
     # dates
     di = qa.get("dates", {})
     if di:
         parts = []
         for c, span in di.items():
             if span.get("min") or span.get("max"):
-                parts.append(f"{c} [{span.get('min','?')} → {span.get('max','?')}]")
+                parts.append(f"{c} [{span.get('min','?')} -> {span.get('max','?')}]")
         if parts:
-            msg.append("Date spans: " + "; ".join(parts[:4]) + ("…" if len(parts)>4 else ""))
+            msg.append("Date spans: " + "; ".join(parts[:4]) + ("..." if len(parts)>4 else ""))
     return " ".join(msg)
 
 def llm_explain(qa: Dict[str, Any]) -> str | None:
@@ -161,9 +168,8 @@ def llm_explain(qa: Dict[str, Any]) -> str | None:
             return None
         prompt = (
             "You are a data quality assistant. Given this JSON summary of a CSV, write a concise, actionable summary "
-            "including 3-6 bullets (issues + suggested fixes). Avoid technical jargon; target a power user.
-"
-            f"JSON: {json.dumps(qa)[:4000]}"
+            "including 3-6 bullets (issues + suggested fixes). Avoid technical jargon; target a power user. "
+            + f"JSON: {json.dumps(qa)[:4000]}"
         )
         with m.chat_session():
             out = m.generate(prompt, max_tokens=220, temp=0.2)

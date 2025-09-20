@@ -1,3 +1,10 @@
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 # programs/pages/admin.py — Admin (Tools includes Run Backfill Now)
 import streamlit as st
 from pathlib import Path

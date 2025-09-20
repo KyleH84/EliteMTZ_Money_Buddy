@@ -1,5 +1,12 @@
-# AstroLotto/programs/utilities/ephemeris.py
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+# AstroLotto/programs/utilities/ephemeris.py
 from pathlib import Path
 from typing import Optional, Tuple, Union, Any
 from skyfield.api import load, Loader

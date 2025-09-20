@@ -1,6 +1,13 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 
 # utilities/model.py - v10.3.6 pluggable backends (LR/LGBM/XGB/CatBoost/AutoGluon)
-from __future__ import annotations
 from typing import Tuple, Optional, Any, Dict
 import os
 import numpy as np

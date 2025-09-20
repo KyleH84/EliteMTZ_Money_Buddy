@@ -1,6 +1,6 @@
+from __future__ import annotations
 
 # Program/backfill_engine.py
-from __future__ import annotations
 from pathlib import Path
 from typing import Dict, Optional
 import pandas as pd

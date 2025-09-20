@@ -1,6 +1,13 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 # utilities/backfill_runner_helper.py — Patch 3.1b
 # Provides a resilient run_backfill_for_csv used by the audit/fix/fill page.
-from __future__ import annotations
 from pathlib import Path
 import importlib, inspect
 import pandas as pd  # type: ignore

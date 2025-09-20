@@ -1,6 +1,13 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 # utilities/common_core.py
 # Shared helpers for recency-weighted fallback predictors.
-from __future__ import annotations
 import math
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple

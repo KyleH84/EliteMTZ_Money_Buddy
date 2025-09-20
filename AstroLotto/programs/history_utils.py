@@ -1,5 +1,12 @@
-# History utilities for AstroLotto (frequency, gaps, heatmaps, pairs, triplets, streaks, time-window filter)
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+# History utilities for AstroLotto (frequency, gaps, heatmaps, pairs, triplets, streaks, time-window filter)
 from pathlib import Path
 from typing import Tuple, List, Optional
 import numpy as np, pandas as pd
