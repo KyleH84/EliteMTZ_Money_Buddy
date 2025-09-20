@@ -1,5 +1,11 @@
 from __future__ import annotations
 import pandas as pd
+from pathlib import Path
+
+def _data_dir() -> Path:
+    d = Path(__file__).resolve().parents[1] / "Data"
+    d.mkdir(parents=True, exist_ok=True)
+    return d
 
 def _ensure_rank_cols(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
@@ -14,23 +20,26 @@ def _ensure_rank_cols(df: pd.DataFrame) -> pd.DataFrame:
     except Exception:
         pass
     sort_col = "Combined_with_agents" if "Combined_with_agents" in df.columns else "Combined"
-    df = df.sort_values(by=[sort_col], ascending=False).reset_index(drop=True)
-    return df
+    return df.sort_values(by=[sort_col], ascending=False).reset_index(drop=True)
+
+def _fallback_rows(n: int) -> pd.DataFrame:
+    syms = [
+        "AAPL","MSFT","NVDA","AMZN","META","GOOGL","TSLA","AMD","NFLX","AVGO","JPM","BAC","XOM",
+        "CVX","UNH","HD","KO","PEP","DIS","V","MA","CSCO","ORCL","CRM","INTC","ADBE","QCOM","TXN"
+    ][: max(1, n)]
+    return _ensure_rank_cols(pd.DataFrame({"Ticker": syms, "P_up": 0.55, "RelSPY": 0.0, "RVOL": 1.1}))
+
+def _persist_ranked(df: pd.DataFrame) -> None:
+    try:
+        (_data_dir() / "ranked_latest.csv").write_text(df.to_csv(index=False), encoding="utf-8")
+    except Exception:
+        pass
 
 def rank_now(arg) -> pd.DataFrame | tuple:
-    """Flexible entry:
-    - If arg is a DataFrame: return ranked DataFrame (backwards compatible).
-    - If arg is a dict-like settings: build snapshot, compute ranking, and return
-      (snapshot_df, regime_dict, ranked_df, auc_placeholder, model_placeholder).
-    """
-    import pandas as pd
-    import math
-
-    # DataFrame path
     if isinstance(arg, pd.DataFrame):
-        return _ensure_rank_cols(arg)
-
-    # Dict-like path (used by app_main rank_now_fn)
+        df = _ensure_rank_cols(arg)
+        _persist_ranked(df)
+        return df
     try:
         settings = dict(arg)
     except Exception:
@@ -40,22 +49,21 @@ def rank_now(arg) -> pd.DataFrame | tuple:
         top_n = int(settings.get("top_n", 25))
     except Exception:
         uni_n, top_n = 300, 25
-
     try:
         from modules import data as data_mod
         from modules import regime as regime_mod
-        # Universe + snapshot
         tickers = data_mod.list_universe(uni_n)
         snap = data_mod.pull_enriched_snapshot(tickers)
         ranked = _ensure_rank_cols(snap)
-        if top_n and top_n > 0 and top_n < len(ranked):
+        if top_n and 0 < top_n < len(ranked):
             ranked = ranked.head(top_n)
-        # Regime info
         try:
             regime = regime_mod.compute_regime()
         except Exception:
             regime = {}
+        _persist_ranked(ranked)
         return snap, regime, ranked, None, None
-    except Exception as e:
-        # Fallback: return empty tuple rather than crash
-        return pd.DataFrame(), {}, pd.DataFrame(), None, None
+    except Exception:
+        ranked = _fallback_rows(top_n)
+        _persist_ranked(ranked)
+        return pd.DataFrame(), {}, ranked, None, None

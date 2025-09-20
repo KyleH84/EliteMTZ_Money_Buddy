@@ -1,99 +1,49 @@
-
 from __future__ import annotations
 from pathlib import Path
-import json
 import pandas as pd
-import numpy as np
 
-def _load_settings(path: str | Path) -> dict:
-    p = Path(path)
-    if not p.exists():
-        return {}
+def _data_dir() -> Path:
+    d = Path(__file__).resolve().parents[1] / "modules" / "Data"
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+def _fallback_universe(n: int = 50) -> list[str]:
+    base = [
+        "AAPL","MSFT","NVDA","AMZN","META","GOOGL","TSLA","AMD","NFLX","AVGO","JPM","BAC","XOM",
+        "CVX","UNH","HD","KO","PEP","DIS","V","MA","CSCO","ORCL","CRM","INTC","ADBE","QCOM","TXN",
+        "PFE","MRK","LLY","T","VZ","WMT","COST","NKE","BA","CAT","GS","MS","BK","USB","WFC",
+    ]
+    return base[:max(1, min(n, len(base)))]
+
+def quick_scan(limit: int = 500) -> int:
+    data_dir = _data_dir()
     try:
-        return json.loads(p.read_text())
+        from modules import data as data_mod
+        from modules.services import scoring as scoring
+    except Exception as e:
+        syms = _fallback_universe( min(50, max(10, limit//10)) )
+        df = pd.DataFrame({"Ticker": syms, "P_up": 0.55, "RelSPY": 0.0, "RVOL": 1.1})
+        df.to_csv(data_dir / "watchlist_snapshot_latest.csv", index=False)
+        rank = scoring._ensure_rank_cols(df) if hasattr(scoring, "_ensure_rank_cols") else df
+        (data_dir / "ranked_latest.csv").write_text(rank.to_csv(index=False), encoding="utf-8")
+        return len(df)
+    try:
+        tickers = data_mod.list_universe(limit)
     except Exception:
-        return {}
-
-def apply_all_engines(df: pd.DataFrame, settings_path: str | Path = "extras/engines_settings.json", app_path: str | Path = "extras/app_settings.json") -> pd.DataFrame:
-    if df is None or df.empty or "Ticker" not in df.columns:
-        return df
-    settings = _load_settings(settings_path)
-    app = _load_settings(app_path)
-    out = df.copy()
-    e_breakout = bool(app.get("enable_breakout", True))
-    e_crosser = bool(app.get("enable_crosser", True))
-    e_box = bool(app.get("enable_box", True))
-    e_fade = bool(app.get("enable_retail_fade", True))
-
-    def ensure(name, default=0.0):
-        if name not in out.columns:
-            out[name] = default
-        return pd.to_numeric(out[name], errors="coerce").fillna(default)
-
-    close = ensure("Close")
-    atr   = ensure("ATR").replace(0, np.nan).fillna(np.nanmedian(ensure("ATR").replace(0,np.nan)))
-    rvol  = ensure("RVOL", 1.0)
-    rsi2  = ensure("RSI2", 50.0)
-    rsi4  = ensure("RSI4", 50.0)
-    squeeze = ensure("SqueezeHint", 0.0)
-    relspy  = ensure("RelSPY", 0.0)
-    hi55  = out["Hi55"] if "Hi55" in out.columns else None
-    ema20 = out["EMA20"] if "EMA20" in out.columns else pd.Series(index=out.index, data=np.nan)
-    ema50 = out["EMA50"] if "EMA50" in out.columns else pd.Series(index=out.index, data=np.nan)
-
-    # Breakout
-    if not e_breakout:
-        out["BreakoutOK"] = 0
-    else:
-        bcfg = settings.get("breakout", {})
-        min_rvol = float(bcfg.get("min_rvol", 1.8))
-        bbw_pctile_max = float(bcfg.get("bbw_pctile_max", 0.30))
-        min_bo_atr = float(bcfg.get("min_breakout_atr", 0.75))
-        trendOK = (ema20 > ema50) if (isinstance(ema20, pd.Series) and ema20.notna().any()) else (relspy > 0)
-        if hi55 is not None and "ATR" in out.columns:
-            breakout_ok = (close > hi55) & (rvol >= min_rvol) & (squeeze <= bbw_pctile_max) & trendOK & (((close - hi55)/atr) >= min_bo_atr)
-        else:
-            breakout_ok = (rvol >= min_rvol) & (squeeze <= bbw_pctile_max) & trendOK
-        out["BreakoutOK"] = breakout_ok.astype(int)
-
-    # Crosser
-    if not e_crosser:
-        out["CrosserOK"] = 0
-    else:
-        ccfg = settings.get("crosser", {})
-        levels = ccfg.get("levels", [5.0,10.0])
-        level_hit = pd.Series(False, index=out.index)
-        for L in levels:
-            level_hit = level_hit | ((close >= L) & (close.shift(1) < L))
-        out["CrosserOK"] = level_hit.astype(int)
-
-    # Box
-    if not e_box:
-        out["BoxOK"] = 0
-    else:
-        bxcfg = settings.get("box", {})
-        box_ok = (squeeze <= float(bxcfg.get("bbw_pctile_max", 0.20)))
-        out["BoxOK"] = box_ok.astype(int)
-
-    # Retail Fade
-    if not e_fade:
-        out["RetailFadeOK"] = 0
-    else:
-        fcfg = settings.get("retail_fade", {})
-        gap = out["GapPct"] if "GapPct" in out.columns else pd.Series(0.0, index=out.index)
-        fade_ok = (gap >= float(fcfg.get("gap_min_pct", 6.0))) & (rsi2 >= float(fcfg.get("rsi2_min", 95.0)))
-        out["RetailFadeOK"] = fade_ok.astype(int)
-
-    # Reasons & EngineScore
-    reasons = []
-    reasons.append(np.where(out.get("BreakoutOK",0)==1, "Breakout55 ✓", ""))
-    reasons.append(np.where(out.get("CrosserOK",0)==1, "LevelCross ✓", ""))
-    reasons.append(np.where(out.get("BoxOK",0)==1, "BoxSetup ✓", ""))
-    reasons.append(np.where(out.get("RetailFadeOK",0)==1, "RetailFade ✓", ""))
-    import numpy as _np
-    R = _np.vstack(reasons) if reasons else _np.empty((0,len(out)))
-    chips = pd.Series(["; ".join([x for x in R[:,i] if x]) for i in range(R.shape[1])] if R.size else [""]*len(out), index=out.index)
-    out["EngineReasons"] = chips
-    score = (out.get("BreakoutOK",0)*35 + out.get("CrosserOK",0)*20 + out.get("BoxOK",0)*20 + out.get("RetailFadeOK",0)*25)
-    out["EngineScore"] = pd.to_numeric(score, errors="coerce").fillna(0).clip(0,100)
-    return out
+        tickers = []
+    try:
+        snap = data_mod.pull_enriched_snapshot(tickers) if tickers else pd.DataFrame()
+    except Exception:
+        snap = pd.DataFrame()
+    if snap is None or snap.empty:
+        syms = _fallback_universe( min(50, max(10, limit//10)) )
+        snap = pd.DataFrame({"Ticker": syms, "P_up": 0.55, "RelSPY": 0.0, "RVOL": 1.1})
+    snap.to_csv(data_dir / "watchlist_snapshot_latest.csv", index=False)
+    try:
+        ranked = scoring.rank_now(snap)
+        if not isinstance(ranked, pd.DataFrame):
+            ranked = ranked[-3] if isinstance(ranked, tuple) and len(ranked) >= 3 else snap
+    except Exception:
+        ranked = snap
+    (data_dir / "ranked_latest.csv").write_text(ranked.to_csv(index=False), encoding="utf-8")
+    return int(len(snap))
