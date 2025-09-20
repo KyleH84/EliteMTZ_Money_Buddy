@@ -263,14 +263,13 @@ def _load_pages_dynamic():
 
 __pages = _load_pages_dynamic()
 if __pages:
-    tab_names = ['Main'] + list(__pages.keys())
-    _tabs = st.tabs(tab_names)
-    # Main tab index 0 will continue below; render extra tabs now
-    for _i, _name in enumerate(tab_names[1:], start=1):
+    _tab_names = ['Main'] + list(__pages.keys())
+    _tabs = st.tabs(_tab_names)
+    # Render non-Main pages into their tabs
+    for _i, _name in enumerate(_tab_names[1:], start=1):
         with _tabs[_i]:
             __mod = __pages[_name]
-            _ok = _call_first(__mod, ('render','main','run'))
-            if not _ok:
+            if not _call_first(__mod, ('render','main','run')):
                 st.write(f"Page '{_name}' loaded, but no entrypoint (main/render/run) found.")
 
         st.write(f"Page '{__choice}' loaded, but no entrypoint (main/render/run) found.")
