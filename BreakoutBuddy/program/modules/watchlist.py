@@ -121,6 +121,10 @@ def enriched_snapshot(tickers: List[str], enrich_features_fn=None) -> pd.DataFra
         return pd.DataFrame({"Ticker": tickers})
 
     sub = base[base["Ticker"].astype(str).isin(tickers)].copy()
+# Ensure the result includes *all* requested tickers (not just those present in snapshot)
+_all_req = pd.DataFrame({"Ticker": tickers})
+sub = _all_req.merge(sub, on="Ticker", how="left")
+
 
     # Optional enrichment hook
     if enrich_features_fn is not None:
@@ -135,6 +139,19 @@ def enriched_snapshot(tickers: List[str], enrich_features_fn=None) -> pd.DataFra
             sub = scoring_mod._ensure_rank_cols(sub)  # type: ignore
         except Exception:
             sub = _fallback_rank(sub)
+# Robust fallbacks so dashboards don't show 'none' when columns are missing
+for _col, _default in [
+    ("RelSPY", 0.0),
+    ("P_up", 0.0),
+    ("ConnorsRSI", 0.0),
+    ("SqueezeHint", ""),
+    ("RVOL", 0.0),
+    ("RSI4", 0.0),
+    ("ChangePct", 0.0),
+]:
+    if _col not in sub.columns:
+        sub[_col] = _default
+
     else:
         sub = _fallback_rank(sub)
 
