@@ -1,69 +1,131 @@
 from __future__ import annotations
 
-from pathlib import Path
-import os
-PROJECT_DIR = Path(__file__).resolve().parent
-(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
-(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
-
-from typing import List, Optional
 import pandas as pd
-from modules import data as data_mod
+import numpy as np
+from datetime import datetime, timedelta
 
-# Feature names we try to ensure are present after enrichment.
+# EXPECTED_FEATURES is referenced by callers; keep the same contract
 EXPECTED_FEATURES = [
-    "Ticker","Close","ChangePct","RSI2","RSI4","ConnorsRSI","RelSPY","RVOL","ATR","PctFrom200d","SqueezeHint",
-    "P_up","CrowdRisk","AgentsScore","AgentsConf"
+    "Close","ChangePct","RSI2","RSI4","ConnorsRSI","RelSPY",
+    "RVOL","ATR","PctFrom200d","SqueezeHint","P_up",
+    "CrowdRisk","AgentsScore","AgentsConf"
 ]
 
-def prices_for(tickers: List[str]) -> pd.DataFrame:
-    """
-    Convenience: fetch normalized OHLCV for a set of tickers.
-    Delegates to modules.data.pull_enriched_snapshot then selects price columns when available.
-    """
-    df = data_mod.pull_enriched_snapshot(tickers)
-    keep = [c for c in ["Ticker","Open","High","Low","Close","Volume","ChangePct"] if c in df.columns]
-    return df[keep] if keep else df
+def _rsi(series: pd.Series, period: int) -> pd.Series:
+    delta = series.diff()
+    gain = (delta.clip(lower=0)).ewm(alpha=1/period, adjust=False).mean()
+    loss = (-delta.clip(upper=0)).ewm(alpha=1/period, adjust=False).mean()
+    rs = gain / loss.replace(0, np.nan)
+    rsi = 100 - (100 / (1 + rs))
+    return rsi
 
-def enrich_features(tickers: List[str], base_df: Optional[pd.DataFrame] = None) -> pd.DataFrame:
-    """
-    Compute or refresh enriched snapshot rows for the given tickers.
-    If base_df is provided, merge freshly computed columns on 'Ticker' and prefer fresh values.
-    """
-    fresh = data_mod.pull_enriched_snapshot(tickers)
-    if base_df is None or base_df.empty:
-        return fresh
-    key = "Ticker" if "Ticker" in base_df.columns else None
-    if not key:
-        return fresh
-    # Drop any overlapping feature columns in base_df then left-join fresh.
-    overlap = [c for c in fresh.columns if c != key and c in base_df.columns]
-    merged = base_df.drop(columns=overlap, errors="ignore").merge(fresh, on=key, how="left")
-    # Ensure expected features exist and fill with sane defaults; recompute if missing
+def _percent_rank(series: pd.Series, window: int) -> pd.Series:
+    return series.rolling(window).apply(lambda x: pd.Series(x).rank(pct=True).iloc[-1] * 100, raw=False)
+
+def _connors_rsi(close: pd.Series) -> pd.Series:
+    rsi2 = _rsi(close, 2)
+    rsi4 = _rsi(close, 4)
+    # simple streak: consecutive up/down days
+    diff = close.diff()
+    streak = (np.sign(diff) != np.sign(diff.shift())).cumsum()
+    streak = (streak.groupby(streak).cumcount() + 1) * np.sign(diff).fillna(0)
+    streak_rsi = _rsi(streak.fillna(0), 2)
+    pr = _percent_rank(close.pct_change().fillna(0), 100)
+    return (rsi2 + rsi4 + pr.fillna(50) + streak_rsi.fillna(50)) / 4
+
+def _fetch_latest_features(tickers: list[str]) -> pd.DataFrame:
     try:
-        needed = [c for c in EXPECTED_FEATURES if c not in merged.columns]
-        if needed:
-            try:
-                _tickers = list(merged['Ticker'].dropna().astype(str).unique())
-                _fix = data_mod.pull_enriched_snapshot(_tickers)
-                if not _fix.empty:
-                    use_cols = [c for c in _fix.columns if c in needed or c == 'Ticker']
-                    merged = merged.merge(_fix[use_cols], on='Ticker', how='left', suffixes=('', '_fresh'))
-            except Exception:
-                pass
-        defaults = {
-            'Close': 0.0, 'ChangePct': 0.0, 'RSI2': 50.0, 'RSI4': 50.0,
-            'ConnorsRSI': 50.0, 'RelSPY': 0.0, 'RVOL': 1.0, 'ATR': 0.0,
-            'PctFrom200d': 0.0, 'SqueezeHint': 0.0, 'P_up': 0.55,
-            'CrowdRisk': 0.0, 'AgentsScore': None, 'AgentsConf': None,
-        }
-        for _c, _d in defaults.items():
-            if _c not in merged.columns:
-                merged[_c] = _d
-        for _c, _d in defaults.items():
-            merged[_c] = pd.to_numeric(merged[_c], errors='coerce') if isinstance(_d, (int,float)) else merged[_c]
-            merged[_c] = merged[_c].fillna(_d)
+        import yfinance as yf
     except Exception:
-        pass
+        return pd.DataFrame(columns=["Ticker"] + EXPECTED_FEATURES)
+
+    tickers = [t for t in dict.fromkeys([str(t).upper().strip() for t in tickers]) if t]
+    if not tickers:
+        return pd.DataFrame(columns=["Ticker"] + EXPECTED_FEATURES)
+
+    # Always include SPY for RelSPY
+    all_syms = sorted(set(tickers) | {"SPY"})
+    end = datetime.utcnow().date()
+    start = end - timedelta(days=120)
+    data = yf.download(all_syms, start=start.isoformat(), end=end.isoformat(), interval="1d", auto_adjust=False, progress=False, threads=False)
+
+    if isinstance(data.columns, pd.MultiIndex):
+        close = data["Adj Close"].copy() if "Adj Close" in data.columns.levels[0] else data["Close"].copy()
+        vol = data["Volume"].copy()
+    else:
+        close = data["Adj Close"].to_frame()
+        vol = data["Volume"].to_frame()
+
+    # Use last valid row for each symbol
+    features = []
+    for t in tickers:
+        c = close[t].dropna() if t in close.columns else pd.Series(dtype=float)
+        v = vol[t].dropna() if t in vol.columns else pd.Series(dtype=float)
+        if c.empty:
+            row = {"Ticker": t}
+        else:
+            last = c.index[-1]
+            chg = c.pct_change().iloc[-1] if len(c) > 1 else 0.0
+            spy_c = close["SPY"].dropna() if "SPY" in close.columns else pd.Series(dtype=float)
+            relspy = (c.pct_change().iloc[-1] - spy_c.pct_change().iloc[-1]) if len(c) > 1 and not spy_c.empty else 0.0
+            rsi2 = _rsi(c, 2).iloc[-1] if len(c) > 5 else 50.0
+            rsi4 = _rsi(c, 4).iloc[-1] if len(c) > 5 else 50.0
+            crsi = _connors_rsi(c).iloc[-1] if len(c) > 20 else 50.0
+            avg20 = v.rolling(20).mean().iloc[-1] if len(v) >= 20 else 1.0
+            rvol = (v.iloc[-1] / avg20) if avg20 and avg20 != 0 else 1.0
+            atr = (c.rolling(14).std().iloc[-1] * np.sqrt(14)) if len(c) >= 14 else 0.0
+            pct200 = ((c.iloc[-1] / c.rolling(200).mean().iloc[-1]) - 1.0) * 100 if len(c) >= 200 else 0.0
+            squeeze = 0.0  # lightweight placeholder signal
+            row = {
+                "Ticker": t, "Close": float(c.iloc[-1]), "ChangePct": float(chg * 100.0),
+                "RSI2": float(rsi2), "RSI4": float(rsi4), "ConnorsRSI": float(crsi),
+                "RelSPY": float(relspy), "RVOL": float(rvol), "ATR": float(atr),
+                "PctFrom200d": float(pct200), "SqueezeHint": float(squeeze),
+                "P_up": 0.55,
+            }
+        features.append(row)
+
+    df = pd.DataFrame(features).drop_duplicates(subset=["Ticker"], keep="last")
+    return df
+
+def ensure_features(merged: pd.DataFrame) -> pd.DataFrame:
+    # Identify tickers missing any key features or with NaN values.
+    need = []
+    need_cols = ["RelSPY","ConnorsRSI","SqueezeHint","P_up","RVOL","RSI4","ChangePct","Close"]
+    for _, row in merged.iterrows():
+        t = str(row.get("Ticker","")).strip().upper()
+        if not t:
+            continue
+        missing = any((col not in merged.columns) or pd.isna(row.get(col)) for col in need_cols)
+        if missing:
+            need.append(t)
+    if not need:
+        return merged
+
+    fetched = _fetch_latest_features(need)
+    if not fetched.empty:
+        base_cols = [c for c in merged.columns if c != "Ticker"]
+        merged = merged.drop_duplicates(subset=["Ticker"], keep="last")
+        merged = merged.merge(fetched, on="Ticker", how="left", suffixes=('', '_fresh'))
+        # Prefer fresh values where existing are NaN/missing
+        for col in EXPECTED_FEATURES:
+            fresh = col + "_fresh"
+            if fresh in merged.columns:
+                merged[col] = merged[col].combine_first(merged[fresh])
+        # Clean up helper columns
+        merged = merged[[c for c in merged.columns if not c.endswith("_fresh")]]
+
+    # Final fill for stability
+    defaults = {
+        "Close": 0.0, "ChangePct": 0.0, "RSI2": 50.0, "RSI4": 50.0,
+        "ConnorsRSI": 50.0, "RelSPY": 0.0, "RVOL": 1.0, "ATR": 0.0,
+        "PctFrom200d": 0.0, "SqueezeHint": 0.0, "P_up": 0.55,
+        "CrowdRisk": 0.0, "AgentsScore": None, "AgentsConf": None,
+    }
+    for c, d in defaults.items():
+        if c not in merged.columns:
+            merged[c] = d
+        merged[c] = pd.to_numeric(merged[c], errors='coerce') if isinstance(d, (int,float)) else merged[c]
+        merged[c] = merged[c].fillna(d)
 
     return merged
