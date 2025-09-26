@@ -1,5 +1,12 @@
-
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+
 import pandas as pd
 
 def _num(s, col, default=0.0):
@@ -45,3 +52,12 @@ def run_agents_calibration(*, df: pd.DataFrame | None = None, lookback_days: int
         "lookback_days": lookback_days,
         "status": "ok-heuristic"
     }
+
+
+def try_import_agents():
+    """Return (has_agents: bool, Orchestrator: type|None, err: str|None)."""
+    try:
+        from modules.agents.orchestrator import AgentOrchestrator as Orchestrator
+        return True, Orchestrator, None
+    except Exception as e:
+        return False, None, str(e)

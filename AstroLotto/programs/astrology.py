@@ -1,5 +1,12 @@
-# utilities/astrology.py — add-only: includes get_user_sign_from_birthday
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+# utilities/astrology.py — add-only: includes get_user_sign_from_birthday
 from datetime import date as dt_date, datetime, timedelta
 import math
 from typing import Union, Dict, Any

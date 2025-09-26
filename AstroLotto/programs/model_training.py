@@ -1,4 +1,11 @@
 
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+
 # v10.3.1 - CLI/Streamlit-friendly trainer (uses enhanced features)
 import os
 from utilities.features import build_features, GAME_MAP

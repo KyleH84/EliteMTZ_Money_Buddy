@@ -1,9 +1,16 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 """
 Sidebar utilities for AstroLotto — patched 2025-09-05T19:33:16
 - Loads feature flags from extras/{features.json|v14_flags.json} if present
 - Provides sensible defaults so UI doesn't hide controls when file is missing
 """
-from __future__ import annotations
 import json, logging, os
 from pathlib import Path
 

@@ -1,6 +1,13 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 
 # utilities/eval.py - v10.3 walk-forward metrics
-from __future__ import annotations
 import numpy as np
 import pandas as pd
 from typing import Dict, Any

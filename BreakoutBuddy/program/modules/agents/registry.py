@@ -1,4 +1,11 @@
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 from typing import Mapping, Any, List
 from .base import AgentResult
 from . import tech_agent, pattern_agent, volatility_agent

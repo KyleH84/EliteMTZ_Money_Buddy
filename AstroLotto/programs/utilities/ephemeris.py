@@ -1,7 +1,26 @@
-# AstroLotto/programs/utilities/ephemeris.py
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+# AstroLotto/programs/utilities/ephemeris.py
 from pathlib import Path
 from typing import Optional, Tuple, Union, Any
+
+def _find_app_root_by_marker(marker: str = "pyvenv.cfg") -> Optional[Path]:
+    """Walk upward from this file to find a folder containing `marker`.
+    Returns the parent directory of the marker if found, else None.
+    Useful for anchoring paths to the app root without hardcoding.
+    """
+    base = Path(__file__).resolve()
+    for parent in [base] + list(base.parents):
+        if (parent / marker).exists():
+            # If the marker itself is a file in parent, app root is parent
+            return parent
+    return None
 from skyfield.api import load, Loader
 
 class EphemerisWrapper:
@@ -102,7 +121,11 @@ def load_kernel():
 
     # 1b) Additional common spots
     more_candidates = [
-        base.parents[1] / "de421.bsp",
+        *(
+        [root / 'de421.bsp', root / 'extras' / 'ephemeris_cache' / 'de421.bsp']
+        if (root := _find_app_root_by_marker()) is not None else []
+    ),
+base.parents[1] / "de421.bsp",
         base.parent / "de421.bsp",
         base.parents[2] / "programs" / "de421.bsp",
         base.parents[2] / "programs" / "utilities" / "de421.bsp",
@@ -159,7 +182,7 @@ def load_kernel():
 I tried local files (de421.bsp), packaged 'de440.bsp', and Loader cache (de421/de440).
 Place 'de421.bsp' in one of:
   ./extras/ephemeris_cache/de421.bsp
-  ./extras/de421.bsp
+  ./extras/ephemeris_cache/de421.bsp
   ./programs/de421.bsp
   ./programs/utilities/de421.bsp
 Then relaunch.""")

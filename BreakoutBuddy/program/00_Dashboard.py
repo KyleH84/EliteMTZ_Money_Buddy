@@ -1,6 +1,142 @@
 
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+from pathlib import Path
+
+# ---------- Strict per-app Data/Extras resolver (BreakoutBuddy) ----------
+from pathlib import Path
+import os, sys
+BB_HERE     = Path(__file__).resolve()
+BB_APP_ROOT = BB_HERE.parents[2]  # fixed to app root   # .../BreakoutBuddy
+
+def _bb_cloud_roots():
+    h = Path.home()
+    return [
+        h / "OneDrive",
+        h / "OneDrive - Personal",
+        h / "OneDrive - Wagstaff Law Firm",
+        h / "Dropbox",
+        h / "Google Drive",
+        h / "Library" / "CloudStorage" / "OneDrive",
+        h / "Library" / "CloudStorage" / "Dropbox",
+        h / "Library" / "CloudStorage" / "GoogleDrive",
+    ]
+
+def _bb_first_existing(paths):
+    for p in paths:
+        try:
+            p2 = Path(p).expanduser().resolve()
+            if p2.exists():
+                return p2
+        except Exception:
+            pass
+    return None
+
+def bb_resolve_dir(preferred_env_var: str, fallback_name: str):
+    """
+    Strict per-app order (NO repo-level fallback):
+      1) Env var (abs or relative)
+      2) BB_APP_ROOT/<name>
+      3) CWD/<name>
+      4) Cloud roots: <BreakoutBuddy>/<name>
+      5) Create BB_APP_ROOT/<name>
+    """
+    envv = os.environ.get(preferred_env_var, "").strip()
+    if envv:
+        cand = (Path(envv) if os.path.isabs(envv) else (Path.cwd() / envv))
+        if cand.exists():
+            return cand.resolve()
+
+    hit = _bb_first_existing([BB_APP_ROOT / fallback_name])
+    if hit:
+        return hit
+
+    cands = []
+    for root in _bb_cloud_roots():
+        cands += [
+            root / BB_APP_ROOT.name / fallback_name,
+            root / "Projects" / BB_APP_ROOT.name / fallback_name,
+        ]
+    hit = _bb_first_existing(cands)
+    if hit:
+        return hit
+
+    target = (BB_APP_ROOT / fallback_name).resolve()
+    target.mkdir(parents=True, exist_ok=True)
+    return target
+
+BB_DATA   = bb_resolve_dir("BREAKOUTBUDDY_DATA",   "Data")
+BB_EXTRAS = bb_resolve_dir("BREAKOUTBUDDY_EXTRAS", "extras")
+
+bb_extras_src = (BB_EXTRAS / "src")
+if bb_extras_src.exists() and str(bb_extras_src) not in sys.path:
+    sys.path.insert(0, str(bb_extras_src))
+# ---------- end resolver ----------
+
 # 00_Dashboard.py
 import streamlit as st
+# LIVE MODE helper: load ranked data even if no snapshot CSV exists
+from pathlib import Path as _Path
+import shutil as _shutil
+import pandas as _pd
+
+def _bb_load_ranked_live_or_snapshot(snap_path, save_snapshot=True):
+    """
+    Returns a DataFrame of ranked symbols.
+    - If snap_path exists, read it and return.
+    - Else run quick_scan(limit=300), locate freshest ranked_*.csv the engine wrote,
+      return it; and optionally save a copy to snap_path for next time.
+    """
+    snap_path = _Path(snap_path)
+    if snap_path.exists():
+        try:
+            return _pd.read_csv(snap_path)
+        except Exception:
+            pass
+
+    try:
+        try:
+            from BreakoutBuddy.program.modules.engines.runner import quick_scan as _bb_quick_scan
+        except Exception:
+            from modules.engines.runner import quick_scan as _bb_quick_scan
+        _bb_quick_scan(limit=300)
+    except Exception:
+        pass
+
+    try:
+        repo_root = _Path(__file__).resolve().parents[1]
+        ranked_dirs = [
+            repo_root / "BreakoutBuddy" / "program" / "modules" / "Data",
+            repo_root / "BreakoutBuddy" / "program" / "Data",
+            repo_root / "BreakoutBuddy" / "Data",
+        ]
+        candidates = []
+        for rd in ranked_dirs:
+            if rd.exists():
+                for pat in ["ranked_latest.csv", "ranked_*.csv", "*ranked*.csv"]:
+                    for p in rd.glob(pat):
+                        if p.is_file():
+                            candidates.append(p)
+        if candidates:
+            candidates.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+            pick = candidates[0]
+            df = _pd.read_csv(pick)
+            if save_snapshot:
+                try:
+                    snap_path.parent.mkdir(parents=True, exist_ok=True)
+                    _shutil.copy2(pick, snap_path)
+                except Exception:
+                    pass
+            return df
+    except Exception:
+        pass
+
+    return _pd.DataFrame(columns=["symbol", "rank", "score", "date"])
+
 import pandas as pd
 import numpy as np
 import os, json, time
@@ -9,9 +145,65 @@ st.set_page_config(page_title="BreakoutBuddy: Dashboard", layout="wide")
 st.title("BreakoutBuddy ▸ Dashboard")
 st.caption("Ranked snapshot, quick analyze, scanner, explore, and watchlist. Uses CSV snapshots/logs so it's easy to swap in your pipeline.")
 
-SNAP_PATH = "Data/bb_snapshot.csv"
-LOGS_PATH = "Data/bb_temporal_logs.csv"
-WL_PATH = "Data/watchlist.csv"
+SNAP_PATH = str(BB_DATA / 'bb_snapshot.csv')
+_ranked_df = _bb_load_ranked_live_or_snapshot(SNAP_PATH, save_snapshot=True)
+try:
+    import streamlit as _st_internal
+    _st_internal.session_state['bb_ranked_df'] = _ranked_df
+except Exception:
+    pass
+
+# ---- ENSURE SNAPSHOT (pre-warning) ----
+from pathlib import Path as _Path
+import shutil as _shutil
+SNAP_PATH = _Path(SNAP_PATH)  # coerce in case it's a string
+if not SNAP_PATH.exists():
+    _scan_errors = []
+    try:
+        try:
+            from BreakoutBuddy.program.modules.engines.runner import quick_scan as _bb_quick_scan
+        except Exception:
+            from modules.engines.runner import quick_scan as _bb_quick_scan
+        _bb_quick_scan(limit=300)
+    except Exception as _e:
+        _scan_errors.append(str(_e))
+    try:
+        repo_root = _Path(__file__).resolve().parents[1]
+        ranked_dirs = [
+            repo_root / "BreakoutBuddy" / "program" / "modules" / "Data",
+            repo_root / "BreakoutBuddy" / "program" / "Data",
+            repo_root / "BreakoutBuddy" / "Data",
+        ]
+        candidates = []
+        for rd in ranked_dirs:
+            if rd.exists():
+                for pat in ["ranked_latest.csv", "ranked_*.csv", "*ranked*.csv"]:
+                    for p in rd.glob(pat):
+                        if p.is_file():
+                            candidates.append(p)
+        pick = None
+        if candidates:
+            candidates.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+            pick = candidates[0]
+        SNAP_PATH.parent.mkdir(parents=True, exist_ok=True)
+        if pick and pick.exists():
+            _shutil.copy2(pick, SNAP_PATH)
+        else:
+            with open(SNAP_PATH, "w", encoding="utf-8") as _f:
+                _f.write("symbol,rank,score,date\n")
+                _f.write("INIT,999,0,1970-01-01\n")
+    except Exception as _e2:
+        SNAP_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with open(SNAP_PATH, "w", encoding="utf-8") as _f:
+            _f.write("symbol,rank,score,date\nINIT,999,0,1970-01-01\n")
+    try:
+        st.rerun()
+    except Exception:
+        pass
+# ---- END ENSURE SNAPSHOT ----
+
+LOGS_PATH = str(BB_DATA / 'bb_temporal_logs.csv')
+WL_PATH = str(BB_DATA / 'watchlist.csv')
 
 def load_csv(path):
     if not os.path.exists(path):

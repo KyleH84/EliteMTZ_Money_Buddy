@@ -1,6 +1,9 @@
+"""
+Agents package for BreakoutBuddy.
+This file makes `modules.agents` a real Python package.
 
-# Lightweight agents package so the Agents tab can import cleanly.
-# Real logic lives in modules.services.agents_service.
-from .base import safe_float  # re-export for convenience
-
-HAS_AGENTS = True  # signal to UI tabs that agents exist
+Re-exports:
+    get_current_weights, run_agents_calibration
+from .auto_tune (drop-in shipped earlier).
+"""
+from .auto_tune import get_current_weights, run_agents_calibration  # noqa: F401

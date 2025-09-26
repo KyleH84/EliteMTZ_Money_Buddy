@@ -1,4 +1,11 @@
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 """
 Monte Carlo predictor wrapper for AstroLotto V14.
 
@@ -16,8 +23,8 @@ matching the Smart 2.0 settings used elsewhere in the app.
 from typing import List, Dict, Any
 import pandas as pd
 
-from ..utilities.smart_features_v2 import WHITE_RANGES
-from ..utilities.montecarlo_v2 import monte_carlo_picks, choose_special  # type: ignore
+from .utilities.smart_features_v2 import WHITE_RANGES
+from .utilities.montecarlo_v2 import monte_carlo_picks, choose_special  # type: ignore
 
 def predict_sets(
     game: str,

@@ -1,10 +1,17 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 
 # utilities/powerball_predictor_core.py
 # Lightweight backend for Powerball when ML backends are unavailable.
 # Exposes get_powerball_prediction(root_dir, k_white=5, k_special=1)
 # to satisfy the app's dynamic loader.
 
-from __future__ import annotations
 from typing import Dict, List
 import math
 import pandas as pd

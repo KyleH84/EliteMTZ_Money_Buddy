@@ -1,5 +1,12 @@
-# utilities/io_routing.py — route CSV writes to Data and READ fallback
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+# utilities/io_routing.py — route CSV writes to Data and READ fallback
 import os, re, builtins
 from pathlib import Path
 

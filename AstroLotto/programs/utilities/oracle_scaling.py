@@ -1,3 +1,10 @@
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 # Oracle scaling constants (tunable)
 # These represent our best-guess upper bounds for how much each factor
 # should be allowed to sway the day’s randomness signal.

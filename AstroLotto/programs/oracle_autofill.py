@@ -1,6 +1,13 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 # Oracle autofill wrapper: fills missing Markets/Space/Weird parts with live data
 # and patches utilities.oracle_mode.compute_oracle at import time.
-from __future__ import annotations
 from typing import Dict, Any
 
 try:

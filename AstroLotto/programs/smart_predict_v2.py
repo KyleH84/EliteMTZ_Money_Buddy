@@ -1,9 +1,17 @@
-# Program/utilities/smart_predict_v2.py
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+# Program/utilities/smart_predict_v2.py
 from typing import Dict, List, Any, Tuple
 import random
 import pandas as pd
-from .smart_features import WHITE_RANGES, SPECIAL_RANGES, detect_white_columns, long_short_blend, gap_overdue_bonus, compute_special_scores
+from .smart_features import WHITE_RANGES, SPECIAL_RANGES, detect_white_columns
+from .special_weights import compute_special_scores, long_short_blend, gap_overdue_bonus, compute_special_scores
 from .wrs import weighted_sample_without_replacement as wrs_wor
 from .pmi import pmi_pairs
 from .diversity import select_diverse

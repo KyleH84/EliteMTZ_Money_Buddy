@@ -1,4 +1,11 @@
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 """
 Ensemble predictor for AstroLotto V14.
 
@@ -20,15 +27,15 @@ from typing import Dict, Any, List
 import random
 import pandas as pd
 
-from ..utilities.smart_features_v2 import (
+from .utilities.smart_features_v2 import (
     WHITE_RANGES,
     SPECIAL_RANGES,
     long_short_blend,
     gap_overdue_bonus,
     compute_special_scores,
 )
-from ..utilities.wrs import weighted_wrs
-from ..utilities.pmi import pmi_pairs
+from .utilities.wrs import weighted_wrs
+from .utilities.pmi import pmi_pairs
 
 def _choose_special(game: str, df: pd.DataFrame, model: Dict[str, Any] | None = None) -> int | None:
     """

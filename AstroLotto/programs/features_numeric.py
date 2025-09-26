@@ -1,5 +1,12 @@
-# Program/utilities/features_numeric.py
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+# Program/utilities/features_numeric.py
 from typing import Tuple, Dict, List
 import numpy as np
 import pandas as pd

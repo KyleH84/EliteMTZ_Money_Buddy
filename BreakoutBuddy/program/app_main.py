@@ -1,109 +1,107 @@
+# program/app_main.py
 from __future__ import annotations
+
+import os
 from pathlib import Path
 import streamlit as st
-from pathlib import Path as _DBG_P
-import duckdb
-from modules import data as data_mod
-from modules import regime as regime_mod
-from modules.services import enrich as enrich_svc
-from modules.tabs.dashboard import render_dashboard_tab
-from modules.ui.watchlist_page import render as render_watchlist_page
-from modules.tabs.report import render_report_tab
-from modules.tabs.agents_tab import render_agents_tab
-from modules.tabs.admin import render_admin_tab
 from modules.tabs.about import render_about_tab
+from modules.tabs.elitenewsbot import render_elitenewsbot_tab
 
-
-from pathlib import Path as _P
-
-def _resolve_data_dir_app():
-    here = _P(__file__).resolve()
-    candidates = [
-        here.parents[2] / "Data",          # BreakoutBuddy/Data  (repo-level)
-        here.parent / "Data",              # BreakoutBuddy/program/Data
-        here.parents[3] / "Data",          # extra-safe: one more up
-        _P.cwd() / "Data",                 # current working dir/Data
-    ]
-    for c in candidates:
-        try:
-            if c.exists():
-                return c
-        except Exception:
-            pass
-    return candidates[0]
-
-DATA_DIR = _resolve_data_dir_app()
+# Try to import duckdb, but don't crash if unavailable (e.g., Python 3.13 on Windows)
+DUCK_OK = True
+conn = None
 try:
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-except Exception:
-    pass
+    import duckdb  # type: ignore
+except Exception as e:
+    DUCK_OK = False
+    duck_error = str(e)
 
+APP_ROOT = Path(__file__).resolve().parents[1]  # program/
+BB_ROOT = APP_ROOT.parents[0]                   # BreakoutBuddy root
+DATA_DIR = BB_ROOT / "Data"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
-DB_PATH = DATA_DIR / "breakoutbuddy.duckdb"
-conn = duckdb.connect(str(DB_PATH))
 
-try:
-    from modules.tabs.sidebar import render_sidebar, SidebarSettings
-    settings = render_sidebar()
-except Exception:
-    class SidebarSettings: pass
-    settings = SidebarSettings()
-    setattr(settings, "top_n", 50)
-    setattr(settings, "universe_size", 300)
+# Connect if duckdb works
+if DUCK_OK:
+    try:
+        db_path = DATA_DIR / "bb.duckdb"
+        conn = duckdb.connect(str(db_path))
+    except Exception as e:
+        DUCK_OK = False
+        duck_error = str(e)
 
-HAS_AGENTS = True
-try:
-    import modules.agents.calibration as _  # noqa
-except Exception:
-    HAS_AGENTS = False
-
+# Top-nav
 st.set_page_config(page_title="BreakoutBuddy", layout="wide")
 st.title("BreakoutBuddy")
+st.caption("BB build: 2025-09-19 (safe duckdb import; robust quick explain fallback)")
 
-st.sidebar.expander("Debug: DATA_DIR").write({
-    "DATA_DIR": str(DATA_DIR),
-    "exists": DATA_DIR.exists(),
-})
+# If duckdb failed, warn but keep going
+if not DUCK_OK:
+    st.warning("DuckDB not available. Continuing without DB features.\n\n"
+               "Tip: Use Python 3.11/3.12 or install a compatible DuckDB wheel. "
+               f"Details: {duck_error}")
 
-tabs = st.tabs(["Dashboard", "Watchlist", "Report", "Agents", "Admin", "About"])
+# Sidebar controls (example/common keys so tabs can read them)
+with st.sidebar:
+    st.header("Controls")
+    st.session_state.setdefault("controls_top_n", st.slider("Top N", 10, 100, 25, 5))
+    st.session_state.setdefault("universe_size", st.slider("Universe size", 50, 1000, 300, 50))
+    st.selectbox("Sort by", ["Combined", "Combined_with_agents", "ChangePct"], index=0, key="sort_by")
+    st.toggle("Plain-English Why", value=True, key="plain_english_on")
 
-with tabs[0]:
-    render_dashboard_tab(settings=settings, has_agents=HAS_AGENTS)
+# Tabs
+from modules.tabs.dashboard import render_dashboard_tab
+from modules.tabs.single import render_single_tab
+from modules.tabs.explore import render_explore_tab
+from modules.ui.watchlist_page import render as render_watchlist_page
+from modules.tabs.admin import render_admin_tab
+try:
+    from modules.tabs.agents import render_agents_tab
+except Exception:
+    def render_agents_tab(**kwargs):
+        st.subheader("Agents")
+        st.info("Agents tab unavailable in this environment.")
 
-with tabs[1]:
-    render_watchlist_page(
-        conn=conn,
-        settings=settings,
-        pull_enriched_snapshot_fn=None,
-        enrich_features_fn=None,
-        train_online_fn=None,
-        score_snapshot_fn=None,
-        header=True,
-    )
+tab = st.tabs(["Dashboard", "Single", "Explore", "Watchlist", "Report", "Agents", "Admin", "About", "EliteNewsBot"])
 
-with tabs[2]:
+with tab[0]:
+    render_dashboard_tab(settings=st.session_state, has_agents=True)
+
+with tab[1]:
+    render_single_tab(settings=st.session_state)
+
+with tab[2]:
     try:
-        render_report_tab(
-            settings=settings,
-            list_universe_fn=data_mod.list_universe,
-            pull_enriched_snapshot_fn=data_mod.pull_enriched_snapshot,
-            enrich_features_fn=enrich_svc.enrich_features,
-            compute_regime_fn=regime_mod.compute_regime,
-        )
+        render_explore_tab(settings=st.session_state, conn=conn, enrich_features_fn=None)
     except Exception as e:
-        st.error(f"Report tab error: {e}")
+        st.error(f"Explore failed: {e}")
 
-with tabs[3]:
+with tab[3]:
     try:
-        render_agents_tab()
+        render_watchlist_page(conn=conn, settings=st.session_state, enrich_features_fn=None, header=True)
     except Exception as e:
-        st.info(f"Agents tab unavailable: {e}")
+        st.error(f"Watchlist failed: {e}")
 
-with tabs[4]:
+with tab[4]:
+    # Reports tab: lazy import to avoid breaking other environments
     try:
-        render_admin_tab(settings=settings)
-    except Exception as e:
-        st.error(f"Admin tab error: {e}")
+        try:
+            from modules.tabs.report import render_report_tab as _render_reports
+        except Exception:
+            from modules.tabs.reports import render_reports_tab as _render_reports  # type: ignore
+        _render_reports(settings=st.session_state)
+    except Exception as _e:
+        st.subheader('Report')
+        st.info('Reports coming soon.')
+        st.caption(f'Details: {_e}')
+with tab[5]:
+    render_agents_tab(settings=st.session_state, has_agents=True)
 
-with tabs[5]:
-    render_about_tab(data_dir=DATA_DIR, db_path=DB_PATH)
+with tab[6]:
+    render_admin_tab(settings=st.session_state)
+
+with tab[7]:
+    render_about_tab(settings=st.session_state)
+
+with tab[-1]:
+    render_elitenewsbot_tab(settings=st.session_state)

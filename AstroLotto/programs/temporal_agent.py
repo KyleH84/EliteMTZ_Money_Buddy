@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 
 # temporal_agent.py
 # A tiny, dependency-light "temporal helper" you can drop into any project.
@@ -5,7 +13,6 @@
 # Author: ChatGPT (Chad) for Kyle
 # License: MIT
 
-from __future__ import annotations
 from dataclasses import dataclass
 from typing import Callable, Any, Dict, List, Optional, Tuple, Union, Sequence
 

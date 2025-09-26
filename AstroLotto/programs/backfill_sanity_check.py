@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 
 """
 backfill_sanity_check.py
@@ -16,7 +24,6 @@ What it does:
 - Warns if the file/headers look off
 """
 
-from __future__ import annotations
 import sys
 from pathlib import Path
 import pandas as pd

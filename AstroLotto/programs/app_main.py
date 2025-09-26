@@ -1,4 +1,18 @@
-from __future__ import annotations
+﻿from __future__ import annotations
+
+from pathlib import Path
+import sys
+from pathlib import Path
+
+THIS_DIR = Path(__file__).resolve().parent  # .../AstroLotto/programs
+if str(THIS_DIR) not in sys.path:
+    sys.path.insert(0, str(THIS_DIR))
+
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 # === Agents Layer: Feature Flag ===
 USE_AGENTS = True  # flip False to revert instantly
 
@@ -58,6 +72,7 @@ def _freshness_checkers():
         "markets":     lambda: last_markets_update_time(),
     }
 
+# NOTE: runs_dir now uses the flexible resolver (defined below) via get_data_dir()
 def _make_pipeline():
     return AgentsPipeline(
         etl_fetch=_etl_fetch,
@@ -67,7 +82,7 @@ def _make_pipeline():
         popularity_model=_PopularityModel(),
         oracle_fetchers=_oracle_fetchers(),
         freshness_checkers=_freshness_checkers(),
-        runs_dir="Data/runs"
+        runs_dir=str(get_data_dir() / "runs")
     )
 
 # === Agents Layer: Predict Hook (call this where you handle Predict button) ===
@@ -121,9 +136,22 @@ def _call_first(_mod, _fns=("render","main","run")):
                 return True
     return False
 
-# app_main.py — hot/cold learning + Monte Carlo + diversity badges
+# app_main.py â€” hot/cold learning + Monte Carlo + diversity badges
 import streamlit as st
-from astrolotto_temporal_integration import (TemporalControls, apply_temporal_to_weights, apply_temporal_to_vector)
+try:
+    # Works when run as a package: python -m programs.app_main
+    from .astrolotto_temporal_integration import (
+        TemporalControls,
+        apply_temporal_to_weights,
+        apply_temporal_to_vector,
+    )
+except ImportError:
+    # Works when run as a script: streamlit run programs/app_main.py
+    from astrolotto_temporal_integration import (
+        TemporalControls,
+        apply_temporal_to_weights,
+        apply_temporal_to_vector,
+    )
 import pandas as pd
 import numpy as np
 import os
@@ -132,6 +160,76 @@ import json
 import math
 import datetime as dt
 from pathlib import Path
+
+# ---------- Strict per-app Data/Extras resolver (AstroLotto) ----------
+from pathlib import Path
+import os, sys
+HERE        = Path(__file__).resolve()
+APP_ROOT    = HERE.parents[1]   # .../AstroLotto
+
+def _cloud_roots():
+    h = Path.home()
+    return [
+        h / "OneDrive",
+        h / "OneDrive - Personal",
+        h / "OneDrive - Wagstaff Law Firm",
+        h / "Dropbox",
+        h / "Google Drive",
+        h / "Library" / "CloudStorage" / "OneDrive",
+        h / "Library" / "CloudStorage" / "Dropbox",
+        h / "Library" / "CloudStorage" / "GoogleDrive",
+    ]
+
+def _first_existing(paths):
+    for p in paths:
+        try:
+            p2 = Path(p).expanduser().resolve()
+            if p2.exists():
+                return p2
+        except Exception:
+            pass
+    return None
+
+def resolve_dir(preferred_env_var: str, fallback_name: str):
+    """
+    Strict per-app order (NO repo-level fallback):
+      1) Env var (abs or relative)
+      2) APP_ROOT/<name>
+      3) CWD/<name>
+      4) Common cloud roots: <AstroLotto>/<name>
+      5) Create APP_ROOT/<name>
+    """
+    envv = os.environ.get(preferred_env_var, "").strip()
+    if envv:
+        cand = (Path(envv) if os.path.isabs(envv) else (Path.cwd() / envv))
+        if cand.exists():
+            return cand.resolve()
+
+    hit = _first_existing([APP_ROOT / fallback_name, Path.cwd() / fallback_name])
+    if hit:
+        return hit
+
+    cands = []
+    for root in _cloud_roots():
+        cands += [
+            root / APP_ROOT.name / fallback_name,
+            root / "Projects" / APP_ROOT.name / fallback_name,
+        ]
+    hit = _first_existing(cands)
+    if hit:
+        return hit
+
+    d = (APP_ROOT / fallback_name).resolve()
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+DATA   = resolve_dir("ASTROLOTTO_DATA",   "Data")
+EXTRAS = resolve_dir("ASTROLOTTO_EXTRAS", "extras")
+
+extras_src = (EXTRAS / "src")
+if extras_src.exists() and str(extras_src) not in sys.path:
+    sys.path.insert(0, str(extras_src))
+# ---------- end resolver ----------
 from typing import Any, Dict, List, Optional, Tuple
 import inspect, json, math, re
 
@@ -152,20 +250,46 @@ except Exception:
 from visuals.timeline_viz import render_white_surface
 from utilities import jackpots as jp
 
-ROOT = Path("."); DATA = Path("Data")
 _rerun = getattr(st, "rerun", getattr(st, "experimental_rerun", None))
 
 
 # ---------------- Page header ----------------
 st.set_page_config(
     page_title="AstroLotto",
-    page_icon="🎱",
+    page_icon="ðŸŽ±",
     layout="wide"
 )
 
 # ---------------- Header ----------------
 st.title("AstroLotto")
 st.caption("Predict lottery numbers using history, per-ball models, oracle signals (moon / space / markets), quantum blending, hot/cold learning, and EV-aware de-popularization.")
+
+# ---- Dynamic pages under programs/pages (works local & cloud) ----
+import importlib
+import pathlib as _pl
+
+_PAGES_DIR = PROJECT_DIR / "pages"
+
+def _load_pages_dynamic():
+    pages = {}
+    if _PAGES_DIR.exists():
+        for _py in sorted(_PAGES_DIR.glob("*.py")):
+            if _py.name.startswith("_"):
+                continue
+            _name = _py.stem.replace("_"," ").title()
+            try:
+                _mod = importlib.import_module(f"programs.pages.{_py.stem}")
+                pages[_name] = _mod
+            except Exception as _e:
+                try:
+                    import streamlit as _st
+                    _st.sidebar.error(f"Failed to load page {_py.stem}: {_e}")
+                except Exception:
+                    pass
+    return pages
+
+# (custom dynamic pages removed; using Streamlit native pages)
+
 
 # ---------------- Sidebar (initial toggles) ----------------
 st.sidebar.header("Modules")
@@ -204,20 +328,20 @@ hc_sharp          = st.sidebar.slider("Hot/Cold sharpness", 0.6, 1.6, 1.0, 0.1, 
 
 # Oracle detail toggles
 st.sidebar.header("Oracle (details)")
-oracle_use_moon    = st.sidebar.checkbox("Moon 🌕", True, disabled=not opt_oracle)
-oracle_use_markets = st.sidebar.checkbox("Markets 📈", True, disabled=not opt_oracle)
-oracle_use_space   = st.sidebar.checkbox("Space weather 🌋", True, disabled=not opt_oracle)
-oracle_use_weird   = st.sidebar.checkbox("Planetary alignments 🪐", True, disabled=not opt_oracle)
-oracle_gain        = st.sidebar.slider("Oracle gain (×)", 0.0, 5.0, 1.7, 0.1, disabled=not opt_oracle)
+oracle_use_moon    = st.sidebar.checkbox("Moon ðŸŒ•", True, disabled=not opt_oracle)
+oracle_use_markets = st.sidebar.checkbox("Markets ðŸ“ˆ", True, disabled=not opt_oracle)
+oracle_use_space   = st.sidebar.checkbox("Space weather ðŸŒ‹", True, disabled=not opt_oracle)
+oracle_use_weird   = st.sidebar.checkbox("Planetary alignments ðŸª", True, disabled=not opt_oracle)
+oracle_gain        = st.sidebar.slider("Oracle gain (Ã—)", 0.0, 5.0, 1.7, 0.1, disabled=not opt_oracle)
 
 # --- Temporal helper (Kozyrev) ---
 st.sidebar.header("Temporal helper")
 opt_temporal = st.sidebar.checkbox("Enable temporal correction (Kozyrev)", False)
 
-temporal_kappa    = st.sidebar.number_input("κ (s/J)", value=0.0, step=1e15, format="%.6e")
-temporal_dt_ref   = st.sidebar.number_input("Δt₀ (ref sec)", value=86400.0, step=3600.0)
-temporal_dt_win   = st.sidebar.number_input("Δt (window sec)", value=86400.0, step=3600.0)
-temporal_eps_days = st.sidebar.number_input("ε (finite-diff days)", value=1.0, min_value=0.01, step=0.25)
+temporal_kappa    = st.sidebar.number_input("Îº (s/J)", value=0.0, step=1e15, format="%.6e")
+temporal_dt_ref   = st.sidebar.number_input("Î”tâ‚€ (ref sec)", value=86400.0, step=3600.0)
+temporal_dt_win   = st.sidebar.number_input("Î”t (window sec)", value=86400.0, step=3600.0)
+temporal_eps_days = st.sidebar.number_input("Îµ (finite-diff days)", value=1.0, min_value=0.01, step=0.25)
 controls_temporal = TemporalControls(
     enabled=bool(opt_temporal),
     kappa=float(temporal_kappa),
@@ -237,11 +361,11 @@ oracle_sign        = st.sidebar.selectbox("Zodiac (optional)",
     index=0, disabled=not opt_oracle)
 
 # [autotune moved to page]
-st.sidebar.subheader("Autotune κ (moved)")
-al_logs_csv = st.sidebar.text_input("Logs CSV", value="Data/temporal_logs.csv")
-al_results_csv = st.sidebar.text_input("Results CSV", value="Data/draw_results.csv")
-al_kmin = st.sidebar.number_input("κ min", value=-5e16, format="%.3e")
-al_kmax = st.sidebar.number_input("κ max", value= 5e16, format="%.3e")
+st.sidebar.subheader("Autotune Îº (moved)")
+al_logs_csv    = st.sidebar.text_input("Logs CSV",    value=str(DATA / "temporal_logs.csv"))
+al_results_csv = st.sidebar.text_input("Results CSV", value=str(DATA / "draw_results.csv"))
+al_kmin = st.sidebar.number_input("Îº min", value=-5e16, format="%.3e")
+al_kmax = st.sidebar.number_input("Îº max", value= 5e16, format="%.3e")
 al_ksteps = st.sidebar.number_input("Steps", min_value=3, value=41, step=2)
 col_a1, col_a2 = st.sidebar.columns(2)
 with col_a1:
@@ -262,9 +386,9 @@ if btn_run_autotune:
             objective="mass_on_winners"
         )
         best_kappa_found = float(res.get("kappa", 0.0))
-        st.sidebar.success(f"Best κ ≈ {best_kappa_found:.3e}")
+        st.sidebar.success(f"Best Îº â‰ˆ {best_kappa_found:.3e}")
         # Offer to save
-        if st.sidebar.button("Save best κ to config"):
+        if st.sidebar.button("Save best Îº to config"):
             meta = {"objective": "mass_on_winners", "objective_value": float(res.get("objective", 0.0)),
                     "scan": {"kappa_min": float(al_kmin), "kappa_max": float(al_kmax), "kappa_steps": int(al_ksteps)}}
             ok = _save_al_kappa_config(best_kappa_found, meta=meta)
@@ -289,18 +413,18 @@ if btn_reload_cfg:
     else:
         st.sidebar.warning('Config module not available.')
 
-# --- Immediate apply best κ ---
-if best_kappa_found is not None and st.sidebar.button("Use best κ now"):
+# --- Immediate apply best Îº ---
+if best_kappa_found is not None and st.sidebar.button("Use best Îº now"):
     st.session_state["temporal_kappa_default"] = float(best_kappa_found)
     temporal_kappa = float(best_kappa_found)
-    st.sidebar.success(f"Applied κ = {best_kappa_found:.3e} for this session")
+    st.sidebar.success(f"Applied Îº = {best_kappa_found:.3e} for this session")
 
 
     try:
         new_default = _load_al_kappa_default()
         # Update the number_input default by writing into session_state, if present
         st.session_state["temporal_kappa_default"] = float(new_default)
-        st.sidebar.info(f"Reloaded κ default: {new_default:.3e}")
+        st.sidebar.info(f"Reloaded Îº default: {new_default:.3e}")
     except Exception as e:
         st.sidebar.error(f"Reload failed: {e}")
 
@@ -528,7 +652,7 @@ def _get_weights_for_epoch_dateaware(epoch_s: float) -> list[float]:
             seed=0,
         )
     )
-    W_local = _weights_array(w_comp, white_max)
+    W_local = _num_weights_array(w_comp)
     s = W_local.sum()
     if s > 0:
         W_local = W_local / s
@@ -1031,7 +1155,7 @@ def _predict(n_sets: int):
     except Exception as _e:
         pass  # fail-safe
 
-# Generate candidates
+    # Generate candidates
 
     if n_sets > 1 and game != "pick3":
         cand = _sample_candidates(W, Sp, n_cand=candidate_pool, shortlist_k=int(shortlist_k))
@@ -1075,34 +1199,37 @@ def _predict(n_sets: int):
         sp_val = None if (sp in ("", None)) else int(sp)
         out.append({"white": whites_sorted, "special": sp_val, "notes": str(p.get("notes",""))})
     
-# ---- Safeguards: ensure names exist even if earlier steps failed ----
-if 'out' not in locals():
-    out = None
-if 'W' not in locals():
-    W = None
-if 'Sp' not in locals():
-    Sp = None
+    # ---- Safeguards: ensure names exist even if earlier steps failed ----
+    if 'out' not in locals():
+        out = None
+    if 'W' not in locals():
+        W = None
+    if 'Sp' not in locals():
+        Sp = None
 
-# ---- Temporal logging (for learning baseline) ----
-try:
-    next_draw_epoch_for_log = _next_draw_epoch_seconds()
-    _log_temporal_run(
-        game=game,
-        next_draw_epoch=next_draw_epoch_for_log,
-        controls=controls_temporal if 'controls_temporal' in globals() else None,
-        diag_w=locals().get('diag_w_for_log'),
-        diag_sp=locals().get('diag_sp_for_log'),
-        W_base=(W_base_copy_for_log.tolist() if hasattr(W_base_copy_for_log,"tolist") else W_base_copy_for_log),
-        W_final=(W.tolist() if hasattr(W,"tolist") else None),
-        Sp_base=(Sp_base_copy_for_log.tolist() if (Sp_base_copy_for_log is not None and hasattr(Sp_base_copy_for_log,"tolist")) else Sp_base_copy_for_log),
-        Sp_final=(Sp.tolist() if (Sp is not None and hasattr(Sp,"tolist")) else None),
-        picks=out,
-    )
-except Exception:
-    pass
-out_last = (out, W, Sp, None)  # stored for viz; avoid top-level return on cloud
-
-
+    # ---- Temporal logging (for learning baseline) ----
+    try:
+        next_draw_epoch_for_log = _next_draw_epoch_seconds()
+        _Wb = locals().get('W_base_copy_for_log')
+        _Spb = locals().get('Sp_base_copy_for_log')
+        _Wf = locals().get('W')
+        _Spf = locals().get('Sp')
+        _log_temporal_run(
+            game=game,
+            next_draw_epoch=next_draw_epoch_for_log,
+            controls=controls_temporal if 'controls_temporal' in globals() else None,
+            diag_w=locals().get('diag_w_for_log'),
+            diag_sp=locals().get('diag_sp_for_log'),
+            W_base=(_Wb.tolist() if hasattr(_Wb, 'tolist') else _Wb),
+            W_final=(_Wf.tolist() if hasattr(_Wf, 'tolist') else None),
+            Sp_base=(_Spb.tolist() if hasattr(_Spb, 'tolist') else _Spb),
+            Sp_final=(_Spf.tolist() if (_Spf is not None and hasattr(_Spf, 'tolist')) else None),
+            picks=out,
+        )
+    except Exception:
+        # fail silently to avoid breaking UI, but don't crash logging
+        pass
+    return (out, W, Sp, None)
 def _entropy(vec):
     import math
     s = float(sum(max(1e-18, float(x)) for x in vec))
@@ -1127,8 +1254,8 @@ def _log_temporal_run(game: str,
     Append a row to Data/temporal_logs.csv capturing diagnostics for learning.
     """
     try:
-        os.makedirs("Data", exist_ok=True)
-        path = os.path.join("Data", "temporal_logs.csv")
+        (DATA).mkdir(parents=True, exist_ok=True)
+        path = (DATA / "temporal_logs.csv")
         # Prepare row
         import time
         row = {
@@ -1181,9 +1308,23 @@ def _log_temporal_run(game: str,
         row["Sp_base"] = json.dumps(Sp_base) if Sp_base is not None else None
         row["Sp_final"] = json.dumps(Sp_final) if Sp_final is not None else None
 
-        # Write header if file is new
-        write_header = not os.path.exists(path)
-        with open(path, "a", newline="", encoding="utf-8") as f:
+        # Write header if file is new OR header schema mismatched (e.g., placeholder file with only 'run_ts')
+        write_header = not (path.exists())
+        if path.exists() and not write_header:
+            try:
+                with open(str(path), "r", encoding="utf-8", newline="") as rf:
+                    first = rf.readline().strip()
+                existing = [h.strip() for h in first.split(",")] if first else []
+                desired = list(row.keys())
+                header_mismatch = (existing != desired)
+            except Exception:
+                header_mismatch = True
+            if header_mismatch:
+                # Rewrite file with correct header before appending
+                with open(str(path), "w", newline="", encoding="utf-8") as wf:
+                    wtmp = csv.DictWriter(wf, fieldnames=list(row.keys()))
+                    wtmp.writeheader()
+        with open(str(path), "a", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, fieldnames=list(row.keys()))
             if write_header:
                 w.writeheader()
@@ -1195,10 +1336,10 @@ def _log_temporal_run(game: str,
 
 def _al_config_path():
     # default location inside project
-    return os.path.join("extras", "al_config.json")
+    return os.path.join(str(EXTRAS), "al_config.json")
 
 def _load_al_kappa_default(path=None, fallback=0.0):
-    """Load default κ from autotuner config JSON, fallback if not found."""
+    """Load default Îº from autotuner config JSON, fallback if not found."""
     path = path or _al_config_path()
     try:
         if os.path.exists(path):
@@ -1209,7 +1350,7 @@ def _load_al_kappa_default(path=None, fallback=0.0):
     return float(fallback)
 
 def _save_al_kappa_config(kappa: float, meta: dict | None = None, path=None) -> bool:
-    """Persist κ and metadata to config JSON."""
+    """Persist Îº and metadata to config JSON."""
     path = path or _al_config_path()
     try:
         os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -1285,14 +1426,14 @@ def _hot_cold_panel():
 
     c1, c2 = st.columns(2)
     with c1:
-        st.subheader("🔥 Hot (most frequent)")
+        st.subheader(" Hot (most frequent)")
         st.write(", ".join([f"{n} ({c})" for n,c in hot_list]))
     with c2:
-        st.subheader("🧊 Cold (least frequent)")
+        st.subheader("Cold (least frequent)")
         st.write(", ".join([f"{n} ({c})" for n,c in cold_list]))
 
 def _next_draw_info():
-    st.subheader("📅 Next draw & jackpot")
+    st.subheader(" Next draw & jackpot")
     schedules = {
         "powerball": dict(days=[0,2,5], hour=20, minute=59),
         "megamillions": dict(days=[1,4], hour=21, minute=0),
@@ -1355,7 +1496,7 @@ def _render_results(picks, W, Sp):
     st.subheader("Your numbers")
     for i, p in enumerate(picks, 1):
         line = _format_plain_line(i, p)
-        badge = " 🟢" if "diversity" in (p.get("notes","").lower()) else ""
+        badge = " ðŸŸ¢" if "diversity" in (p.get("notes","").lower()) else ""
         st.markdown(f"**{line}{badge}**")
 
     st.subheader("Why these (in normal English)")
@@ -1363,21 +1504,21 @@ def _render_results(picks, W, Sp):
         reasons = _human_reasons(p)
         st.markdown(f"**Pick {i}:**")
         for r in reasons:
-            st.write("• " + r)
+            st.write("â€¢ " + r)
 
 def _human_reasons(p: Dict[str,Any]) -> List[str]:
     notes = p.get("notes","")
     reasons = []
-    for a,b in re.findall(r"meta swapped (\d+)→(\d+)", notes):
+    for a,b in re.findall(r"meta swapped (\d+)â†’(\d+)", notes):
         reasons.append(f"Swapped {a} for {b} because {b} looked better given the probabilities.")
-    pulls = re.findall(r"shortlist pull (\d+)→(\d+)", notes)
+    pulls = re.findall(r"shortlist pull (\d+)â†’(\d+)", notes)
     if pulls:
         reasons.append(f"Nudged {len(pulls)} number(s) toward the top-ranked shortlist.")
-    m = re.search(r"EV swap lowered risk ([0-9.]+)→([0-9.]+)", notes)
+    m = re.search(r"EV swap lowered risk ([0-9.]+)â†’([0-9.]+)", notes)
     if m:
         x, y = m.groups()
         reasons.append(f"Reduced 'popular combo' risk from {float(x):.2f} to {float(y):.2f} to avoid splitting a jackpot.")
-    m2 = re.search(r"conf[≈~=]?([0-9.]+)", notes)
+    m2 = re.search(r"conf[â‰ˆ~=]?([0-9.]+)", notes)
     if m2:
         c = float(m2.group(1))
         reasons.append(f"Overall confidence for this set is about {int(c*100)}%.")
@@ -1391,7 +1532,7 @@ def _human_reasons(p: Dict[str,Any]) -> List[str]:
         spc = parts.get("space",0.0); wierd = parts.get("weird",0.0)
         total = moon+mk+spc+wierd
         if total>0:
-            reasons.append(f"Oracle signal applied (×{oracle_gain:.1f}): moon {moon*100:.0f}%, markets {mk*100:.0f}%, space {spc*100:.0f}%, alignments {wierd*100:.0f}%.")
+            reasons.append(f"Oracle signal applied (Ã—{oracle_gain:.1f}): moon {moon*100:.0f}%, markets {mk*100:.0f}%, space {spc*100:.0f}%, alignments {wierd*100:.0f}%.")
     if opt_quantum:
         reasons.append(f"Blended probabilities across {quantum_universes} simulated universes; 'decoherence' {decoherence:.2f} softens extremes.")
     if opt_per_ball_ml:
@@ -1478,16 +1619,16 @@ def _hot_cold_panel():
 
     c1, c2 = st.columns(2)
     with c1:
-        st.subheader("🔥 Hot (most frequent)")
+        st.subheader(" Hot (most frequent)")
         st.write(", ".join([f"{n} ({c})" for n,c in hot_list]))
     with c2:
-        st.subheader("🧊 Cold (least frequent)")
+        st.subheader("Cold (least frequent)")
         st.write(", ".join([f"{n} ({c})" for n,c in cold_list]))
 
 _hot_cold_panel()
 
 def _next_draw_info():
-    st.subheader("📅 Next draw & jackpot")
+    st.subheader(" Next draw & jackpot")
     schedules = {
         "powerball": dict(days=[0,2,5], hour=20, minute=59),
         "megamillions": dict(days=[1,4], hour=21, minute=0),
@@ -1528,7 +1669,7 @@ _next_draw_info()
 
 # Oracle panel (visual)
 if opt_oracle:
-    with st.expander("🔮 Oracle Influence Today"):
+    with st.expander(" Oracle Influence Today"):
         parts = oracle_mods.get("parts", {})
         cols = st.columns(5)
         with cols[0]: st.metric("Moon", f"{parts.get('moon',0.0)*100:.1f}%")
@@ -1584,7 +1725,7 @@ try:
     if isinstance(view, list):
         view = view[0] if view else ""
     if view == "admin":
-        st.info("Open the Admin page from the left navigation (About → Admin).")
+        st.info("Open the Admin page from the left navigation (About â†’ Admin).")
         st.stop()
 except Exception:
     pass

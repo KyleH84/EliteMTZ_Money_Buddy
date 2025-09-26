@@ -1,5 +1,12 @@
-
 from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
+
 import pandas as pd, hashlib, numpy as np
 
 def hist_hash(df: pd.DataFrame, cols=None, last_n: int = 120) -> str:

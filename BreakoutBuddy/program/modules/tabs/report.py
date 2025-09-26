@@ -1,41 +1,95 @@
-
+# program/modules/tabs/report.py
 from __future__ import annotations
-import streamlit as st
-import pandas as pd
+
 from pathlib import Path
-from modules import explain as explain_mod
+from typing import Any
+import os
+import pandas as pd  # type: ignore
+import streamlit as st
 
-def _data_dir() -> Path:
-    here = Path(__file__).resolve()
-    for up in [here, *here.parents]:
-        cand = up / "Data"
-        if cand.is_dir():
-            return cand
-        if up.name == "program":
-            cand2 = up.parent / "Data"
-            if cand2.is_dir():
-                return cand2
-    fb = here.parent / "Data"
-    fb.mkdir(parents=True, exist_ok=True)
-    return fb
+APP_ROOT = Path(__file__).resolve().parents[3]
+DATA_DIR = Path(os.getenv("BREAKOUTBUDDY_DATA", APP_ROOT / "Data")).expanduser().resolve()
+DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-def render_report_tab(**kwargs):
-    st.header("Report")
-    p = _data_dir() / "ranked_latest.csv"
-    if not p.exists():
-        st.info("No ranked CSV yet. Run a rank once.")
+def _load_df() -> pd.DataFrame:
+    for nm in ("ranked_latest.csv","explore_snapshot_latest.csv","ranked.csv","snapshot.csv"):
+        p = DATA_DIR / nm
+        if p.exists():
+            try:
+                return pd.read_csv(p)
+            except Exception:
+                pass
+    return pd.DataFrame()
+
+def _render(df: pd.DataFrame) -> None:
+    # Safety casts
+    for col in ("ChangePct","RVOL","RSI4","RelSPY"):
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors="coerce")
+
+    tabs = st.tabs(["Top Gainers", "Top Losers", "High RVOL", "Overbought/Oversold", "Summary"])
+
+    with tabs[0]:
+        if "ChangePct" in df.columns:
+            top = df.sort_values("ChangePct", ascending=False).head(50)
+            st.dataframe(top, use_container_width=True, hide_index=True)
+        else:
+            st.info("ChangePct not available.")
+
+    with tabs[1]:
+        if "ChangePct" in df.columns:
+            bot = df.sort_values("ChangePct", ascending=True).head(50)
+            st.dataframe(bot, use_container_width=True, hide_index=True)
+        else:
+            st.info("ChangePct not available.")
+
+    with tabs[2]:
+        if "RVOL" in df.columns:
+            hi = df[df["RVOL"] >= 1.5].sort_values("RVOL", ascending=False).head(100)
+            st.dataframe(hi, use_container_width=True, hide_index=True)
+        else:
+            st.info("RVOL not available.")
+
+    with tabs[3]:
+        if "RSI4" in df.columns:
+            overbought = df[df["RSI4"] >= 75].sort_values("RSI4", ascending=False).head(100)
+            oversold = df[df["RSI4"] <= 30].sort_values("RSI4", ascending=True).head(100)
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown("**Overbought (RSI4 ≥ 75)**")
+                st.dataframe(overbought, use_container_width=True, hide_index=True)
+            with col2:
+                st.markdown("**Oversold (RSI4 ≤ 30)**")
+                st.dataframe(oversold, use_container_width=True, hide_index=True)
+        else:
+            st.info("RSI4 not available.")
+
+    with tabs[4]:
+        st.markdown("**Snapshot Summary**")
+        cols = [c for c in ("Ticker","ChangePct","RVOL","RSI4","RelSPY") if c in df.columns]
+        st.write(f"Columns present: {', '.join(cols) or '(none)'}")
+        st.write(f"Rows: {len(df)}")
+        if "ChangePct" in df.columns:
+            st.write(f"Avg ChangePct: {df['ChangePct'].mean():.3f}%")
+        if "RVOL" in df.columns:
+            st.write(f"Avg RVOL: {df['RVOL'].mean():.3f}")
+        if "RSI4" in df.columns:
+            st.write(f"Median RSI4: {df['RSI4'].median():.3f}")
+        if "RelSPY" in df.columns:
+            st.write(f"Avg RelSPY: {df['RelSPY'].mean():.3f}")
+
+def render_report_tab(*, settings: Any = None) -> None:
+    st.subheader("Reports")
+    df = _load_df()
+    if df is None or df.empty:
+        st.info("No data to report on. Refresh from Dashboard/Explore first.")
         return
-    try:
-        df = pd.read_csv(p)
-    except Exception as e:
-        st.error(f"Failed to read ranked CSV: {e}")
-        return
-    try:
-        table = explain_mod.explain_scan(df)
-        st.dataframe(table, height=520, width='stretch')
-        if st.button("Download report CSV"):
-            out = _data_dir() / "report_latest.csv"
-            table.to_csv(out, index=False)
-            st.success(f"Saved {out}")
-    except Exception as e:
-        st.error(f"Report build failed: {e}")
+    _render(df)
+
+# Alias for alternate wiring:
+def render_reports_tab(*, settings: Any = None) -> None:
+    render_report_tab(settings=settings)
+
+# Generic name some apps use:
+def render(*, settings: Any = None) -> None:
+    render_report_tab(settings=settings)

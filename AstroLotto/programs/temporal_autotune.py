@@ -1,3 +1,11 @@
+from __future__ import annotations
+
+from pathlib import Path
+import os
+PROJECT_DIR = Path(__file__).resolve().parent
+(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
+(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
+
 
 # temporal_autotune.py
 # Autotunes the Kozyrev coupling kappa using your CSV logs.
@@ -9,7 +17,6 @@
 # Author: Chad (for Kyle)
 # License: MIT
 
-from __future__ import annotations
 import json
 import math
 from dataclasses import dataclass
@@ -186,6 +193,9 @@ def tune_kappa_astrolotto(
       - white_winning (JSON list of winning white numbers, 1-based)
       - special_winning (int or null)
     """
+    # Friendly handling if logs file is missing
+    if not os.path.exists(logs_csv):
+        raise ValueError(f"Logs not found at {logs_csv}. Run a prediction to generate temporal_logs.csv first.")
     d = pd.read_csv(logs_csv)
     if results_csv is None:
         return {"warning": "No results CSV provided; cannot tune kappa."}

@@ -1,0 +1,11 @@
+{
+  "weights": {
+    "AgentBoost_exact": 0.34644478063540096,
+    "Combined_with_agents": 0.6535552193645991
+  },
+  "meta": {
+    "status": "ok",
+    "note": "corr_target",
+    "source": "auto_tune"
+  }
+}

@@ -1,51 +1,124 @@
-
 from __future__ import annotations
+
+import os, sys, runpy
 from pathlib import Path
-import runpy
-import sys
 import streamlit as st
-
-st.set_page_config(page_title="Money Buddy — Cloud", page_icon="💼", layout="wide")
-
-ROOT = Path(__file__).resolve().parent
-APPS = {
-    "AstroLotto": ROOT / "AstroLotto" / "programs" / "app_main.py",
-    "BreakoutBuddy": ROOT / "BreakoutBuddy" / "program" / "00_Dashboard.py",
-}
-
-st.title("💼 Money Buddy — Cloud")
-st.caption("Single-entry app that routes to AstroLotto or BreakoutBuddy in the same Streamlit process (cloud-safe).")
-
-with st.sidebar:
-    st.header("Choose an app")
-    choice = st.radio("App", list(APPS.keys()), index=0)
-
-missing = [name for name, path in APPS.items() if not path.exists()]
-if missing:
-    st.error("Missing entry files for: " + ", ".join(missing))
-    with st.expander("Debug info"):
-        for name, p in APPS.items():
-            st.write(f"{name}: {p}")
-    st.stop()
-
-with st.expander("Environment / Secrets (diagnostic)"):
-    bridge = st.secrets.get("LLMBRIDGE_URL", None) if hasattr(st, "secrets") else None
-    st.write({"LLMBRIDGE_URL": bool(bridge)})
-
-st.divider()
-st.subheader(f"▶ {choice}")
-st.caption("Running inline. If you navigate back here, use the sidebar to switch apps.")
-
-script_path = APPS[choice]
-module_dir = str(script_path.parent)
-
-# Prepend the target module directory so 'from X import Y' works for sibling modules.
-if module_dir not in sys.path:
-    sys.path.insert(0, module_dir)
-
+# --- Streamlit compatibility shim ---
+# Older code may call st.experimental_rerun; alias it to st.rerun if missing.
 try:
-    runpy.run_path(str(script_path), run_name="__main__")
-except SystemExit:
-    pass
-except Exception as e:
-    st.exception(e)
+    import streamlit as _st_comp
+    if not hasattr(_st_comp, "experimental_rerun") and hasattr(_st_comp, "rerun"):
+        _st_comp.experimental_rerun = _st_comp.rerun  # type: ignore[attr-defined]
+except Exception as _shim_e:
+    print("Streamlit compat shim warning:", _shim_e)
+# --- End shim ---
+
+
+# --- Cloud paths & BB snapshot preflight ---
+MB_BASE_DIR = Path(os.getenv("MB_BASE_DIR", "/tmp/money_buddy"))
+DATA_DIR = MB_BASE_DIR / "Data"
+os.environ["BREAKOUTBUDDY_DATA"] = str(DATA_DIR)
+SNAP_PATH = DATA_DIR / "bb_snapshot.csv"
+try:
+    if not SNAP_PATH.exists():
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        SNAP_PATH.write_text("symbol,rank,score,date\n", encoding="utf-8")
+except Exception as _e:
+    print("BB snapshot preflight warning:", _e)
+
+def _run_script(path: Path, sys_paths: list[Path] = None):
+    # Temporarily extend sys.path so app-local imports (e.g., 'modules') resolve
+    old_sys_path = list(sys.path)
+    try:
+        if sys_paths:
+            for p in sys_paths:
+                sp = str(p)
+                if sp not in sys.path:
+                    sys.path.insert(0, sp)
+        runpy.run_path(str(path), run_name="__main__")
+    except SystemExit:
+        pass  # let Streamlit rerun/stop pass
+    except Exception as e:
+        st.error(f"Failed to run {path}: {type(e).__name__}: {e}")
+    finally:
+        sys.path[:] = old_sys_path
+
+def _discover_page_files(app_root: Path, subdirs: list[str]):
+    # Return list[Path] of page scripts excluding app_main.py and __init__.py
+    pages = []
+    for sub in subdirs:
+        p = app_root / sub
+        if p.exists():
+            for f in sorted(p.rglob("*.py")):
+                name = f.name.lower()
+                if name == "__init__.py" or name == "app_main.py":
+                    continue
+                pages.append(f)
+    return pages
+
+def _nice_title(p: Path):
+    # Derive a tab title from filename like '2_Admin_Tools.py' -> 'Admin Tools'
+    s = p.stem
+    # Drop numeric/order prefixes
+    while s and (s[0].isdigit() or s[0] in "_-"):
+        s = s[1:]
+    s = s.replace("_", " ").replace("-", " ").strip()
+    return s or p.stem
+
+st.set_page_config(page_title="EliteMTZ Money Buddy", layout="wide")
+
+st.sidebar.title("Apps")
+app_choice = st.sidebar.radio("Choose app", ["AstroLotto", "BreakoutBuddy"], index=0)
+
+base_dir = Path(__file__).resolve().parent
+
+if app_choice == "AstroLotto":
+    app_dir = base_dir / "AstroLotto" / "programs"
+    main_path = app_dir / "app_main.py"
+
+    # Discover additional pages
+    extra_pages = _discover_page_files(app_dir, ["pages", "programs/pages", "program/pages"])
+
+    tab_titles = ["Main"] + [_nice_title(p) for p in extra_pages]
+    tabs = st.tabs(tab_titles)
+
+    with tabs[0]:
+        if main_path.exists():
+            _run_script(main_path, sys_paths=[app_dir, app_dir.parent])
+        else:
+            st.error(f"Main file not found: {main_path}")
+
+    for t, p in zip(tabs[1:], extra_pages):
+        with t:
+            _run_script(p, sys_paths=[app_dir, app_dir.parent])
+
+else:
+    # BreakoutBuddy
+    app_dir = base_dir / "BreakoutBuddy"
+    program_dir = app_dir / "program"
+    # Detect main
+    bb_main = None
+    for candidate in ["app_main.py", "00_Dashboard.py", "main.py"]:
+        c = program_dir / candidate
+        if c.exists():
+            bb_main = c
+            break
+    if bb_main is None:
+        bb_main = program_dir / "00_Dashboard.py"
+
+    # Discover page scripts under common locations
+    extra_pages = _discover_page_files(app_dir, ["program/pages", "pages"])
+
+    tab_titles = ["Main"] + [_nice_title(p) for p in extra_pages]
+    tabs = st.tabs(tab_titles)
+
+    with tabs[0]:
+        if bb_main.exists():
+            # Ensure BB's 'modules' package resolves by adding program_dir to sys.path
+            _run_script(bb_main, sys_paths=[program_dir, app_dir, base_dir])
+        else:
+            st.error(f"Main file not found: {bb_main}")
+
+    for t, p in zip(tabs[1:], extra_pages):
+        with t:
+            _run_script(p, sys_paths=[program_dir, app_dir, base_dir])
