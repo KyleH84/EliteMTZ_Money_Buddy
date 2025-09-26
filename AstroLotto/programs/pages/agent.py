@@ -8,6 +8,11 @@ from typing import Optional
 
 import streamlit as st
 
+# page-local key namespace
+_AGENT_KEY_PREFIX = "AL_AGENT_"
+def _k(name: str) -> str:
+    return f"{_AGENT_KEY_PREFIX}{name}"
+
 # ------------------------------------------------------------
 # Paths
 # This file lives at AstroLotto/programs/pages/agent.py
@@ -226,7 +231,7 @@ def render():
 
     # -------- Data source (.\\Data with override) --------
     st.write("### Data source")
-    ui_override = st.text_input("Data folder (leave blank to use .\\Data)", str(DEFAULT_DATA_DIR), key="agents_data_dir")
+    ui_override = st.text_input("Data folder (leave blank to use .\\Data)", str(DEFAULT_DATA_DIR), key=_k("agents_data_dir"))
     data_dir = _effective_data_dir(ui_override.strip() if ui_override else None)
     data_dir.mkdir(exist_ok=True, parents=True)
 
