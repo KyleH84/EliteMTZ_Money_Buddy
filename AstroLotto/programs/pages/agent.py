@@ -8,10 +8,47 @@ from typing import Optional
 
 import streamlit as st
 
-# page-local key namespace
-_AGENT_KEY_PREFIX = "AL_AGENT_"
-def _k(name: str) -> str:
-    return f"{_AGENT_KEY_PREFIX}{name}"
+# --- AUTO-UNIQUE KEYS for agents_data_dir (avoid DuplicateElementKey) ---
+try:
+    if not hasattr(st, '_al_agent_key_registry'):
+        st._al_agent_key_registry = set()
+
+    def _al_agent_kbase():
+        # Prefer namespaced key if helper exists, else fallback
+        try:
+            return _k('agents_data_dir')  # from our local helper if present
+        except Exception:
+            return 'AL_AGENT_agents_data_dir'
+
+    def _al_agent_ensure_unique_key(base_key: str) -> str:
+        key = base_key
+        idx = 1
+        while key in st._al_agent_key_registry:
+            idx += 1
+            key = f"{base_key}__{idx}"
+        st._al_agent_key_registry.add(key)
+        return key
+
+    # Monkey-patch text_input to de-dup only this key while keeping session_state in sync
+    _orig_text_input = st.text_input
+    def _al_agent_text_input(*args, **kwargs):
+        if 'key' in kwargs and kwargs['key'] in {'agents_data_dir', 'AL_AGENT_agents_data_dir'}:
+            base = _al_agent_kbase()
+            # initial value from canonical key
+            init_val = kwargs.get('value', st.session_state.get(base, ''))
+            kwargs['value'] = init_val
+            uniq = _al_agent_ensure_unique_key(base)
+            kwargs['key'] = uniq
+            def _sync():
+                st.session_state[base] = st.session_state.get(uniq, init_val)
+            kwargs.setdefault('on_change', _sync)
+        return _orig_text_input(*args, **kwargs)
+    st.text_input = _al_agent_text_input
+except Exception as _al_agent_e:
+    # Non-fatal: fall back to default behavior
+    pass
+# --- END AUTO-UNIQUE KEYS ---
+
 
 # ------------------------------------------------------------
 # Paths
@@ -231,7 +268,7 @@ def render():
 
     # -------- Data source (.\\Data with override) --------
     st.write("### Data source")
-    ui_override = st.text_input("Data folder (leave blank to use .\\Data)", str(DEFAULT_DATA_DIR), key=_k("agents_data_dir"))
+    ui_override = st.text_input("Data folder (leave blank to use .\\Data)", str(DEFAULT_DATA_DIR), key="agents_data_dir")
     data_dir = _effective_data_dir(ui_override.strip() if ui_override else None)
     data_dir.mkdir(exist_ok=True, parents=True)
 
