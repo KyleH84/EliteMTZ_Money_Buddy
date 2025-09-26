@@ -39,30 +39,27 @@ def enrich_features(tickers: List[str], base_df: Optional[pd.DataFrame] = None) 
     # Drop any overlapping feature columns in base_df then left-join fresh.
     overlap = [c for c in fresh.columns if c != key and c in base_df.columns]
     merged = base_df.drop(columns=overlap, errors="ignore").merge(fresh, on=key, how="left")
-    # Ensure all expected features exist and fill missing with safe defaults
-    # If some core features are missing entirely, try to recompute from fresh snapshot.
+    # Ensure expected features exist and fill with sane defaults; recompute if missing
     try:
         needed = [c for c in EXPECTED_FEATURES if c not in merged.columns]
         if needed:
-            # Attempt to pull fresh enriched rows and merge missing cols
             try:
-                _fix = data_mod.pull_enriched_snapshot(list(merged['Ticker'].dropna().astype(str).unique()))
+                _tickers = list(merged['Ticker'].dropna().astype(str).unique())
+                _fix = data_mod.pull_enriched_snapshot(_tickers)
                 if not _fix.empty:
                     use_cols = [c for c in _fix.columns if c in needed or c == 'Ticker']
                     merged = merged.merge(_fix[use_cols], on='Ticker', how='left', suffixes=('', '_fresh'))
             except Exception:
                 pass
-        # Now guarantee presence with defaults
         defaults = {
-            "Close": 0.0, "ChangePct": 0.0, "RSI2": 50.0, "RSI4": 50.0,
-            "ConnorsRSI": 50.0, "RelSPY": 0.0, "RVOL": 1.0, "ATR": 0.0,
-            "PctFrom200d": 0.0, "SqueezeHint": 0.0,
-            "P_up": 0.55, "CrowdRisk": 0.0, "AgentsScore": None, "AgentsConf": None,
+            'Close': 0.0, 'ChangePct': 0.0, 'RSI2': 50.0, 'RSI4': 50.0,
+            'ConnorsRSI': 50.0, 'RelSPY': 0.0, 'RVOL': 1.0, 'ATR': 0.0,
+            'PctFrom200d': 0.0, 'SqueezeHint': 0.0, 'P_up': 0.55,
+            'CrowdRisk': 0.0, 'AgentsScore': None, 'AgentsConf': None,
         }
         for _c, _d in defaults.items():
             if _c not in merged.columns:
                 merged[_c] = _d
-        # Fill NaNs with defaults for display stability
         for _c, _d in defaults.items():
             merged[_c] = pd.to_numeric(merged[_c], errors='coerce') if isinstance(_d, (int,float)) else merged[_c]
             merged[_c] = merged[_c].fillna(_d)

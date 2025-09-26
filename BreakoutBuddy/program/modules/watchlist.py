@@ -121,9 +121,9 @@ def enriched_snapshot(tickers: List[str], enrich_features_fn=None) -> pd.DataFra
         return pd.DataFrame({"Ticker": tickers})
 
     sub = base[base["Ticker"].astype(str).isin(tickers)].copy()
-# Ensure the result includes *all* requested tickers (not just those present in snapshot)
-_all_req = pd.DataFrame({"Ticker": tickers})
-sub = _all_req.merge(sub, on="Ticker", how="left")
+    # Ensure all requested tickers appear, even if not present in snapshot
+    _all_req = pd.DataFrame({'Ticker': [str(t).strip().upper() for t in tickers]})
+    sub = _all_req.merge(sub, on='Ticker', how='left')
 
 
     # Optional enrichment hook
@@ -139,18 +139,25 @@ sub = _all_req.merge(sub, on="Ticker", how="left")
             sub = scoring_mod._ensure_rank_cols(sub)  # type: ignore
         except Exception:
             sub = _fallback_rank(sub)
-# Robust fallbacks so dashboards don't show 'none' when columns are missing
-for _col, _default in [
-    ("RelSPY", 0.0),
-    ("P_up", 0.0),
-    ("ConnorsRSI", 0.0),
-    ("SqueezeHint", ""),
-    ("RVOL", 0.0),
-    ("RSI4", 0.0),
-    ("ChangePct", 0.0),
-]:
-    if _col not in sub.columns:
-        sub[_col] = _default
+    # Guarantee indicator columns exist with safe defaults
+    _defaults = {
+        'RelSPY': 0.0,
+        'P_up': 0.55,
+        'ConnorsRSI': 50.0,
+        'SqueezeHint': 0.0,
+        'RVOL': 1.0,
+        'RSI4': 50.0,
+        'ChangePct': 0.0,
+    }
+    for _c, _d in _defaults.items():
+        if _c not in sub.columns:
+            sub[_c] = _d
+        else:
+            try:
+                sub[_c] = pd.to_numeric(sub[_c], errors='coerce') if isinstance(_d, (int, float)) else sub[_c]
+                sub[_c] = sub[_c].fillna(_d)
+            except Exception:
+                pass
 
     else:
         sub = _fallback_rank(sub)

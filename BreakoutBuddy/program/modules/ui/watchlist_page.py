@@ -68,19 +68,17 @@ def render(*, conn=None, settings: Any = None, enrich_features_fn=None, header: 
         st.info("No data available for watchlist.")
         return
 
-    
-    # Guarantee that all watchlist tickers are shown, even if snapshot/scoring dropped some
+        # Guarantee that all watchlist tickers are shown, even if snapshot/scoring dropped some
     try:
         wl = wlmod.read_watchlist()
         if isinstance(wl, (list, tuple)) and wl:
-            _all = pd.DataFrame({"Ticker": [str(t).strip().upper() for t in wl]})
-            if "Ticker" in df.columns:
-                df = _all.merge(df, on="Ticker", how="left")
+            _all = pd.DataFrame({'Ticker': [str(t).strip().upper() for t in wl]})
+            if 'Ticker' in df.columns:
+                df = _all.merge(df, on='Ticker', how='left')
             else:
                 df = _all
     except Exception:
         pass
-
     st.dataframe(df, use_container_width=True, hide_index=True)
 
     # Quick explain on the current watchlist snapshot

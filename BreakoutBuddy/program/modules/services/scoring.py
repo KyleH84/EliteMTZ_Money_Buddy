@@ -62,8 +62,6 @@ def rank_now(arg) -> pd.DataFrame | tuple:
         tickers = data_mod.list_universe(uni_n)
         snap = data_mod.pull_enriched_snapshot(tickers)
         ranked = _ensure_rank_cols(snap)
-        if top_n and 0 < top_n < len(ranked):
-            ranked = ranked.head(top_n)
         try:
             regime = regime_mod.compute_regime()
         except Exception:
