@@ -1,3 +1,4 @@
+﻿from modules.utilities.reporting_fixed_panel import render_reporting_fixed_panel
 # program/modules/tabs/admin.py
 from __future__ import annotations
 
@@ -188,11 +189,11 @@ def _section_csv_qa():
                     st.markdown("**Local model read**")
                     st.write(aug)
                 else:
-                    st.info("Local LLM not available or failed — showing rule-based summary above.")
+                    st.info("Local LLM not available or failed â€” showing rule-based summary above.")
 
 
 def _section_maintenance():
-    st.subheader("Maintenance — Clean build junk")
+    st.subheader("Maintenance â€” Clean build junk")
     st.caption("Removes __pycache__, *.pyc, build/dist, .pytest_cache, and egg-info inside this app folder.")
     if st.button("Clean now", key="maint_clean_now"):
         base = APP_ROOT
@@ -322,3 +323,8 @@ def render_admin_tab(*, settings: Any = None):
         _section_regime()
     with tabs[6]:
         _section_utilities()
+
+
+# Auto-wired panel
+render_reporting_fixed_panel()
+
