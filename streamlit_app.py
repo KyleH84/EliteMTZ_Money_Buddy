@@ -35,9 +35,9 @@ _SUPA_KEY = os.getenv("SUPABASE_KEY")
 with st.sidebar:
     st.subheader("Storage")
     if _SUPA_URL and _SUPA_KEY:
-        st.success("Supabase connected", icon="ðŸ—„ï¸")
+        st.success("Supabase connected")
     else:
-        st.warning("Supabase not configured â€” CSV I/O will use local ephemeral filesystem.", icon="âš ï¸")
+        st.warning("Supabase not configured — CSV I/O will use local ephemeral filesystem.")
 
 
 # --- Streamlit compatibility shim ---

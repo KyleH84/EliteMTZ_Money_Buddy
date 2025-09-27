@@ -8,6 +8,8 @@ import os
 import pandas as pd  # type: ignore
 import numpy as np  # type: ignore
 import streamlit as st
+from utilities.feature_fixups import fill_feature_gaps
+from data.spy_loader import get_spy_prices
 
 # Optional yfinance
 try:
@@ -208,6 +210,11 @@ def render_dashboard_tab(*, settings: Any = None, has_agents: bool = False) -> N
     if df is None or df.empty:
         st.info("No ranked data yet. Click **Refresh now** to fetch from the internet, or **Load latest from disk**.")
         return
+
+    try:
+        df = fill_feature_gaps(df, spy_ref=get_spy_prices())
+    except Exception as _ffg_e:
+        pass
 
     view = df.copy().head(top_n)
     desired = [

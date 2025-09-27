@@ -6,6 +6,8 @@ from typing import Any
 import os
 import pandas as pd  # type: ignore
 import streamlit as st
+from utilities.feature_fixups import fill_feature_gaps
+from data.spy_loader import get_spy_prices
 
 APP_ROOT = Path(__file__).resolve().parents[3]
 DATA_DIR = Path(os.getenv("BREAKOUTBUDDY_DATA", APP_ROOT / "Data")).expanduser().resolve()
@@ -22,6 +24,10 @@ def _load_df() -> pd.DataFrame:
     return pd.DataFrame()
 
 def _render(df: pd.DataFrame) -> None:
+    try:
+        df = fill_feature_gaps(df, spy_ref=get_spy_prices())
+    except Exception as _ffg_e:
+        pass
     # Safety casts
     for col in ("ChangePct","RVOL","RSI4","RelSPY"):
         if col in df.columns:
