@@ -9,16 +9,33 @@ def render_watchlist(df: pd.DataFrame):
         new = st.text_input("Add ticker").strip().upper()
         if st.button("Add"):
             if new:
-                wlmod.add_to_watchlist(new)
-                st.success(f"Added {new} to watchlist")
+                try:
+                    if hasattr(wlmod, "add_to_watchlist"):
+                        wlmod.add_to_watchlist(new)
+                    else:
+                        wlmod.write_watchlist(list(set(wlmod.read_watchlist() + [new])))
+                    st.success(f"Added {new} to watchlist")
+                except Exception as e:
+                    st.error(f"Failed to add: {e}")
 
-        to_remove = st.multiselect("Remove tickers", wlmod.read_watchlist())
+        try:
+            existing = wlmod.read_watchlist()
+        except Exception:
+            existing = []
+
+        to_remove = st.multiselect("Remove tickers", existing)
         if st.button("Remove selected"):
-            for t in to_remove:
-                wlmod.remove_from_watchlist(t)
-            st.success(f"Removed: {', '.join(to_remove)}")
+            try:
+                if hasattr(wlmod, "remove_from_watchlist"):
+                    for t in to_remove:
+                        wlmod.remove_from_watchlist(t)
+                else:
+                    keep = [t for t in existing if t not in set(to_remove)]
+                    wlmod.write_watchlist(keep)
+                st.success(f"Removed: {', '.join(to_remove)}")
+            except Exception as e:
+                st.error(f"Failed to remove: {e}")
 
-    # Ensure every watchlist ticker appears in the table
     try:
         wl = wlmod.read_watchlist()
         if isinstance(wl, (list, tuple)) and wl:
@@ -30,8 +47,11 @@ def render_watchlist(df: pd.DataFrame):
     except Exception:
         pass
 
-    # Drop duplicate tickers if any and keep the newest row
     if df is not None and not df.empty and 'Ticker' in df.columns:
         df = df.drop_duplicates(subset=['Ticker'], keep='last')
 
     st.dataframe(df, use_container_width=True, hide_index=True)
+
+# Back-compat for callers importing render()
+def render(df: pd.DataFrame):
+    return render_watchlist(df)
