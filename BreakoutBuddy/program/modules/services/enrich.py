@@ -1,10 +1,10 @@
+
 from __future__ import annotations
 
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 
-# EXPECTED_FEATURES is referenced by callers; keep the same contract
 EXPECTED_FEATURES = [
     "Close","ChangePct","RSI2","RSI4","ConnorsRSI","RelSPY",
     "RVOL","ATR","PctFrom200d","SqueezeHint","P_up",
@@ -25,7 +25,6 @@ def _percent_rank(series: pd.Series, window: int) -> pd.Series:
 def _connors_rsi(close: pd.Series) -> pd.Series:
     rsi2 = _rsi(close, 2)
     rsi4 = _rsi(close, 4)
-    # simple streak: consecutive up/down days
     diff = close.diff()
     streak = (np.sign(diff) != np.sign(diff.shift())).cumsum()
     streak = (streak.groupby(streak).cumcount() + 1) * np.sign(diff).fillna(0)
@@ -56,7 +55,6 @@ def _fetch_latest_features(tickers: list[str]) -> pd.DataFrame:
         close = data["Adj Close"].to_frame()
         vol = data["Volume"].to_frame()
 
-    # Use last valid row for each symbol
     features = []
     for t in tickers:
         c = close[t].dropna() if t in close.columns else pd.Series(dtype=float)
@@ -64,7 +62,6 @@ def _fetch_latest_features(tickers: list[str]) -> pd.DataFrame:
         if c.empty:
             row = {"Ticker": t}
         else:
-            last = c.index[-1]
             chg = c.pct_change().iloc[-1] if len(c) > 1 else 0.0
             spy_c = close["SPY"].dropna() if "SPY" in close.columns else pd.Series(dtype=float)
             relspy = (c.pct_change().iloc[-1] - spy_c.pct_change().iloc[-1]) if len(c) > 1 and not spy_c.empty else 0.0
@@ -75,7 +72,7 @@ def _fetch_latest_features(tickers: list[str]) -> pd.DataFrame:
             rvol = (v.iloc[-1] / avg20) if avg20 and avg20 != 0 else 1.0
             atr = (c.rolling(14).std().iloc[-1] * np.sqrt(14)) if len(c) >= 14 else 0.0
             pct200 = ((c.iloc[-1] / c.rolling(200).mean().iloc[-1]) - 1.0) * 100 if len(c) >= 200 else 0.0
-            squeeze = 0.0  # lightweight placeholder signal
+            squeeze = 0.0
             row = {
                 "Ticker": t, "Close": float(c.iloc[-1]), "ChangePct": float(chg * 100.0),
                 "RSI2": float(rsi2), "RSI4": float(rsi4), "ConnorsRSI": float(crsi),
@@ -89,7 +86,6 @@ def _fetch_latest_features(tickers: list[str]) -> pd.DataFrame:
     return df
 
 def ensure_features(merged: pd.DataFrame) -> pd.DataFrame:
-    # Identify tickers missing any key features or with NaN values.
     need = []
     need_cols = ["RelSPY","ConnorsRSI","SqueezeHint","P_up","RVOL","RSI4","ChangePct","Close"]
     for _, row in merged.iterrows():
@@ -104,18 +100,14 @@ def ensure_features(merged: pd.DataFrame) -> pd.DataFrame:
 
     fetched = _fetch_latest_features(need)
     if not fetched.empty:
-        base_cols = [c for c in merged.columns if c != "Ticker"]
         merged = merged.drop_duplicates(subset=["Ticker"], keep="last")
         merged = merged.merge(fetched, on="Ticker", how="left", suffixes=('', '_fresh'))
-        # Prefer fresh values where existing are NaN/missing
         for col in EXPECTED_FEATURES:
             fresh = col + "_fresh"
             if fresh in merged.columns:
                 merged[col] = merged[col].combine_first(merged[fresh])
-        # Clean up helper columns
         merged = merged[[c for c in merged.columns if not c.endswith("_fresh")]]
 
-    # Final fill for stability
     defaults = {
         "Close": 0.0, "ChangePct": 0.0, "RSI2": 50.0, "RSI4": 50.0,
         "ConnorsRSI": 50.0, "RelSPY": 0.0, "RVOL": 1.0, "ATR": 0.0,
@@ -129,3 +121,9 @@ def ensure_features(merged: pd.DataFrame) -> pd.DataFrame:
         merged[c] = merged[c].fillna(d)
 
     return merged
+
+# --- Backward-compat shim ---
+def enrich_features(merged):
+    """Compatibility alias for older imports expecting 'enrich_features'.
+    Delegates to ensure_features(merged)."""
+    return ensure_features(merged)
