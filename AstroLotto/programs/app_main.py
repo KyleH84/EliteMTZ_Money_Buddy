@@ -1,16 +1,52 @@
-# AstroLotto/programs/app_main.py (patched)
-# - Make load_kernel() cache with st.cache_resource (EphemerisWrapper is not pickle-serializable)
-# - Auto-backfill if no cached history CSV found so the app doesn't demand manual upload
-import os
+# AstroLotto/programs/app_main.py (patched v2)
+# - Robust imports whether executed as a package or as loose scripts
+# - load_kernel cached as resource
+# - Auto-backfill of game CSVs when missing/empty
+
+import os, sys
 import streamlit as st
 
-from . import historical_backfill as hb
+# ---- import helpers robustly ----
+def _import_ephemeris_wrapper():
+    try:
+        # package relative (preferred)
+        from .utilities.ephemeris import EphemerisWrapper
+        return EphemerisWrapper
+    except Exception:
+        try:
+            # package absolute
+            from AstroLotto.programs.utilities.ephemeris import EphemerisWrapper
+            return EphemerisWrapper
+        except Exception:
+            # path fallback
+            here = os.path.dirname(__file__)
+            util_dir = os.path.join(here, "utilities")
+            if util_dir not in sys.path:
+                sys.path.insert(0, util_dir)
+            from ephemeris import EphemerisWrapper  # type: ignore
+            return EphemerisWrapper
+
+def _import_historical_backfill():
+    try:
+        from . import historical_backfill as hb
+        return hb
+    except Exception:
+        try:
+            import AstroLotto.programs.historical_backfill as hb  # type: ignore
+            return hb
+        except Exception:
+            here = os.path.dirname(__file__)
+            if here not in sys.path:
+                sys.path.insert(0, here)
+            import historical_backfill as hb  # type: ignore
+            return hb
+
+HB = _import_historical_backfill()
+EphemerisWrapper = _import_ephemeris_wrapper()
 
 # ---- CACHE FIX ----
 @st.cache_resource(show_spinner=False)
 def load_kernel():
-    # NOTE: keep original behavior but return the EphemerisWrapper object without serializing (resource cache)
-    from utilities.ephemeris import EphemerisWrapper  # your existing helper
     return EphemerisWrapper()
 
 # ---- DATA GUARANTEE ----
@@ -33,7 +69,7 @@ def ensure_history():
         need = (not os.path.exists(path)) or (os.path.getsize(path) == 0)
         if need:
             try:
-                added = hb.run_backfill_for_csv(game=game, path=path)
+                added = HB.run_backfill_for_csv(game=game, path=path)
                 results[label] = {"ok": True, "path": path, "added_rows": int(added or 0), "used": "historical_backfill.run_backfill_for_csv"}
             except Exception as e:
                 results[label] = {"ok": False, "path": path, "error": f"{type(e).__name__}: {e}"}
@@ -41,9 +77,7 @@ def ensure_history():
             results[label] = {"ok": True, "path": path, "added_rows": 0, "used": "existing"}
     return results
 
-# Call on import so pages can rely on cache presence without manual CSV upload
 try:
     _ = ensure_history()
-except Exception as _e:
-    # Non-fatal: surfaces on UI elsewhere
+except Exception:
     pass
