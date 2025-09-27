@@ -13,7 +13,7 @@ from typing import List, Dict, Any
 from .config import data_dir
 import streamlit as st
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_hint(game: str, draw_date: str) -> Dict[str, Any]:
     p = data_dir() / "quantum_hints" / game / f"{draw_date}.json"
     if not p.exists():

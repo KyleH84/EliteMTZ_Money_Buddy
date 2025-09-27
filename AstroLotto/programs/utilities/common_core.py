@@ -131,7 +131,7 @@ def _flex_history_fallback(game_key: str, root: Path) -> "pd.DataFrame":
             continue
     return pd.DataFrame()
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_history(game_key: str, root_dir: Path) -> "pd.DataFrame":
     if callable(_load_history):
         try:

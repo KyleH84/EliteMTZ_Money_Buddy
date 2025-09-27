@@ -125,6 +125,6 @@ def predict_proba(model_tuple, X: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]
 def save_model(model_tuple, path: str):
     joblib.dump(model_tuple, path)
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_model(path: str):
     return joblib.load(path)

@@ -108,7 +108,7 @@ def save_snapshot(df: pd.DataFrame, name: str = "latest", app: str = "BB") -> No
         path, buf, file_options={"cache-control": "no-cache", "upsert": "true"}
     )
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_snapshot(name: str = "latest", app: str = "BB") -> pd.DataFrame:
     c = _client()
     path = f"{app}/{name}.parquet"
@@ -135,7 +135,7 @@ def save_table(df: pd.DataFrame, table_name: str, app: str = "BB") -> None:
         path, buf, file_options={"cache-control": "no-cache", "upsert": "true"}
     )
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_table(table_name: str, app: str = "BB") -> pd.DataFrame:
     c = _client()
     path = f"{app}/{table_name}.parquet"

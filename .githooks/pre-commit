@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Fail commits if @st.cache_data decorates a resource-like function.
+bad=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.py$' | while read f; do
+  awk '
+    /@st\.cache_data/ { seen=NR }
+    /^[[:space:]]*def[[:space:]]+(load_|open_|connect_|get_ephemeris|get_skyfield|get_duckdb|open_duckdb|get_db|get_connection|get_client|init_|build_model|load_model|make_client|create_client)/ {
+      if (seen && NR-seen<=3) { print FILENAME ":" NR; exit 0 }
+    }
+  ' "$f"
+done || true)
+
+if [ -n "${bad:-}" ]; then
+  echo "❌ Found @st.cache_data on functions that look like resources:"
+  echo "$bad"
+  echo "Use @st.cache_resource() instead."
+  exit 1
+fi
+
+exit 0

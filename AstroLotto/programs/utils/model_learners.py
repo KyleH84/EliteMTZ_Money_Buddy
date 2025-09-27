@@ -81,7 +81,7 @@ def optional_ml_available() -> str:
 
 def save_json(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True); path.write_text(json.dumps(data, indent=2))
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_json(path: Path) -> dict:
     if path.exists():
         try: return json.loads(path.read_text())

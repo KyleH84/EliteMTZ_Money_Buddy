@@ -94,7 +94,7 @@ def _has_any_planets(eph) -> bool:
     except Exception:
         return False
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_kernel():
     """
     Return an SPK kernel (wrapped) that supports planet access by names.
@@ -189,7 +189,7 @@ Place 'de421.bsp' in one of:
   ./programs/utilities/de421.bsp
 Then relaunch.""")
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def get_ephemeris_and_timescale() -> Tuple[object, object]:
     eph = load_kernel()
     ts = load.timescale()

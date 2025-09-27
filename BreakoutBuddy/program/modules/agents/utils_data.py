@@ -173,7 +173,7 @@ def _make_priors(df: pd.DataFrame) -> Dict[str, float]:
         pri[t] = float(p)
     return pri
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_features_for_agents(
     db_path: Path | str = DEFAULT_DB_PATH,
     tickers: Optional[Iterable[str]] = None,

@@ -40,7 +40,7 @@ EXTRAS_DIR.mkdir(parents=True, exist_ok=True)
 # User-config path (JSON). Keep it simple and robust.
 CONFIG_PATH = EXTRAS_DIR / "config.json"
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_user_config() -> dict:
     """
     Load user config from Extras/config.json.

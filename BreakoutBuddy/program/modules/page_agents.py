@@ -108,7 +108,7 @@ with mv_cols[1]:
 st.divider()
 
 # --- Load last observation for ticker from logs ---
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_last_row(logs_csv, ticker):
     if not os.path.exists(logs_csv):
         return None

@@ -16,7 +16,7 @@ def model_dir(game: str, head: str) -> Path:
     base = Path(env.get("ASTRO_DATA_DIR","Data")) / "models" / game
     return base / f"{head}.ag"
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_predictor(game: str, head: str):
     try:
         from autogluon.tabular import TabularPredictor

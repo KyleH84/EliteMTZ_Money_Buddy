@@ -1,3 +1,4 @@
+﻿from utilities.health_widget import render_health_widget
 from __future__ import annotations
 
 # --- Cloud CSV shim: route ALL pandas CSV I/O to Supabase Storage ---
@@ -12,15 +13,17 @@ import os, sys, runpy
 from pathlib import Path
 import streamlit as st
 
+render_health_widget()
+
 # --- Supabase status indicator (helps catch misconfigured secrets) ---
 _SUPA_URL = os.getenv("SUPABASE_URL")
 _SUPA_KEY = os.getenv("SUPABASE_KEY")
 with st.sidebar:
     st.subheader("Storage")
     if _SUPA_URL and _SUPA_KEY:
-        st.success("Supabase connected", icon="🗄️")
+        st.success("Supabase connected", icon="ðŸ—„ï¸")
     else:
-        st.warning("Supabase not configured — CSV I/O will use local ephemeral filesystem.", icon="⚠️")
+        st.warning("Supabase not configured â€” CSV I/O will use local ephemeral filesystem.", icon="âš ï¸")
 
 
 # --- Streamlit compatibility shim ---
@@ -137,3 +140,4 @@ else:
     for t, p in zip(tabs[1:], extra_pages):
         with t:
             _run_script(p, sys_paths=[program_dir, app_dir, base_dir])
+

@@ -33,7 +33,7 @@ def _normalize_cols(df: pd.DataFrame) -> pd.DataFrame:
     df = df.sort_values("Date", ascending=False, kind="stable")
     return df
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_news_csv(*, csv_bytes: Optional[bytes] = None, csv_path: Optional[Path] = None) -> pd.DataFrame:
     df = pd.DataFrame(columns=EXPECTED_COLS)
     try:

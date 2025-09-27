@@ -30,7 +30,7 @@ def _load_json(path: Path):
     except Exception:
         return None
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_feeds(project_root: Path) -> dict:
     feeds_dir = project_root / "Data" / "feeds"
     return {

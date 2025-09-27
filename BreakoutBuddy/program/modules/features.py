@@ -141,7 +141,7 @@ def persist_features(df: pd.DataFrame, db_path: Path | str, *, asof: Optional[pd
     con.close()
     return len(tmp)
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_resource(show_spinner=False)
 def load_features(db_path: Path | str, *, tickers: Optional[Iterable[str]] = None, latest: bool = True) -> pd.DataFrame:
     con = duckdb.connect(str(db_path))
     _ensure_table(con)

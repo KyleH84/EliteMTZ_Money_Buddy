@@ -1,10 +1,13 @@
-# home_main.py (launcher with logs, BAT→Direct fallback, cleaner, and Recreate .venv)
+﻿from utilities.health_widget import render_health_widget
+# home_main.py (launcher with logs, BATâ†’Direct fallback, cleaner, and Recreate .venv)
 from __future__ import annotations
 import os, sys, time, socket, subprocess, webbrowser, shutil
 from pathlib import Path
 import streamlit as st
 
-st.set_page_config(page_title="Money Buddy — Home", page_icon="💼", layout="wide")
+render_health_widget()
+
+st.set_page_config(page_title="Money Buddy â€” Home", page_icon="ðŸ’¼", layout="wide")
 
 ROOT = Path(__file__).resolve().parent
 APPS = {
@@ -207,7 +210,7 @@ def _recreate_venv_for_app(name: str, cfg: dict, log_dir: Path | None) -> str:
         return f".venv recreated for {name}. No requirements file found."
 
 # ---------------- UI ----------------
-st.title("💼 Money Buddy — Home")
+st.title("ðŸ’¼ Money Buddy â€” Home")
 st.write("Start/stop, open, embed, clean junk, or rebuild venvs.")
 
 # Global launcher options
@@ -227,7 +230,7 @@ for col, (name, cfg) in zip((colA, colB), APPS.items()):
     with col:
         st.subheader(name)
         running = _port_open("127.0.0.1", cfg["port"])
-        st.markdown(f"**Status:** {'🟢 Running' if running else '🔴 Stopped'}  (port {cfg['port']})")
+        st.markdown(f"**Status:** {'ðŸŸ¢ Running' if running else 'ðŸ”´ Stopped'}  (port {cfg['port']})")
         c1, c2, c3 = st.columns(3)
         if c1.button(f"Start {name}", use_container_width=True, key=f"start_{name}"):
             msg = _start_app(name, cfg, mode, wait_s=wait_s, log_dir=log_dir)
@@ -244,7 +247,7 @@ for col, (name, cfg) in zip((colA, colB), APPS.items()):
 
         c4, _ = st.columns([1, 2])
         if c4.button(f"Recreate .venv", use_container_width=True, key=f"venv_{name}"):
-            with st.spinner(f"Recreating .venv for {name}…"):
+            with st.spinner(f"Recreating .venv for {name}â€¦"):
                 msg = _recreate_venv_for_app(name, cfg, log_dir)
             st.session_state["status"][name] = msg
             st.success(msg)
@@ -262,7 +265,7 @@ for col, (name, cfg) in zip((colA, colB), APPS.items()):
 
 # -------- Maintenance: project cleanup --------
 st.divider()
-st.subheader("Maintenance — Clean build junk")
+st.subheader("Maintenance â€” Clean build junk")
 
 with st.expander("Clean up generated files", expanded=False):
     st.write("Select what to remove across the project. **CSV and JSON are never touched.**")
@@ -329,7 +332,7 @@ with st.expander("Clean up generated files", expanded=False):
         total_bytes = info.get("bytes", 0)
         truncated = info.get("truncated", False)
 
-        st.markdown(f"**Files:** {len(files)}  •  **Dirs:** {len(dirs)}  •  **Approx size:** {total_bytes/1024/1024:.2f} MB")
+        st.markdown(f"**Files:** {len(files)}  â€¢  **Dirs:** {len(dirs)}  â€¢  **Approx size:** {total_bytes/1024/1024:.2f} MB")
         if truncated:
             st.caption("Preview truncated after 20,000 items. Narrow your selection if needed.")
         with st.expander("Show paths", expanded=False):
@@ -366,5 +369,6 @@ if (log_dir and any((log_dir / f"launcher_{n.lower()}.log").exists() for n in AP
                     txt = f.read()[-6000:]
             except Exception:
                 txt = "(could not read log file)"
-            st.markdown(f"**{name}** — `{lf}`")
+            st.markdown(f"**{name}** â€” `{lf}`")
             st.text_area(f"Log: {name}", txt, height=200)
+
