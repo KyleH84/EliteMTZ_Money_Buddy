@@ -30,12 +30,8 @@ textblob>=0.18.0
 # === Agents (optional) ===
 langchain>=0.2.0
 langchain-openai>=0.1.0
-gpt4all>=2.7
+# gpt4all>=2.7  # disabled for Streamlit Cloud (no local gguf use)
 
-# === Optional ML libs (only if used) ===
-xgboost>=2.0.0
-lightgbm>=4.3.0 ; platform_machine!="aarch64"
-catboost>=1.2.5
-supabase
-pandas
-pyarrow
+# === Persistence (Supabase/Parquet) ===
+supabase>=2.6.0
+pyarrow>=15.0.0
