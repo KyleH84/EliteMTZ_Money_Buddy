@@ -1,4 +1,4 @@
-# utilities/feature_fixups.py
+# BreakoutBuddy/program/utilities/feature_fixups.py
 import numpy as np, pandas as pd
 
 def _to_numeric(df: pd.DataFrame, cols):
@@ -19,7 +19,7 @@ def compute_connors_rsi(close: pd.Series, pr_rsi=3, pr_streak=2, pr_rank=100):
     delta = close.diff()
     streak = delta.copy()*0.0
     for i in range(1, len(close)):
-        if np.isnan(delta.iloc[i]) or np.isnan(delta.iloc[i-1]): streak.iloc[i]=0
+        if pd.isna(delta.iloc[i]) or pd.isna(delta.iloc[i-1]): streak.iloc[i]=0
         elif delta.iloc[i] > 0:  streak.iloc[i] = streak.iloc[i-1]+1 if streak.iloc[i-1]>0 else 1
         elif delta.iloc[i] < 0:  streak.iloc[i] = streak.iloc[i-1]-1 if streak.iloc[i-1]<0 else -1
         else: streak.iloc[i]=0
@@ -71,24 +71,4 @@ def fill_feature_gaps(df: pd.DataFrame, spy_ref=None,
         if close is not None and high is not None and low is not None:
             df['SqueezeHint'] = compute_squeeze_hint(close, high, low)
 
-    # P_up baseline only if fully missing
-    if 'P_up' not in df or df['P_up'].isna().all():
-        rsi = df.get('RSI4'); rel = df.get('RelSPY')
-        if rsi is not None and rel is not None:
-            rsi_z = (rsi - 50)/50.0
-            rel_z = rel - 1.0
-            score = 0.6*rsi_z + 0.4*rel_z
-            df['P_up'] = 1/(1+np.exp(-score))
-
-    for c in ['RelSPY','RVOL','RSI4','ConnorsRSI','SqueezeHint','P_up']:
-        if c in df.columns: df[c] = pd.to_numeric(df[c], errors='coerce')
-
     return df
-
-def report_feature_gaps(df: pd.DataFrame, cols=None):
-    if cols is None: cols = ['P_up','RelSPY','RVOL','RSI4','ConnorsRSI','SqueezeHint']
-    out = []
-    for c in cols:
-        if c in df.columns: out.append((c, int(df[c].isna().sum())))
-        else: out.append((c, 'missing'))
-    return pd.DataFrame(out, columns=['column','null_count'])

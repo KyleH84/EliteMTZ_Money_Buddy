@@ -1,9 +1,9 @@
-# data/spy_loader.py
+# BreakoutBuddy/program/data/spy_loader.py
 import pandas as pd
 from datetime import datetime, timedelta
-from utilities.caching import cache_data
+import streamlit as st
 
-@cache_data(ttl=3600)
+@st.cache_data(ttl=3600, show_spinner=False)
 def get_spy_prices(period_days: int = 400) -> pd.DataFrame:
     try:
         import yfinance as yf
