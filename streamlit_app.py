@@ -1,30 +1,34 @@
 from __future__ import annotations
 
+# --- Cloud CSV shim: route ALL pandas CSV I/O to Supabase Storage ---
+# Keep this immediately after the __future__ import.
+try:
+    import cloud_csv_shim  # patches pandas.read_csv / DataFrame.to_csv -> Supabase
+    print("Cloud CSV shim active: pandas CSV I/O mapped to Supabase 'tables' bucket")
+except Exception as _shim_e:
+    print("CSV shim disabled:", _shim_e)
+
 import os, sys, runpy
 from pathlib import Path
 import streamlit as st
+
 # --- Streamlit compatibility shim ---
 # Older code may call st.experimental_rerun; alias it to st.rerun if missing.
 try:
     import streamlit as _st_comp
     if not hasattr(_st_comp, "experimental_rerun") and hasattr(_st_comp, "rerun"):
         _st_comp.experimental_rerun = _st_comp.rerun  # type: ignore[attr-defined]
-except Exception as _shim_e:
-    print("Streamlit compat shim warning:", _shim_e)
+except Exception as _compat_e:
+    print("Streamlit compat shim warning:", _compat_e)
 # --- End shim ---
 
-
-# --- Cloud paths & BB snapshot preflight ---
+# --- Cloud paths (kept), but NO local CSV preflight anymore ---
 MB_BASE_DIR = Path(os.getenv("MB_BASE_DIR", "/tmp/money_buddy"))
 DATA_DIR = MB_BASE_DIR / "Data"
 os.environ["BREAKOUTBUDDY_DATA"] = str(DATA_DIR)
-SNAP_PATH = DATA_DIR / "bb_snapshot.csv"
-try:
-    if not SNAP_PATH.exists():
-        DATA_DIR.mkdir(parents=True, exist_ok=True)
-        SNAP_PATH.write_text("symbol,rank,score,date\n", encoding="utf-8")
-except Exception as _e:
-    print("BB snapshot preflight warning:", _e)
+# NOTE: we no longer create / depend on bb_snapshot.csv on local disk.
+# Any pd.read_csv()/to_csv() calls anywhere in the codebase are now
+# transparently handled by the Supabase-backed cloud_csv_shim.
 
 def _run_script(path: Path, sys_paths: list[Path] = None):
     # Temporarily extend sys.path so app-local imports (e.g., 'modules') resolve
