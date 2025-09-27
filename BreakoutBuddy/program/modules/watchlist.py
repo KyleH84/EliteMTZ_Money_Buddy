@@ -169,4 +169,69 @@ def enriched_snapshot(tickers: List[str], enrich_features_fn=None) -> pd.DataFra
         "Combined","AgentBoost_exact","Combined_with_agents",
     ]
     order = [c for c in desired if c in sub.columns] + [c for c in sub.columns if c not in desired]
-    return sub[order].reset_index(drop=True)
+    return sub[order].reset_index(drop=True)# --- Appended storage helpers (added by layout repair) ---
+# Simple watchlist storage using DuckDB (preferred) or CSV fallback.
+import os, csv
+_WATCHLIST_CSV = os.path.join("Data", "watchlist.csv")
+try:
+    import duckdb as _duckdb
+    _HAVE_DUCK = True
+except Exception:
+    _HAVE_DUCK = False
+_DB_PATH = os.path.join("Data", "watchlist.duckdb")
+
+def _ensure_dirs():
+    os.makedirs("Data", exist_ok=True)
+
+def _ensure_duck():
+    if not _HAVE_DUCK:
+        return None
+    con = _duckdb.connect(_DB_PATH, read_only=False)
+    con.execute("""CREATE TABLE IF NOT EXISTS watchlist(symbol TEXT PRIMARY KEY, added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);""")
+    return con
+
+def read_watchlist():
+    _ensure_dirs()
+    if _HAVE_DUCK:
+        con = _ensure_duck()
+        rows = con.execute("SELECT symbol FROM watchlist ORDER BY symbol").fetchall()
+        con.close()
+        return [r[0] for r in rows]
+    if not os.path.exists(_WATCHLIST_CSV):
+        return []
+    with open(_WATCHLIST_CSV, newline='') as f:
+        return [row[0] for row in csv.reader(f) if row]
+
+def write_watchlist(symbols):
+    _ensure_dirs()
+    symbols = sorted(set((s or "").upper().strip() for s in symbols if s))
+    if _HAVE_DUCK:
+        con = _ensure_duck()
+        con.execute("DELETE FROM watchlist")
+        con.executemany("INSERT INTO watchlist(symbol) VALUES (?)", [(s,) for s in symbols])
+        con.close()
+        return
+    with open(_WATCHLIST_CSV, 'w', newline='') as f:
+        w = csv.writer(f); [w.writerow([s]) for s in symbols]
+
+def add_to_watchlist(symbol):
+    s = (symbol or "").upper().strip()
+    if not s: return
+    if _HAVE_DUCK:
+        con = _ensure_duck()
+        con.execute("INSERT OR REPLACE INTO watchlist(symbol) VALUES (?)", [s])
+        con.close()
+    else:
+        cur = set(read_watchlist()); cur.add(s); write_watchlist(list(cur))
+
+def remove_from_watchlist(symbol):
+    s = (symbol or "").upper().strip()
+    if not s: return
+    if _HAVE_DUCK:
+        con = _ensure_duck()
+        con.execute("DELETE FROM watchlist WHERE symbol = ?", [s])
+        con.close()
+    else:
+        cur = set(read_watchlist()); cur.discard(s); write_watchlist(list(cur))
+# --- end appended helpers ---
+

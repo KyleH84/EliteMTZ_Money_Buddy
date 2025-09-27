@@ -1,1 +1,0 @@
-See the sidebar widget and feature fixups usage in your pages as described in the chat.

@@ -1,5 +1,19 @@
-﻿from utilities.health_widget import render_health_widget
-from __future__ import annotations
+﻿from __future__ import annotations
+# --- Health widget (BreakoutBuddy-aware import) ---
+try:
+    from utilities.health_widget import render_health_widget  # either root-level utilities or already on sys.path
+except Exception:
+    import sys
+    from pathlib import Path as _Path
+    _bb_prog = _Path(__file__).parent / "BreakoutBuddy" / "program"
+    if _bb_prog.exists() and str(_bb_prog) not in sys.path:
+        sys.path.insert(0, str(_bb_prog))
+    from utilities.health_widget import render_health_widget  # now import from BreakoutBuddy/program
+try:
+    render_health_widget()
+except Exception as _hw_e:
+    print("Health widget init warning:", _hw_e)
+# --- end health widget ---
 
 # --- Cloud CSV shim: route ALL pandas CSV I/O to Supabase Storage ---
 # Keep this immediately after the __future__ import.
@@ -140,4 +154,5 @@ else:
     for t, p in zip(tabs[1:], extra_pages):
         with t:
             _run_script(p, sys_paths=[program_dir, app_dir, base_dir])
+
 
