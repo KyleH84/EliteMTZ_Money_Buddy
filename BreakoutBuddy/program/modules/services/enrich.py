@@ -1,129 +1,123 @@
 
-from __future__ import annotations
-
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta
+import yfinance as yf
 
-EXPECTED_FEATURES = [
-    "Close","ChangePct","RSI2","RSI4","ConnorsRSI","RelSPY",
-    "RVOL","ATR","PctFrom200d","SqueezeHint","P_up",
-    "CrowdRisk","AgentsScore","AgentsConf"
-]
+# --------------------------------------------------------------------
+# Main feature enrichment
+# --------------------------------------------------------------------
 
-def _rsi(series: pd.Series, period: int) -> pd.Series:
-    delta = series.diff()
-    gain = (delta.clip(lower=0)).ewm(alpha=1/period, adjust=False).mean()
-    loss = (-delta.clip(upper=0)).ewm(alpha=1/period, adjust=False).mean()
-    rs = gain / loss.replace(0, np.nan)
-    rsi = 100 - (100 / (1 + rs))
-    return rsi
+def ensure_features(df: pd.DataFrame) -> pd.DataFrame:
+    """Ensure required feature columns exist and are populated.
+    If any are missing or NaN, fetch from yfinance and compute."""
+    if df is None or df.empty:
+        return df
 
-def _percent_rank(series: pd.Series, window: int) -> pd.Series:
-    return series.rolling(window).apply(lambda x: pd.Series(x).rank(pct=True).iloc[-1] * 100, raw=False)
+    if "Ticker" not in df.columns:
+        return df
 
-def _connors_rsi(close: pd.Series) -> pd.Series:
-    rsi2 = _rsi(close, 2)
-    rsi4 = _rsi(close, 4)
-    diff = close.diff()
-    streak = (np.sign(diff) != np.sign(diff.shift())).cumsum()
-    streak = (streak.groupby(streak).cumcount() + 1) * np.sign(diff).fillna(0)
-    streak_rsi = _rsi(streak.fillna(0), 2)
-    pr = _percent_rank(close.pct_change().fillna(0), 100)
-    return (rsi2 + rsi4 + pr.fillna(50) + streak_rsi.fillna(50)) / 4
-
-def _fetch_latest_features(tickers: list[str]) -> pd.DataFrame:
-    try:
-        import yfinance as yf
-    except Exception:
-        return pd.DataFrame(columns=["Ticker"] + EXPECTED_FEATURES)
-
-    tickers = [t for t in dict.fromkeys([str(t).upper().strip() for t in tickers]) if t]
+    tickers = df["Ticker"].dropna().astype(str).str.upper().unique().tolist()
     if not tickers:
-        return pd.DataFrame(columns=["Ticker"] + EXPECTED_FEATURES)
+        return df
 
-    # Always include SPY for RelSPY
-    all_syms = sorted(set(tickers) | {"SPY"})
-    end = datetime.utcnow().date()
-    start = end - timedelta(days=120)
-    data = yf.download(all_syms, start=start.isoformat(), end=end.isoformat(), interval="1d", auto_adjust=False, progress=False, threads=False)
+    required = ["RelSPY", "ConnorsRSI", "SqueezeHint", "P_up",
+                "RVOL", "RSI4", "ChangePct", "Close"]
 
-    if isinstance(data.columns, pd.MultiIndex):
-        close = data["Adj Close"].copy() if "Adj Close" in data.columns.levels[0] else data["Close"].copy()
-        vol = data["Volume"].copy()
-    else:
-        close = data["Adj Close"].to_frame()
-        vol = data["Volume"].to_frame()
+    # If any required column missing, create placeholder for the isna check
+    for col in required:
+        if col not in df.columns:
+            df[col] = np.nan
 
-    features = []
-    for t in tickers:
-        c = close[t].dropna() if t in close.columns else pd.Series(dtype=float)
-        v = vol[t].dropna() if t in vol.columns else pd.Series(dtype=float)
-        if c.empty:
-            row = {"Ticker": t}
-        else:
-            chg = c.pct_change().iloc[-1] if len(c) > 1 else 0.0
-            spy_c = close["SPY"].dropna() if "SPY" in close.columns else pd.Series(dtype=float)
-            relspy = (c.pct_change().iloc[-1] - spy_c.pct_change().iloc[-1]) if len(c) > 1 and not spy_c.empty else 0.0
-            rsi2 = _rsi(c, 2).iloc[-1] if len(c) > 5 else 50.0
-            rsi4 = _rsi(c, 4).iloc[-1] if len(c) > 5 else 50.0
-            crsi = _connors_rsi(c).iloc[-1] if len(c) > 20 else 50.0
-            avg20 = v.rolling(20).mean().iloc[-1] if len(v) >= 20 else 1.0
-            rvol = (v.iloc[-1] / avg20) if avg20 and avg20 != 0 else 1.0
-            atr = (c.rolling(14).std().iloc[-1] * np.sqrt(14)) if len(c) >= 14 else 0.0
-            pct200 = ((c.iloc[-1] / c.rolling(200).mean().iloc[-1]) - 1.0) * 100 if len(c) >= 200 else 0.0
-            squeeze = 0.0
-            row = {
-                "Ticker": t, "Close": float(c.iloc[-1]), "ChangePct": float(chg * 100.0),
-                "RSI2": float(rsi2), "RSI4": float(rsi4), "ConnorsRSI": float(crsi),
-                "RelSPY": float(relspy), "RVOL": float(rvol), "ATR": float(atr),
-                "PctFrom200d": float(pct200), "SqueezeHint": float(squeeze),
-                "P_up": 0.55,
-            }
-        features.append(row)
+    missing_mask = df[required].isna() | df[required].eq("None")
+    missing_tickers = df.loc[missing_mask.any(axis=1), "Ticker"].astype(str).str.upper().unique().tolist()
 
-    df = pd.DataFrame(features).drop_duplicates(subset=["Ticker"], keep="last")
+    if missing_tickers:
+        try:
+            fetched = fetch_features_for(missing_tickers)
+            if not fetched.empty:
+                # Drop possibly stale columns so merge prefers fetched
+                df = df.drop(columns=[c for c in required if c in df.columns], errors="ignore")
+                df = df.merge(fetched, on="Ticker", how="left")
+        except Exception as e:
+            print(f"[enrich] fetch failed: {e}")
+
+    # Final cleanup
+    for col in required:
+        if col not in df.columns:
+            df[col] = np.nan
+        df[col] = pd.to_numeric(df[col], errors="coerce") if col not in ("SqueezeHint",) else df[col]
     return df
 
-def ensure_features(merged: pd.DataFrame) -> pd.DataFrame:
-    need = []
-    need_cols = ["RelSPY","ConnorsRSI","SqueezeHint","P_up","RVOL","RSI4","ChangePct","Close"]
-    for _, row in merged.iterrows():
-        t = str(row.get("Ticker","")).strip().upper()
-        if not t:
+
+# --------------------------------------------------------------------
+# Fetch helper
+# --------------------------------------------------------------------
+
+def fetch_features_for(tickers):
+    """Fetch simple feature set from yfinance for tickers + SPY."""
+    import datetime
+
+    end = datetime.date.today()
+    start = end - datetime.timedelta(days=30)
+
+    # Always include SPY for relative strength
+    yf_tickers = sorted(set([t.strip().upper() for t in tickers if t]) | {"SPY"})
+    if not yf_tickers:
+        return pd.DataFrame(columns=["Ticker", "Close", "ChangePct", "RelSPY", "RSI4", "ConnorsRSI", "RVOL", "P_up", "SqueezeHint"])
+
+    data = yf.download(yf_tickers, start=start, end=end, progress=False, group_by="ticker")
+
+    if isinstance(data.columns, pd.MultiIndex):
+        closes = pd.DataFrame({t: data[t].get("Close") for t in yf_tickers if "Close" in data[t]})
+        vols = pd.DataFrame({t: data[t].get("Volume") for t in yf_tickers if "Volume" in data[t]})
+    else:
+        closes = data["Close"].to_frame()
+        vols = data["Volume"].to_frame()
+
+    latest = []
+    for t in [x for x in yf_tickers if x != "SPY"]:
+        s = closes.get(t, pd.Series(dtype=float)).dropna()
+        v = vols.get(t, pd.Series(dtype=float)).dropna()
+        if s.empty:
+            latest.append({"Ticker": t})
             continue
-        missing = any((col not in merged.columns) or pd.isna(row.get(col)) for col in need_cols)
-        if missing:
-            need.append(t)
-    if not need:
-        return merged
 
-    fetched = _fetch_latest_features(need)
-    if not fetched.empty:
-        merged = merged.drop_duplicates(subset=["Ticker"], keep="last")
-        merged = merged.merge(fetched, on="Ticker", how="left", suffixes=('', '_fresh'))
-        for col in EXPECTED_FEATURES:
-            fresh = col + "_fresh"
-            if fresh in merged.columns:
-                merged[col] = merged[col].combine_first(merged[fresh])
-        merged = merged[[c for c in merged.columns if not c.endswith("_fresh")]]
+        close = s.iloc[-1]
+        change_pct = (s.iloc[-1] / s.iloc[-2] - 1) * 100 if len(s) > 1 else 0.0
 
-    defaults = {
-        "Close": 0.0, "ChangePct": 0.0, "RSI2": 50.0, "RSI4": 50.0,
-        "ConnorsRSI": 50.0, "RelSPY": 0.0, "RVOL": 1.0, "ATR": 0.0,
-        "PctFrom200d": 0.0, "SqueezeHint": 0.0, "P_up": 0.55,
-        "CrowdRisk": 0.0, "AgentsScore": None, "AgentsConf": None,
-    }
-    for c, d in defaults.items():
-        if c not in merged.columns:
-            merged[c] = d
-        merged[c] = pd.to_numeric(merged[c], errors='coerce') if isinstance(d, (int,float)) else merged[c]
-        merged[c] = merged[c].fillna(d)
+        spy_s = closes.get("SPY", pd.Series(dtype=float)).dropna()
+        relspy = (s.pct_change().iloc[-1] - spy_s.pct_change().iloc[-1]) if len(s) > 1 and len(spy_s) > 1 else np.nan
 
-    return merged
+        # RSI4 (simple)
+        delta = s.diff()
+        gain = delta.clip(lower=0).rolling(4).mean()
+        loss = -delta.clip(upper=0).rolling(4).mean()
+        rs = gain / (loss + 1e-9)
+        rsi4 = 100 - (100 / (1 + rs.iloc[-1])) if not rs.dropna().empty else 50
 
-# --- Backward-compat shim ---
-def enrich_features(merged):
-    """Compatibility alias for older imports expecting 'enrich_features'.
-    Delegates to ensure_features(merged)."""
-    return ensure_features(merged)
+        # RVOL (5d)
+        rvol = v.iloc[-1] / v.rolling(5).mean().iloc[-1] if len(v) >= 5 and v.rolling(5).mean().iloc[-1] else 1.0
+
+        latest.append(dict(
+            Ticker=t,
+            Close=float(close),
+            ChangePct=round(float(change_pct), 4),
+            RelSPY=round(float(relspy), 4) if pd.notna(relspy) else np.nan,
+            RSI4=round(float(rsi4), 2),
+            ConnorsRSI=50.0,   # placeholder
+            RVOL=round(float(rvol), 3),
+            P_up=0.55,         # neutral placeholder
+            SqueezeHint=0.0    # placeholder
+        ))
+
+    return pd.DataFrame(latest)
+
+
+# --------------------------------------------------------------------
+# Backward-compat shim
+# --------------------------------------------------------------------
+
+def enrich_features(df: pd.DataFrame) -> pd.DataFrame:
+    """Compatibility alias for older code importing `enrich_features`.
+    Just calls ensure_features."""
+    return ensure_features(df)
