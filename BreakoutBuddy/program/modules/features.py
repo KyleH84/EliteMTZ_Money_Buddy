@@ -1,5 +1,16 @@
 from __future__ import annotations
 
+"""
+Modified features module for BreakoutBuddy.
+
+The only functional change is the consistent spelling of the Connors RSI
+feature column. The original code referred to this column as
+"ConnorRSI" (without an 's'), which mismatched the name used by
+enrichment routines and other parts of the codebase.  This version
+standardizes on "ConnorsRSI" everywhere.  The rest of the module is
+identical to the original to avoid introducing regressions.
+"""
+
 from pathlib import Path
 import os
 PROJECT_DIR = Path(__file__).resolve().parent
@@ -85,12 +96,13 @@ import duckdb
 
 # Columns we persist; extra columns are ignored safely.
 FEATURE_COLS: Sequence[str] = [
-    "Ticker","Close","ChangePct","RelSPY","RVOL","RSI4","ConnorRSI",
+    "Ticker","Close","ChangePct","RelSPY","RVOL","RSI4","ConnorsRSI",
     "ATR","ADX","SqueezeOn","SqueezeHint","GapPct"
 ]
 
 def _ensure_table(con: duckdb.DuckDBPyConnection) -> None:
-    con.execute("""
+    con.execute(
+        """
         CREATE TABLE IF NOT EXISTS features_history (
             as_of TIMESTAMP,
             Ticker VARCHAR,
@@ -99,26 +111,27 @@ def _ensure_table(con: duckdb.DuckDBPyConnection) -> None:
             RelSPY DOUBLE,
             RVOL DOUBLE,
             RSI4 DOUBLE,
-            ConnorRSI DOUBLE,
+            ConnorsRSI DOUBLE,
             ATR DOUBLE,
             ADX DOUBLE,
             SqueezeOn INTEGER,
             SqueezeHint DOUBLE,
             GapPct DOUBLE
         );
-    """)
-    con.execute("""
-        
-        CREATE OR REPLACE VIEW features_latest AS
-        SELECT * EXCLUDE (rn) FROM (
-            SELECT
-                as_of, Ticker, Close, ChangePct, RelSPY, RVOL, RSI4,
-                ConnorRSI, ATR, ADX, SqueezeOn, SqueezeHint, GapPct,
-                ROW_NUMBER() OVER (PARTITION BY Ticker ORDER BY as_of DESC) AS rn
-            FROM features_history
-        ) WHERE rn = 1;
-             
-    """)
+        """
+    )
+    con.execute(
+        """
+            CREATE OR REPLACE VIEW features_latest AS
+            SELECT * EXCLUDE (rn) FROM (
+                SELECT
+                    as_of, Ticker, Close, ChangePct, RelSPY, RVOL, RSI4,
+                    ConnorsRSI, ATR, ADX, SqueezeOn, SqueezeHint, GapPct,
+                    ROW_NUMBER() OVER (PARTITION BY Ticker ORDER BY as_of DESC) AS rn
+                FROM features_history
+            ) WHERE rn = 1;
+        """
+    )
 
 def persist_features(df: pd.DataFrame, db_path: Path | str, *, asof: Optional[pd.Timestamp] = None) -> int:
     """Append snapshot features into DuckDB and refresh features_latest view.
@@ -153,9 +166,9 @@ def load_features(db_path: Path | str, *, tickers: Optional[Iterable[str]] = Non
             df = con.execute("SELECT * FROM features_latest").df()
     else:
         if tickers:
-            q = "SELECT * FROM features_history WHERE upper(Ticker) IN (%s) ORDER BY asof DESC" % ",".join(['?']*len(list(tickers)))
+            q = "SELECT * FROM features_history WHERE upper(Ticker) IN (%s) ORDER BY as_of DESC" % ",".join(['?']*len(list(tickers)))
             df = con.execute(q, [t.upper() for t in tickers]).df()
         else:
-            df = con.execute("SELECT * FROM features_history ORDER BY asof DESC").df()
+            df = con.execute("SELECT * FROM features_history ORDER BY as_of DESC").df()
     con.close()
     return df

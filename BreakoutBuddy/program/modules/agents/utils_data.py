@@ -1,5 +1,14 @@
 from __future__ import annotations
 
+"""
+Modified utils_data for BreakoutBuddy agents.
+
+The key change here is the consistent spelling of the Connors RSI
+feature column.  The canonical feature list and alias mappings now
+reference `ConnorsRSI` (with an 's') instead of the inconsistent
+`ConnorRSI`.  All other logic remains unchanged.
+"""
+
 from pathlib import Path
 import os
 PROJECT_DIR = Path(__file__).resolve().parent
@@ -109,7 +118,7 @@ DEFAULT_DB_PATH = Path(__file__).resolve().parents[3] / "Data" / str(BB_DATA / '
 
 # Canonical feature set expected by most agent trainers
 CANONICAL_COLS: List[str] = [
-    "Close","ChangePct","RelSPY","RVOL","RSI4","ConnorRSI",
+    "Close","ChangePct","RelSPY","RVOL","RSI4","ConnorsRSI",
     "ATR","ADX","SqueezeOn","SqueezeHint","GapPct"
 ]
 
@@ -119,8 +128,8 @@ ALIASES: Dict[str, str] = {
     "rel_spy": "RelSPY",
     "rvol": "RVOL",
     "rsi4": "RSI4",
-    "crsi": "ConnorRSI",
-    "connorsrsi": "ConnorRSI",
+    "crsi": "ConnorsRSI",
+    "connorsrsi": "ConnorsRSI",
     "adx14": "ADX",
     "atr14": "ATR",
     "squeeze_on": "SqueezeOn",
@@ -206,7 +215,7 @@ def join_features_with(
     right: pd.DataFrame,
     how: str = "left",
 ) -> pd.DataFrame:
-    """Merge helper on Ticker for post-processing (e.g., attach agent outputs)."""
+    """Merge helper on Ticker for post‑processing (e.g., attach agent outputs)."""
     if left is None or left.empty:
         return right
     if right is None or right.empty:
