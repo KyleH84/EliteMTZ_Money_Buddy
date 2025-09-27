@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from typing import Dict, List, Tuple
 import pandas as pd
+import streamlit as st
 
 WHITE_RANGES: Dict[str, Tuple[int,int,int]] = {
     "powerball": (1, 69, 5),

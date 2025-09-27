@@ -15,6 +15,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from dataclasses import dataclass
 from typing import Callable, Any, Dict, List, Optional, Tuple, Union, Sequence
+import streamlit as st
 
 # Physical constant (exact by definition)
 PLANCK_H = 6.62607015e-34  # J*s

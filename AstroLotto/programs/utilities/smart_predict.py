@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from typing import Dict, List, Any
 import pandas as pd
 from .montecarlo import monte_carlo_picks, choose_special
+import streamlit as st
 
 def predict_sets(game: str, df: pd.DataFrame, model: Dict[str,Any]|None, n_sets: int = 5,
                  short_days: int = 30, alpha: float = 0.3, gap_strength: float = 0.2,

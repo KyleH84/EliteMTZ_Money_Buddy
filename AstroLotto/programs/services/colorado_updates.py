@@ -11,6 +11,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Tuple
 import pandas as pd, re
+import streamlit as st
 
 @dataclass
 class UpdateResult:
@@ -49,6 +50,7 @@ def _safe_requests_bs4():
     except Exception:
         return None, None
 
+@st.cache_data(ttl=900, show_spinner=False)
 def fetch_primary(url: str) -> Tuple[pd.DataFrame, Optional[str], str]:
     requests, BeautifulSoup = _safe_requests_bs4()
     if not requests: return pd.DataFrame(), None, "no-requests"

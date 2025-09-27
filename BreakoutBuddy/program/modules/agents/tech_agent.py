@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from typing import Mapping, Any
 from .base import AgentResult, safe_float, clip
+import streamlit as st
 
 def compute(row: Mapping[str, Any]) -> AgentResult:
     rv = safe_float(row.get("RVOL", 1.0), 1.0)

@@ -6,6 +6,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 (PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
 
 from datetime import datetime
+import streamlit as st
 
 class OpsHealthAgent:
     def __init__(self, freshness_checkers):

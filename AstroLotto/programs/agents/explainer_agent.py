@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 
 from .state import RunState
+import streamlit as st
 
 def _try_local_llm_summary(state: RunState) -> str | None:
     try:

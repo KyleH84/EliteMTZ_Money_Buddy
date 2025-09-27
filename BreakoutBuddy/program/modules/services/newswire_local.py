@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Optional, List, Dict, Iterable
 import io, re
 import pandas as pd
+import streamlit as st
 
 EXPECTED_COLS = ["Date","Company","Ticker","Sign","Headline","Link","Source"]
 
@@ -32,6 +33,7 @@ def _normalize_cols(df: pd.DataFrame) -> pd.DataFrame:
     df = df.sort_values("Date", ascending=False, kind="stable")
     return df
 
+@st.cache_data(ttl=900, show_spinner=False)
 def load_news_csv(*, csv_bytes: Optional[bytes] = None, csv_path: Optional[Path] = None) -> pd.DataFrame:
     df = pd.DataFrame(columns=EXPECTED_COLS)
     try:

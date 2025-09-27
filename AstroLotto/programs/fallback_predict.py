@@ -11,6 +11,7 @@ from typing import List, Dict, Any
 import random
 import pandas as pd
 from .smart_features import WHITE_RANGES, SPECIAL_RANGES, detect_white_columns
+import streamlit as st
 try:
     from .smart_features import long_short_blend, gap_overdue_bonus
 except Exception:

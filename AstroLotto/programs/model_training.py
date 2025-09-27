@@ -11,6 +11,7 @@ import os
 from utilities.features import build_features, GAME_MAP
 from utilities.model import train_model, save_model
 from utilities.eval import walk_forward
+import streamlit as st
 
 MODELS_DIR = "models"
 

@@ -8,11 +8,13 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 
 from typing import List
+import streamlit as st
 try:
     import yfinance as yf
 except Exception:
     yf = None
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_titles(symbol: str, limit: int = 20) -> List[str]:
     """Free helper: fetch recent news titles from yfinance (best-effort, optional)."""
     if yf is None:

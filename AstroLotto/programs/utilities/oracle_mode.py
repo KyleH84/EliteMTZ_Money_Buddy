@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from typing import Dict, Optional
 from pathlib import Path
 import json, datetime as dt
+import streamlit as st
 
 MAX_CHAOS_TOTAL = 0.30
 MAX_SCORE_BIAS = 0.12
@@ -29,6 +30,7 @@ def _load_json(path: Path):
     except Exception:
         return None
 
+@st.cache_data(ttl=900, show_spinner=False)
 def load_feeds(project_root: Path) -> dict:
     feeds_dir = project_root / "Data" / "feeds"
     return {

@@ -7,6 +7,7 @@ from typing import Optional, List
 
 import pandas as pd
 from supabase import create_client, Client
+import streamlit as st
 
 # ---------- Config ----------
 SUPABASE_URL = os.getenv("SUPABASE_URL")
@@ -31,6 +32,7 @@ def _client() -> Client:
 
 # ---------- Watchlist (Postgres table) ----------
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_watchlist(app: str = "BB") -> List[str]:
     c = _client()
     try:
@@ -84,6 +86,7 @@ def set_kv(ns: str, key: str, value: str) -> None:
     row = {"ns": ns, "k": key, "v": str(value)}
     c.table("app_kv").upsert(row).execute()
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_kv(ns: str, key: str, default: Optional[str] = None) -> Optional[str]:
     c = _client()
     resp = c.table("app_kv").select("v").eq("ns", ns).eq("k", key).single().execute()
@@ -105,6 +108,7 @@ def save_snapshot(df: pd.DataFrame, name: str = "latest", app: str = "BB") -> No
         path, buf, file_options={"cache-control": "no-cache", "upsert": "true"}
     )
 
+@st.cache_data(ttl=900, show_spinner=False)
 def load_snapshot(name: str = "latest", app: str = "BB") -> pd.DataFrame:
     c = _client()
     path = f"{app}/{name}.parquet"
@@ -131,6 +135,7 @@ def save_table(df: pd.DataFrame, table_name: str, app: str = "BB") -> None:
         path, buf, file_options={"cache-control": "no-cache", "upsert": "true"}
     )
 
+@st.cache_data(ttl=900, show_spinner=False)
 def load_table(table_name: str, app: str = "BB") -> pd.DataFrame:
     c = _client()
     path = f"{app}/{table_name}.parquet"

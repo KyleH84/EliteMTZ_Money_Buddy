@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 import pandas as pd
 import numpy as np
+import streamlit as st
 
 def compute_crowd_flags(df: pd.DataFrame) -> pd.DataFrame:
     out = df.copy()

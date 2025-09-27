@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 import pandas as pd, numpy as np
 from ._common import _load_game_df
+import streamlit as st
 
 def statistical_summary(df_or_path=None) -> dict:
     df = _load_game_df(df_or_path)

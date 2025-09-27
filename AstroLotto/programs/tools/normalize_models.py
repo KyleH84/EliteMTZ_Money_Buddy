@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 # Minimal normalize_models wrapper for compatibility with older imports.
 from typing import Dict, Any
+import streamlit as st
 try:
     from programs.utils.model_trainers import normalize_all as _normalize_all  # type: ignore
 except Exception:

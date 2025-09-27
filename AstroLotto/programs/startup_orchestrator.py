@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from pathlib import Path
 from datetime import datetime, timedelta, timezone
+import streamlit as st
 
 # Mapping of game identifiers to the module and function used to refresh that game.
 # We reference the lower‑case ``programs.services`` package directly; earlier builds

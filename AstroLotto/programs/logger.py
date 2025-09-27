@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 import csv, os
 from pathlib import Path
 from typing import Dict, List
+import streamlit as st
 
 def ensure_csv(path: str | Path, headers: List[str]) -> None:
     p = Path(path)

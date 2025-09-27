@@ -12,7 +12,9 @@ from typing import Dict
 from . import astrology
 from .features_cosmic import moon_phase_frac, moon_quadrant
 from .weather_source import daily_weather_for_game
+import streamlit as st
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_cosmic_and_weather(zip_code: str | int | None, draw_date: date) -> Dict:
     d = draw_date if isinstance(draw_date, date) else datetime.utcnow().date()
     sign = getattr(astrology, "get_zodiac_sign_for_date", lambda x: "Unknown")(d)

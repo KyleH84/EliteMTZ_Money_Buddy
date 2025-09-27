@@ -10,6 +10,7 @@ from typing import Any, Dict, List, Optional
 import pandas as pd
 import numpy as np
 from pathlib import Path
+import streamlit as st
 
 DIGITS = list(range(0, 10))
 
@@ -55,6 +56,7 @@ def _apply_astro(scores: pd.Series, cosmic: Optional[Dict[str, Any]]) -> pd.Seri
     s = scores.copy().astype(float) + 1e-9
     return s.pow(gamma)
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_pick3_prediction(root_dir: Optional[str] = None, *, draw_time: Optional[str] = None,
                          use_hot_cold: bool = True, use_astro: bool = False,
                          cosmic: Optional[Dict[str, Any]] = None,

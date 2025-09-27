@@ -13,6 +13,7 @@ from .tools.pattern_tool import pattern_detection
 from .tools.ml_tool import ml_predictor
 from .tools.stats_tool import statistical_summary
 from .tools.viz_tool import frequency_chart
+import streamlit as st
 
 def agent_response(prompt: str, df_or_path=None) -> Dict[str, Any]:
     p = (prompt or "").lower()

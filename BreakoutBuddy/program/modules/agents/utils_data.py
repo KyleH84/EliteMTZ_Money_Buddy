@@ -12,6 +12,7 @@ from pathlib import Path
 # ---------- Strict per-app Data/Extras resolver (BreakoutBuddy) ----------
 from pathlib import Path
 import os, sys
+import streamlit as st
 BB_HERE     = Path(__file__).resolve()
 BB_APP_ROOT = BB_HERE.parents[2]  # fixed to app root   # .../BreakoutBuddy
 
@@ -172,6 +173,7 @@ def _make_priors(df: pd.DataFrame) -> Dict[str, float]:
         pri[t] = float(p)
     return pri
 
+@st.cache_data(ttl=900, show_spinner=False)
 def load_features_for_agents(
     db_path: Path | str = DEFAULT_DB_PATH,
     tickers: Optional[Iterable[str]] = None,

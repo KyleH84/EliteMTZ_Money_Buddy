@@ -13,6 +13,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # - mkdir: Redirect creation of those dirs to Data/ so stray folders aren't created in root/Program
 import os, re, builtins
 from pathlib import Path
+import streamlit as st
 
 # ---- Config / names ----
 _BACKUP_NAMES = {"backup", "backups", "_backups", "bkup", "bkups", "bkp"}

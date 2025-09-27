@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 import pandas as pd
 import re
+import streamlit as st
 
 ALIASES = {
     "price":"Close",

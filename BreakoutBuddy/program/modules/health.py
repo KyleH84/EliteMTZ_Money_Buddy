@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from pathlib import Path
 import json
+import streamlit as st
 
 def _program_root() -> Path:
     return Path(__file__).resolve().parents[1]

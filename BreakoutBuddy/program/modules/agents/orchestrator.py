@@ -13,6 +13,7 @@ import math
 
 from modules.agents.technical_agent import TechnicalAgent
 from modules.agents.sentiment_agent import SentimentAgent
+import streamlit as st
 
 ProgressCB = Callable[[str, float], None]
 

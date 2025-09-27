@@ -36,6 +36,7 @@ from .utilities.smart_features_v2 import (
 )
 from .utilities.wrs import weighted_wrs
 from .utilities.pmi import pmi_pairs
+import streamlit as st
 
 def _choose_special(game: str, df: pd.DataFrame, model: Dict[str, Any] | None = None) -> int | None:
     """

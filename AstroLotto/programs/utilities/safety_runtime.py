@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from typing import Dict, Any
 from pathlib import Path
 import csv, datetime as dt
+import streamlit as st
 
 try:
     from .smart_features import WHITE_RANGES, SPECIAL_RANGES

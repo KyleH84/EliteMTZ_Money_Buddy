@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from typing import Dict, Any
 import math
+import streamlit as st
 def _risk_badge(row) -> str:
     try:
         rvol = float(row.get('RVOL', 1.0))

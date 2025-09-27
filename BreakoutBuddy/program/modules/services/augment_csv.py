@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 import pandas as pd
 from pathlib import Path
 from modules.explain import explain_for_row
+import streamlit as st
 
 def augment_ranked_csv(csv_path: str | Path) -> pd.DataFrame:
     p = Path(csv_path)

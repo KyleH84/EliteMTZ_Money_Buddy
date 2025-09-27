@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # visuals/timeline_viz.py
 import matplotlib.pyplot as plt
 import numpy as np
+import streamlit as st
 def render_white_surface(white_probs, title="Probability Surface"):
     fig, ax = plt.subplots(figsize=(8,3))
     x = np.arange(1, len(white_probs)+1)

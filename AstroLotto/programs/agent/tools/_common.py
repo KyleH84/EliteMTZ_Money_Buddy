@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from pathlib import Path
 import pandas as pd
+import streamlit as st
 
 def _load_game_df(df_or_path=None) -> pd.DataFrame:
     if isinstance(df_or_path, pd.DataFrame):

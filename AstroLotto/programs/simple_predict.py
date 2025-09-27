@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 import pandas as pd
 from pathlib import Path
 from typing import List, Tuple, Optional
+import streamlit as st
 
 # Heuristic, fast fallback predictor so UI doesn't break if the "real" model is missing.
 # Uses frequency + slight recency weighting on the last N draws.

@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from pathlib import Path
 from typing import Optional
+import streamlit as st
 try:
     import json
 except Exception:
@@ -162,6 +163,7 @@ def _save_cfg():
     except Exception:
         pass
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_config() -> dict:
     return dict(_load_cfg())
 

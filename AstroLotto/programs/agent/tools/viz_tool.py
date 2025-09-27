@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 import pandas as pd
 import plotly.express as px
 from ._common import _load_game_df
+import streamlit as st
 
 def frequency_chart(df_or_path=None, width=900, height=420):
     df = _load_game_df(df_or_path)

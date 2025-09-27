@@ -12,6 +12,7 @@ import pandas as pd
 import numpy as np
 
 from modules.services.ohlcv_cache import get_history
+import streamlit as st
 
 def _rsi(series: pd.Series, period: int = 14) -> float:
     s = series.astype(float).diff()

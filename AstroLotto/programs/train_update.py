@@ -11,6 +11,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 import argparse, os, json
 from utilities.ensemble import train_auto
 import historical_backfill as hb
+import streamlit as st
 
 GAMES = ["powerball","mega_millions","colorado_lottery","cash5","pick3","lucky_for_life"]
 

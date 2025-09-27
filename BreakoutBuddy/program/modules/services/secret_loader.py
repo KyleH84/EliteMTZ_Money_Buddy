@@ -14,6 +14,7 @@ try:
 except Exception:
     _SECRETS = {}
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_secret(name: str, default: str | None = None) -> str | None:
     # Prefer Streamlit secrets (Cloud/local), else environment
     if isinstance(_SECRETS, dict) and name in _SECRETS:

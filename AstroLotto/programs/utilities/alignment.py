@@ -20,6 +20,7 @@ except Exception:
 
 # Local ephemeris helpers are independent of Skyfield availability.
 from .ephemeris import load_kernel, get_ephemeris_and_timescale
+import streamlit as st
 
 PLANETS = [
     "mercury", "venus", "earth", "mars",

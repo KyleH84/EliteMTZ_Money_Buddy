@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from datetime import date as dt_date, datetime, timedelta
 import math
 from typing import Union, Dict, Any
+import streamlit as st
 
 try:
     import ephem  # type: ignore
@@ -53,6 +54,7 @@ def _parse_birthday(b: Union[str, dt_date, datetime]) -> dt_date:
             pass
     raise ValueError(f"Unrecognized birthday format: {b!r}")
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_zodiac_sign(d: Union[str, dt_date, datetime]) -> str:
     dt = _parse_birthday(d)
     m, day = dt.month, dt.day
@@ -67,6 +69,7 @@ def get_zodiac_sign(d: Union[str, dt_date, datetime]) -> str:
     return "Capricorn"
 
 # Back-compat export expected by pages
+@st.cache_data(ttl=900, show_spinner=False)
 def get_user_sign_from_birthday(birthday: Union[str, dt_date, datetime]) -> str:
     """Return Western zodiac sign for a given birthday.
     Accepts 'YYYY-MM-DD' or 'YYYY/MM/DD', datetime.date, or datetime.
@@ -81,6 +84,7 @@ def _clamp01(x: float) -> float:
     try: return max(0.0, min(1.0, float(x)))
     except Exception: return 0.0
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_moon_phase(date=None):
     date = date or dt_date.today()
     if ephem is None:
@@ -93,6 +97,7 @@ def get_moon_phase(date=None):
     except Exception:
         return 0.0
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_moon_position(date=None):
     date = date or dt_date.today()
     if ephem is None:
@@ -107,6 +112,7 @@ def get_moon_position(date=None):
     except Exception:
         return {"ra": 0.0, "dec": 0.0, "summary": "RA 0.00h, Dec 0.00°"}
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_mercury_retrograde(date=None):
     date = date or dt_date.today()
     if ephem is None:
@@ -137,6 +143,7 @@ def _circ_resultant_length(degrees_list):
     n = max(1.0, float(len(degrees_list)))
     return _clamp01((sx*sx + sy*sy) ** 0.5 / n)
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_planetary_alignment_score(date=None, bodies=None, **kwargs) -> Dict[str, Any]:
     date = date or dt_date.today()
     bodies = bodies or ["Sun","Moon","Mercury","Venus","Mars","Jupiter","Saturn"]

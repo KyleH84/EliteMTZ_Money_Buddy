@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import Iterable, List
 import math
 import pandas as pd
+import streamlit as st
 
 @dataclass
 class SnapRow:
@@ -30,6 +31,7 @@ def _safe_float(x):
     except Exception:
         return None
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_ohlcv_for_tickers(tickers: Iterable[str]) -> pd.DataFrame:
     # Return a DataFrame with OHLC, PrevClose, Volume, AvgVol20, RVOL, Change, ChangePct, 52w stats for each ticker.
     try:

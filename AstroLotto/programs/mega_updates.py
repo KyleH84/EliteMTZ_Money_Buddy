@@ -12,6 +12,7 @@ from pathlib import Path
 import historical_backfill  # fallback to NY Open Data for full history
 from typing import Optional, Tuple
 import pandas as pd, re
+import streamlit as st
 
 @dataclass
 class UpdateResult:
@@ -50,6 +51,7 @@ def _safe_requests_bs4():
     except Exception:
         return None, None
 
+@st.cache_data(ttl=900, show_spinner=False)
 def fetch_official() -> Tuple[pd.DataFrame, Optional[str], str]:
     requests, BeautifulSoup = _safe_requests_bs4()
     if not requests: return pd.DataFrame(), None, "no-requests"
@@ -75,6 +77,7 @@ def fetch_official() -> Tuple[pd.DataFrame, Optional[str], str]:
     except Exception:
         return pd.DataFrame(), None, "official-failed"
 
+@st.cache_data(ttl=900, show_spinner=False)
 def fetch_lotteryusa() -> Tuple[pd.DataFrame, Optional[str], str]:
     requests, BeautifulSoup = _safe_requests_bs4()
     if not requests: return pd.DataFrame(), None, "no-requests"

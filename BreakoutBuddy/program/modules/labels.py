@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 import pandas as pd
 import numpy as np
 import yfinance as yf
+import streamlit as st
 
 def compute_labels_for_symbol(ticker: str, horizon: int = 5, target_pct: float = 3.0) -> pd.DataFrame:
     df = yf.download(ticker, period="2y", interval="1d", auto_adjust=False, progress=False)

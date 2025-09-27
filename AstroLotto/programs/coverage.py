@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from typing import List
 from .diversity import select_diverse
+import streamlit as st
 
 def coverage_sets(candidates: List[List[int]], n_sets: int, strength: float = 0.5) -> List[List[int]]:
     # strength in [0,1] maps to diversity target [0.5, 0.8]

@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional, Any
+import streamlit as st
 
 @dataclass
 class AppContext:

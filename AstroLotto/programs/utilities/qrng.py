@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # utilities/qrng.py
 import os, time, hashlib, json
 from typing import Optional
+import streamlit as st
 try:
     import requests
 except Exception:

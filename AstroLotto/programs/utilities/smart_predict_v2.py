@@ -15,6 +15,7 @@ from .special_weights import compute_special_scores, long_short_blend, gap_overd
 from .wrs import weighted_sample_without_replacement as wrs_wor
 from .pmi import pmi_pairs
 from .diversity import select_diverse
+import streamlit as st
 
 def _weighted_choice(keys: List[int], weights: List[float]) -> int:
     tot = sum(weights) or 1.0

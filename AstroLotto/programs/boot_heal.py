@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # Auto-heal critical CSVs on import (safe, idempotent)
 from pathlib import Path
 import pandas as pd, re, time, shutil
+import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "Data"

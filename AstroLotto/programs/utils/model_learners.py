@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from typing import Optional, List, Dict
 import numpy as np, pandas as pd, json
 from pathlib import Path
+import streamlit as st
 
 @dataclass
 class PickSet:
@@ -80,6 +81,7 @@ def optional_ml_available() -> str:
 
 def save_json(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True); path.write_text(json.dumps(data, indent=2))
+@st.cache_data(ttl=900, show_spinner=False)
 def load_json(path: Path) -> dict:
     if path.exists():
         try: return json.loads(path.read_text())

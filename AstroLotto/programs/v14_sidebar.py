@@ -20,6 +20,7 @@ except Exception:
 
 logger = logging.getLogger(__name__)
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_version() -> str:
     """
     Legacy helper: try to read extras/version.txt if it exists.

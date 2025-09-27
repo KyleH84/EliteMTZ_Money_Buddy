@@ -14,6 +14,7 @@ import yfinance as yf
 
 
 from pathlib import Path as _P
+import streamlit as st
 
 def _resolve_data_dir_cache():
     here = _P(__file__).resolve()
@@ -43,6 +44,7 @@ def _cache_file(symbol: str, period: str, interval: str) -> Path:
     safe = symbol.replace("/", "_").upper()
     return CACHE_DIR / f"{safe}_{period}_{interval}.csv"
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_history(symbol: str, period: str = "1y", interval: str = "1d", ttl_hours: int = 12, retries: int = 2) -> pd.DataFrame:
     fp = _cache_file(symbol, period, interval)
     now = time.time()

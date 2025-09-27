@@ -11,6 +11,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from pathlib import Path
 import importlib, inspect
 import pandas as pd  # type: ignore
+import streamlit as st
 
 def _detect_game_from_name(name: str) -> str | None:
     n = name.lower()

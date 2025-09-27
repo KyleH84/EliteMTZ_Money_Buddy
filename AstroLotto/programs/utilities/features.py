@@ -133,6 +133,7 @@ def _find_history_files(game_key: str, search_root: Path) -> List[Path]:
     return uniq
 
 @cache_fn(ttl=900)
+@st.cache_data(ttl=900, show_spinner=False)
 def load_history(game_key: str, root_dir: str | Path | None = None) -> pd.DataFrame:
     preferred = os.environ.get("ASTRO_DATA_DIR")
     search_root = Path(preferred) if preferred else Path(root_dir or ".")

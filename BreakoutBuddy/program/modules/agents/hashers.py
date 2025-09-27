@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 
 import pandas as pd, hashlib, numpy as np
+import streamlit as st
 
 def hist_hash(df: pd.DataFrame, cols=None, last_n: int = 120) -> str:
     """Stable sha1 of last_n bars of selected columns."""

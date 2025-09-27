@@ -20,6 +20,7 @@ Exports:
 
 from pathlib import Path
 import os, json, tempfile, shutil
+import streamlit as st
 
 # Project root = Program/.. (two levels up from this file)
 ROOT = Path(__file__).resolve().parents[2]
@@ -39,6 +40,7 @@ EXTRAS_DIR.mkdir(parents=True, exist_ok=True)
 # User-config path (JSON). Keep it simple and robust.
 CONFIG_PATH = EXTRAS_DIR / "config.json"
 
+@st.cache_data(ttl=900, show_spinner=False)
 def load_user_config() -> dict:
     """
     Load user config from Extras/config.json.

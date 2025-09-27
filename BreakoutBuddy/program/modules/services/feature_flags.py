@@ -1,6 +1,7 @@
 from __future__ import annotations
 from pathlib import Path
 import json, threading
+import streamlit as st
 
 # Project root = BreakoutBuddy/
 PROJECT_DIR = Path(__file__).resolve().parents[3]
@@ -21,6 +22,7 @@ def _read():
             pass
     return dict(_DEFAULTS)
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_flags() -> dict:
     with _LOCK:
         data = _read()

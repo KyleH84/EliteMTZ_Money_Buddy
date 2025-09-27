@@ -7,6 +7,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 (PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
 
 from typing import Dict, Any
+import streamlit as st
 
 def _pct(x: float) -> str:
     try:

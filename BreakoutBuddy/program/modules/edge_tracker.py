@@ -7,6 +7,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 (PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
 
 import pandas as pd
+import streamlit as st
 
 # Adaptive insert (unchanged behavior) + richer summary helpers
 

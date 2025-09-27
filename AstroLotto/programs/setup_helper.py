@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 import os, csv, json
 from pathlib import Path
 from typing import Dict, List, Tuple
+import streamlit as st
 
 APP_NAME = "AstroLotto"
 APP_VERSION = "v11-step2"

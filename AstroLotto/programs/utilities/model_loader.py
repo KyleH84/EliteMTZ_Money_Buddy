@@ -9,12 +9,14 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # Program/utilities/model_loader.py
 from pathlib import Path
 from typing import Optional, Any, Dict
+import streamlit as st
 
 def model_dir(game: str, head: str) -> Path:
     from os import environ as env
     base = Path(env.get("ASTRO_DATA_DIR","Data")) / "models" / game
     return base / f"{head}.ag"
 
+@st.cache_data(ttl=900, show_spinner=False)
 def load_predictor(game: str, head: str):
     try:
         from autogluon.tabular import TabularPredictor

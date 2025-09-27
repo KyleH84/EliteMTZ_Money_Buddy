@@ -10,6 +10,7 @@ import asyncio
 import pandas as pd
 import yfinance as yf
 from .base import BaseAgent, ProgressCB
+import streamlit as st
 
 class DataAgent(BaseAgent):
     name = "data"

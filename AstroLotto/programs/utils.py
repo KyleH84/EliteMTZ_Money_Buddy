@@ -7,6 +7,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 
 import os
+import streamlit as st
 
 def clear_prediction_log(filename: str):
     try:

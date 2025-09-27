@@ -16,6 +16,7 @@ from .probability import compute_number_probs, GAME_RULES
 from .quantum_predictor import quantum_probability_map
 from .archetypal_engine import archetypal_weights
 from .retrocausal_feedback import apply_retro_weights, RetroConfig
+import streamlit as st
 
 def _ranges_for(game: str) -> Tuple[int, Optional[int]]:
     key = game if game in GAME_RULES else game.replace(" ", "").lower()

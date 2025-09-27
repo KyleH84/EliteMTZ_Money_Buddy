@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from dataclasses import dataclass
 from typing import Optional, Dict, Any, List
 import re, time
+import streamlit as st
 
 def _try_requests_get(url: str, retries: int = 2, timeout: int = 6) -> Optional[str]:
     try:
@@ -79,6 +80,7 @@ def _parse_megamillions_com(html: str) -> Dict[str, Any]:
         out["jackpot"] = f"${j.group(1)} {j.group(2)}"
     return out
 
+@st.cache_data(ttl=900, show_spinner=False)
 def fetch_powerball_status() -> DrawStatus:
     official = _try_requests_get("https://www.powerball.com/")
     net = _try_requests_get("https://www.powerball.net/")
@@ -89,6 +91,7 @@ def fetch_powerball_status() -> DrawStatus:
     return DrawStatus("powerball", parsed.get("date"), parsed.get("white"), parsed.get("special"),
                       {k:v for k,v in extras.items() if v} | {k:v for k,v in parsed.items() if k not in ("date","white","special") and v})
 
+@st.cache_data(ttl=900, show_spinner=False)
 def fetch_megamillions_status() -> DrawStatus:
     html = _try_requests_get("https://www.megamillions.com/")
     parsed = _parse_megamillions_com(html or "")

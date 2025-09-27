@@ -12,6 +12,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
 from ._common import _load_game_df
+import streamlit as st
 
 FEATURES = {"lunar_phase","kp_3h_or_recent","kp_24h_max","ap_daily","f107_flux","flare_m72h","flare_x72h",
             "vix_close_or_spy20d","alignment_index","conjunction_rate","mercury_retro","dow","dom","woy","month","is_weekend"}

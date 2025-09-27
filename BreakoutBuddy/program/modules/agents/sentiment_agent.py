@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from typing import Optional, List
 import re
+import streamlit as st
 
 try:
     from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer

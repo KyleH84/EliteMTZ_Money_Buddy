@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 from typing import List, Optional
 import pandas as pd  # type: ignore
+import streamlit as st
 
 # Optional DuckDB import; do NOT hard-require at import time
 DUCK_OK = True

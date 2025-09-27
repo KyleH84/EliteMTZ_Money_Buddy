@@ -10,6 +10,7 @@ from typing import Dict, List, Tuple, Any
 import random
 import pandas as pd
 from .smart_features import WHITE_RANGES, SPECIAL_RANGES, long_short_blend, gap_overdue_bonus
+import streamlit as st
 
 def _weighted_choice(items: List[int], weights: List[float]) -> int:
     total = sum(weights) + 1e-12

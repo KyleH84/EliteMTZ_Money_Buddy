@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # astro_doctor.py - environment checks
 import os, sys, importlib, platform, shutil
 from pathlib import Path
+import streamlit as st
 
 def check_import(name):
     try:

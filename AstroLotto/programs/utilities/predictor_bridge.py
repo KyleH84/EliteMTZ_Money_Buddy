@@ -15,6 +15,7 @@ from .model_loader import load_predictor
 from .features_numeric import rules_for_game
 from .chaos_signals import chaos_level_for_date
 from .probability import compute_number_probs
+import streamlit as st
 
 def _blend(a: np.ndarray, b: np.ndarray, w: float) -> np.ndarray:
     w = float(max(0.0, min(1.0, w)))
@@ -36,6 +37,7 @@ def _fallback_freq_table(game: str) -> Optional[Dict[str,np.ndarray]]:
                 continue
     return None
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_prob_table_or_none(game: str, draw_date) -> Optional[Dict[str,np.ndarray]]:
     k,wmin,wmax,smin,smax = rules_for_game(game)
     inf = build_inference_frame(game, draw_date, Path("Extras"), Path("Program"))

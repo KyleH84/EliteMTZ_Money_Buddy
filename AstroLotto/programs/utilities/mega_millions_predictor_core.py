@@ -10,6 +10,7 @@ from typing import Any, Dict, List, Optional
 import pandas as pd
 from pathlib import Path
 from .predictor_core_base import top_k_by_score, uniform_random
+import streamlit as st
 
 GAME = {"white_min":1,"white_max":70,"special_min":1,"special_max":25}
 
@@ -44,6 +45,7 @@ def _apply_astro(scores: pd.Series, cosmic: Optional[Dict[str, Any]]) -> pd.Seri
     s = scores.copy().astype(float) + 1e-9
     return s.pow(gamma)
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_mega_millions_prediction(root_dir: Optional[str] = None, *, k_white:int=5, k_special:int=1,
                                  use_hot_cold:bool=True, use_astro:bool=False,
                                  cosmic: Optional[Dict[str, Any]] = None,

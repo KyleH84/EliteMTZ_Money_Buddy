@@ -16,6 +16,7 @@ This avoids missing legacy ensemble logic while keeping the new engine.
 
 from pathlib import Path
 import sys
+import streamlit as st
 
 # Ensure Program/ is on sys.path so we can import training_engine cleanly
 ROOT = Path(__file__).resolve().parents[2]  # project root

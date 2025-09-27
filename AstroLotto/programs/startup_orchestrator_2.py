@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from pathlib import Path
 from datetime import datetime, timedelta
 from .config import data_dir, extras_dir
+import streamlit as st
 def ensure_dirs():
     for name in ["models","logs","quantum_hints","quantum_inbox"]:
         (data_dir()/name).mkdir(parents=True, exist_ok=True)

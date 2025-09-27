@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from dataclasses import dataclass
 from typing import Optional
+import streamlit as st
 
 def clip(x: float, lo: float = -1e9, hi: float = 1e9) -> float:
     try:

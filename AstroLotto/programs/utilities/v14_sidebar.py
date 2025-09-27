@@ -60,6 +60,7 @@ def _load_flags() -> dict:
         data["show_admin_tools"] = os.getenv("AL_SHOW_ADMIN_TOOLS","1") not in ("0","false","False")
     return data
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_version() -> str:
     # Simple best-effort version reader
     try:

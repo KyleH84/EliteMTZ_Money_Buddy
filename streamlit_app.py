@@ -12,6 +12,17 @@ import os, sys, runpy
 from pathlib import Path
 import streamlit as st
 
+# --- Supabase status indicator (helps catch misconfigured secrets) ---
+_SUPA_URL = os.getenv("SUPABASE_URL")
+_SUPA_KEY = os.getenv("SUPABASE_KEY")
+with st.sidebar:
+    st.subheader("Storage")
+    if _SUPA_URL and _SUPA_KEY:
+        st.success("Supabase connected", icon="🗄️")
+    else:
+        st.warning("Supabase not configured — CSV I/O will use local ephemeral filesystem.", icon="⚠️")
+
+
 # --- Streamlit compatibility shim ---
 # Older code may call st.experimental_rerun; alias it to st.rerun if missing.
 try:

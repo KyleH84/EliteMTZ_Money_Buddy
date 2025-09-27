@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 # Program/utilities/ticket_select.py
 import numpy as np, random
+import streamlit as st
 
 def _rules(game: str):
     g = (game or "").lower()

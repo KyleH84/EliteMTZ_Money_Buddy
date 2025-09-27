@@ -12,6 +12,7 @@ from pathlib import Path
 # ---------- Strict per-app Data/Extras resolver (BreakoutBuddy) ----------
 from pathlib import Path
 import os, sys
+import streamlit as st
 BB_HERE     = Path(__file__).resolve()
 BB_APP_ROOT = BB_HERE.parents[2]  # fixed to app root   # .../BreakoutBuddy
 
@@ -140,6 +141,7 @@ def persist_features(df: pd.DataFrame, db_path: Path | str, *, asof: Optional[pd
     con.close()
     return len(tmp)
 
+@st.cache_data(ttl=900, show_spinner=False)
 def load_features(db_path: Path | str, *, tickers: Optional[Iterable[str]] = None, latest: bool = True) -> pd.DataFrame:
     con = duckdb.connect(str(db_path))
     _ensure_table(con)

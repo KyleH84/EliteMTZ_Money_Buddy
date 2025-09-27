@@ -12,6 +12,7 @@ import math
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 import pandas as pd
+import streamlit as st
 
 # Optional dependency on your existing features.py
 try:
@@ -130,6 +131,7 @@ def _flex_history_fallback(game_key: str, root: Path) -> "pd.DataFrame":
             continue
     return pd.DataFrame()
 
+@st.cache_data(ttl=900, show_spinner=False)
 def load_history(game_key: str, root_dir: Path) -> "pd.DataFrame":
     if callable(_load_history):
         try:

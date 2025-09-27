@@ -6,6 +6,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 (PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
 
 import numpy as np
+import streamlit as st
 def quantum_probability_map(white_probs, special_probs=None, n_universes=1024, decoherence=0.15,
     observer_favored_whites=None, observer_favored_specials=None, observer_bias=0.2, seed=None):
     rng = np.random.default_rng(seed or 0)

@@ -7,6 +7,7 @@ from typing import List, Dict, Optional, Tuple
 
 import pandas as pd  # type: ignore
 from pathlib import Path
+import streamlit as st
 
 # Resolve app root and Data dir (env/session override friendly if app sets BREAKOUTBUDDY_DATA)
 APP_ROOT = Path(__file__).resolve().parents[3]
@@ -102,6 +103,7 @@ def _save_weights_json(weights: Dict[str, float], meta: Dict[str, str]) -> None:
     WEIGHTS_PATH.write_text(json.dumps({"weights": weights, "meta": meta}, indent=2), encoding="utf-8")
 
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_current_weights() -> pd.DataFrame:
     """Return a small DataFrame with agent weights. If none saved, return equal weights."""
     if WEIGHTS_PATH.exists():

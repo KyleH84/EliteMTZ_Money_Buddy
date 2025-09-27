@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from typing import List, Dict, Any, Tuple
 import hashlib, random
+import streamlit as st
 
 def _seed(game: str, draw_date: str) -> int:
     h = hashlib.sha256(f"{game}|{draw_date}".encode()).hexdigest()

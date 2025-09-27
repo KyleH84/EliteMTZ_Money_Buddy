@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from pathlib import Path
 import pandas as pd
+import streamlit as st
 
 def _data_dir() -> Path:
     d = Path(__file__).resolve().parents[1] / "modules" / "Data"

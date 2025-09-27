@@ -7,6 +7,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from .state import OracleSignals
 from statistics import mean
+import streamlit as st
 
 class OracleAgent:
     def __init__(self, fetchers):

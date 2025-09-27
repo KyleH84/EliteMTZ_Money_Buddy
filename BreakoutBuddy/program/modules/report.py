@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 import pandas as pd
 from .explain import explain_scan, alpha_density
+import streamlit as st
 
 def _df_to_markdown(df: pd.DataFrame) -> str:
     if df is None or df.empty:

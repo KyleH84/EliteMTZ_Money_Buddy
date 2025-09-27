@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # utilities/io_routing.py — route CSV writes to Data and READ fallback
 import os, re, builtins
 from pathlib import Path
+import streamlit as st
 
 _PATTERNS = [
     re.compile(r'.*_predictions\.csv$', re.I),

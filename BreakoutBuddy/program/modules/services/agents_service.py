@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 
 import pandas as pd
+import streamlit as st
 
 def _num(s, col, default=0.0):
     if isinstance(s, pd.Series):

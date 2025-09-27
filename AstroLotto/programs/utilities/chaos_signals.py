@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from pathlib import Path
 from datetime import date
 import hashlib, pandas as pd, numpy as np, os
+import streamlit as st
 
 def _kp_for_date(d: date, extras_dir: Path, program_dir: Path) -> float|None:
     for base in (extras_dir / "static", program_dir / "static"):

@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 import pandas as pd
 from ._common import _load_game_df
+import streamlit as st
 
 def frequency_analysis(df_or_path=None) -> dict:
     df = _load_game_df(df_or_path)

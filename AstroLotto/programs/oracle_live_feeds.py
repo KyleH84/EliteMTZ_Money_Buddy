@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # Live feeds + scaling used by oracle_autofill
 import requests
 from typing import Dict
+import streamlit as st
 
 CAP_TOTAL = 0.33
 CAP_MARKETS = 0.12
@@ -70,6 +71,7 @@ def _weird_part() -> float:
     except Exception:
         return 0.0
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_live_parts() -> Dict[str, float]:
     return {
         "markets": float(_markets_part()),

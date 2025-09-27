@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from pathlib import Path
 from typing import List
+import streamlit as st
 
 # Pages listed here will be retained in the ``programs/pages`` directory when
 # ``consolidate_pages`` is invoked.  Names are compared case‑insensitively

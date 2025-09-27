@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 # Program/utilities/diversity.py
 from typing import List
+import streamlit as st
 
 def _set_distance(a: List[int], b: List[int]) -> float:
     sa, sb = set(a), set(b)

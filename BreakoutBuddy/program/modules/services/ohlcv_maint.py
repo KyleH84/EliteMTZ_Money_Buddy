@@ -4,6 +4,7 @@ import os, time, json
 from dataclasses import dataclass
 from typing import List, Dict, Optional
 from pathlib import Path
+import streamlit as st
 
 try:
     import yfinance as yf  # type: ignore

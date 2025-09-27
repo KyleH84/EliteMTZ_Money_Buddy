@@ -11,6 +11,7 @@ from pathlib import Path
 import json, hmac, hashlib
 from typing import Optional
 from .config import data_dir, extras_dir
+import streamlit as st
 
 def _secret() -> bytes:
     s = (extras_dir() / "future_secret.txt")

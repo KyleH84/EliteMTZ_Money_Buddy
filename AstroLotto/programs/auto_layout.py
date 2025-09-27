@@ -7,6 +7,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from pathlib import Path
 import json
+import streamlit as st
 
 def ensure_layout(root: str | None = None) -> None:
     base = Path(root or ".").resolve()

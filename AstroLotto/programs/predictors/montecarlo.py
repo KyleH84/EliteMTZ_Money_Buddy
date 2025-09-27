@@ -25,6 +25,7 @@ import pandas as pd
 
 from .utilities.smart_features_v2 import WHITE_RANGES
 from .utilities.montecarlo_v2 import monte_carlo_picks, choose_special  # type: ignore
+import streamlit as st
 
 def predict_sets(
     game: str,

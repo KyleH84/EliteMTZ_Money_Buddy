@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # engine/ev_mode.py
 from typing import List, Dict, Any, Tuple
 import numpy as np
+import streamlit as st
 
 def popularity_risk_white(nums: List[int], white_max: int) -> float:
     if not nums: return 0.0

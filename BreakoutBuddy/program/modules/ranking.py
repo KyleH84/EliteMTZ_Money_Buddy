@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 import numpy as np
 import pandas as pd
+import streamlit as st
 
 def _ensure_col(df: pd.DataFrame, name: str, default: float = 0.0) -> pd.Series:
     if name not in df.columns:

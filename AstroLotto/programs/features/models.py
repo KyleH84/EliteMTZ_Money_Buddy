@@ -14,6 +14,7 @@ from programs.features.refresh import refresh_all
 # canonical location for these modules in v14.5.  Older builds used a
 # capitalised ``Program.utils`` alias, which is no longer present.
 from programs.utils.model_trainers import train_all_for_game, GAMES  # type: ignore
+import streamlit as st
 
 def train_all(root: Path) -> Dict[str, dict]:
     out = {}

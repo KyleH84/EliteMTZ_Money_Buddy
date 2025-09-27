@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # programs/utils/model_trainers.py — route Admin Train buttons to the trainer + normalize
 from pathlib import Path
 from typing import Dict, Any
+import streamlit as st
 
 GAMES = ("powerball","megamillions","cash5","pick3","luckyforlife","colorado")
 

@@ -12,6 +12,7 @@ import json, re, time
 from typing import Dict, Any, Optional
 import requests
 from bs4 import BeautifulSoup
+import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "Data"
@@ -62,6 +63,7 @@ def _parse_usd(text: str) -> Optional[int]:
     return int(round(num))
 
 # --- Fetchers ---
+@st.cache_data(ttl=900, show_spinner=False)
 def fetch_megamillions() -> Optional[int]:
     # Try official page first
     try:
@@ -90,6 +92,7 @@ def fetch_megamillions() -> Optional[int]:
         pass
     return None
 
+@st.cache_data(ttl=900, show_spinner=False)
 def fetch_colorado_lotto() -> Optional[int]:
     # Colorado Lotto+ official
     try:
@@ -118,6 +121,7 @@ def fetch_colorado_lotto() -> Optional[int]:
         pass
     return None
 
+@st.cache_data(ttl=900, show_spinner=False)
 def fetch_powerball() -> Optional[int]:
     try:
         r = requests.get("https://www.powerball.com/", headers=USER_AGENT, timeout=10)
@@ -135,6 +139,7 @@ FETCHERS = {
     "colorado": fetch_colorado_lotto,
 }
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_jackpot(game: str, force_refresh: bool=False) -> Optional[int]:
     game = game.lower().strip()
     overrides = _read_json(OVERRIDE_FILE)

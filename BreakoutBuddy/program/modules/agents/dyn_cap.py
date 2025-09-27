@@ -11,6 +11,7 @@ from pathlib import Path
 # ---------- Strict per-app Data/Extras resolver (BreakoutBuddy) ----------
 from pathlib import Path
 import os, sys
+import streamlit as st
 BB_HERE     = Path(__file__).resolve()
 BB_APP_ROOT = BB_HERE.parents[2]  # fixed to app root   # .../BreakoutBuddy
 
@@ -97,6 +98,7 @@ def _latest_agentcalib(con=None) -> pd.DataFrame:
     except Exception:
         return pd.DataFrame()
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_agents_multiplier_cap(default_cap: float = 1.15) -> float:
     """Compute an adaptive cap for the Agents multiplier.
     Returns a value in [1.10, 1.18] where higher = more trust in agents.

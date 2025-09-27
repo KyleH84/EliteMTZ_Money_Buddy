@@ -7,6 +7,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from typing import List
 from .state import PickSet
+import streamlit as st
 
 class EVAvoidPopularPatterns:
     def __init__(self, popularity_model):

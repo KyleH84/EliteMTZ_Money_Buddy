@@ -15,6 +15,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from typing import Dict, List
 import math
 import pandas as pd
+import streamlit as st
 
 try:
     # When placed under `utilities/`, this relative import works
@@ -66,6 +67,7 @@ def _top_k(scores: pd.Series, k: int) -> List[int]:
               .tolist()
     )
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_powerball_prediction(root_dir: str, k_white: int = 5, k_special: int = 1) -> Dict[str, object]:
     """Return a Powerball prediction using recency‑weighted frequency.
 

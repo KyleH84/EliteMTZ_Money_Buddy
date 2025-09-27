@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from typing import Mapping, Any, List
 from .base import AgentResult
 from . import tech_agent, pattern_agent, volatility_agent
+import streamlit as st
 
 def list_agent_fns():
     return [tech_agent.compute, pattern_agent.compute, volatility_agent.compute]

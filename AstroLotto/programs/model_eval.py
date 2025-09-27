@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # programs/utils/model_eval.py — Minimal safe evaluator for Admin Models tab
 from pathlib import Path
 from typing import Dict, Any
+import streamlit as st
 
 def _cache_path(root: Path, game: str) -> Path:
     names = {

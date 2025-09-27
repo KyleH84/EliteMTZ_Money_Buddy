@@ -15,6 +15,7 @@ import json
 from .smart_predict_v2 import predict_sets_v2  # Monte Carlo + long/short + gap + PMI + diversity
 from .smart_features import WHITE_RANGES, SPECIAL_RANGES, detect_white_columns
 from .diversity import select_diverse
+import streamlit as st
 
 # Config flags from Extras/v14_flags.json
 def _load_flags(root: Path) -> Dict[str, Any]:
@@ -137,20 +138,26 @@ def _predict_generic(game: str, root_dir: Optional[str], **kwargs):
         return [{"white": w, "special": s} for w, s in zip(whites, specials)]
 
 # Public API expected by predictor UIs
+@st.cache_data(ttl=900, show_spinner=False)
 def get_powerball_prediction(root_dir: Optional[str] = None, **kwargs):
     return _predict_generic("powerball", root_dir, **kwargs)
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_mega_millions_prediction(root_dir: Optional[str] = None, **kwargs):
     return _predict_generic("megamillions", root_dir, **kwargs)
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_cash5_prediction(root_dir: Optional[str] = None, **kwargs):
     return _predict_generic("cash5", root_dir, **kwargs)
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_pick3_prediction(root_dir: Optional[str] = None, **kwargs):
     return _predict_generic("pick3", root_dir, **kwargs)
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_lucky_for_life_prediction(root_dir: Optional[str] = None, **kwargs):
     return _predict_generic("luckyforlife", root_dir, **kwargs)
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_colorado_lottery_prediction(root_dir: Optional[str] = None, **kwargs):
     return _predict_generic("colorado", root_dir, **kwargs)

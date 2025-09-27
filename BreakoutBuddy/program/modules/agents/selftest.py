@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 import asyncio, pandas as pd
 from .agents.orchestrator import AgentOrchestrator
+import streamlit as st
 
 DEFAULTS = ["AAPL","MSFT","SPY"]
 

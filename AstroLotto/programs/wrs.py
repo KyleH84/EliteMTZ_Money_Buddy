@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # Program/utilities/wrs.py
 from typing import List
 import math, random
+import streamlit as st
 
 def weighted_sample_without_replacement(items: List[int], weights: List[float], k: int) -> List[int]:
     """

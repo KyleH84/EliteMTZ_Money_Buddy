@@ -13,6 +13,7 @@ import numpy as np, pandas as pd
 from .features_numeric import rules_for_game, _date_col, last_seen_gap, rolling_freq
 from .features_cosmic import zodiac_ordinal, moon_phase_frac, moon_quadrant, mercury_retrograde_flag
 from .weather_source import daily_weather_for_game
+import streamlit as st
 
 def _white_cols(df: pd.DataFrame, game: str) -> List[str]:
     prefers = ["white1","white2","white3","white4","white5","white6","n1","n2","n3","n4","n5","n6","ball1","ball2","ball3","ball4","ball5","ball6"]

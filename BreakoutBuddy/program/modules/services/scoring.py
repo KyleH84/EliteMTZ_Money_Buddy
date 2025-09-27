@@ -16,6 +16,7 @@ def _data_dir() -> Path:
 
 # --- NEW: import our feature filler ---
 from .enrich import ensure_features
+import streamlit as st
 
 def _ensure_rank_cols(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()

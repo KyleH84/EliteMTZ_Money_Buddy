@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from typing import List
 import pandas as pd
 from modules import explain as explain_mod
+import streamlit as st
 
 def friendly_lines(row: pd.Series) -> List[str]:
     """Turn explain.explain_row text into a short bullet list."""

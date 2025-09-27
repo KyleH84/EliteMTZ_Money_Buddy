@@ -12,6 +12,7 @@ from typing import Dict, Any
 import datetime as dt
 from utilities.oracle_data import moon_phase_bucket, moon_phase_fraction, kp_index_recent, solar_flare_activity, market_volatility_proxy
 from utilities.alignment import planetary_alignment_index
+import streamlit as st
 @dataclass
 class OracleSettings:
     use_moon: bool = True

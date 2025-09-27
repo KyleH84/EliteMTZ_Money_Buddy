@@ -39,6 +39,7 @@ def _tf_map(tf: str) -> Tuple[dict, str]:
         return ({"period":"max", "interval":"1mo"}, "Max, monthly")
     return ({"period":"6mo", "interval":"1d"}, "6 months, daily")
 
+@st.cache_data(ttl=900, show_spinner=False)
 def fetch_history(symbol: str, timeframe: str) -> pd.DataFrame:
     """Fetch OHLCV for symbol at a timeframe, with sensible fallbacks."""
     t = yf.Ticker(symbol)

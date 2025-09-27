@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from pathlib import Path
 from typing import Dict, List, Tuple
 import pandas as pd
+import streamlit as st
 
 # Standard filenames we expect in the project root
 STANDARD_FILENAMES: Dict[str, str] = {

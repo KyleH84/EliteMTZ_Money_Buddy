@@ -205,6 +205,7 @@ if not SNAP_PATH.exists():
 LOGS_PATH = str(BB_DATA / 'bb_temporal_logs.csv')
 WL_PATH = str(BB_DATA / 'watchlist.csv')
 
+@st.cache_data(ttl=900, show_spinner=False)
 def load_csv(path):
     if not os.path.exists(path):
         return None
@@ -221,6 +222,7 @@ def save_watchlist(df):
     except Exception:
         return False
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_watchlist():
     if os.path.exists(WL_PATH):
         try:

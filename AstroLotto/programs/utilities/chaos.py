@@ -8,7 +8,9 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 import random
 from datetime import datetime
+import streamlit as st
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_cosmic_entropy() -> int:
     return int(datetime.now().timestamp())
 

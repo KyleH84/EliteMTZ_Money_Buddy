@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 from typing import Callable, Dict, Optional
 import pandas as pd
+import streamlit as st
 
 def _data_root() -> Path:
     return Path(os.environ.get("ASTRO_DATA_DIR") or Path.cwd() / "Data")

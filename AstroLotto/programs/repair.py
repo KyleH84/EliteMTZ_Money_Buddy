@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from pathlib import Path
 from typing import Optional, Tuple
 import pandas as pd
+import streamlit as st
 
 # Canonical special column names per game
 SPECIAL_CANON = {

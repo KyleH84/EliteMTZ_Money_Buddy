@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from pathlib import Path
 from typing import Optional, Dict, Any
 import json, re, time
+import streamlit as st
 
 try:
     import requests
@@ -152,6 +153,7 @@ _FETCHERS = {
     "colorado": _fetch_colorado,
 }
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_jackpot(game: str, force_refresh: bool = False) -> Optional[int]:
     """Return current jackpot in dollars for game in {'powerball','megamillions','colorado'}.
        Uses overrides if present; caches successful fetches in Data/cache/jackpots.json

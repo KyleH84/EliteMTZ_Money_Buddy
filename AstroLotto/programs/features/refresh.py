@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from pathlib import Path
 import importlib
+import streamlit as st
 
 LABEL_TO_UPDATER = {
     "Mega Millions": ("programs.services.mega_updates", "update_megamillions"),

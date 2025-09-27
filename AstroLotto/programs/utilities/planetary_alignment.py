@@ -11,6 +11,7 @@ import math
 import shutil
 import datetime as dt
 from typing import Dict, Any, Optional
+import streamlit as st
 
 def _try_copy_de440_from_pip(dest: Path) -> Optional[Path]:
     """

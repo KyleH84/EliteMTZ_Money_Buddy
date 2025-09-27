@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 import json
+import streamlit as st
 
 _CFG_NAME = "llm_config.json"
 
@@ -46,6 +47,7 @@ def _save_cfg(d: Dict) -> None:
     except Exception:
         pass
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_config() -> Dict:
     c = _load_cfg()
     c.setdefault("model_dir", "")
@@ -217,4 +219,3 @@ def infer(prompt: str, *, max_tokens: int = 200, temp: float = 0.2) -> Optional[
         pass
     # Fallback to simple API if configured
     return _infer_via_simple_api(prompt, max_tokens=max_tokens, temp=temp)
-

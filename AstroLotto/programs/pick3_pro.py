@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from typing import Dict, List
 import pandas as pd
 from collections import Counter
+import streamlit as st
 def _digits_for_row(row, cols: List[str]) -> List[int]:
     out = []
     for c in cols:

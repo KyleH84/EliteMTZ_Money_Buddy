@@ -25,6 +25,7 @@ def _mph(ms: float) -> float:
         return 0.0
 
 @cache_data(ttl=900)
+@st.cache_data(ttl=900, show_spinner=False)
 def get_weather_by_zip(zip_code: Any, *args, units: str = "F", **kwargs) -> Dict[str, Any]:
     """Return current weather for a US ZIP. Accepts extra args for backward compatibility.
     Output:

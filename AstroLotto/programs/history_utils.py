@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from pathlib import Path
 from typing import Tuple, List, Optional
 import numpy as np, pandas as pd
+import streamlit as st
 
 def project_root_from_page(file_path: str) -> Path:
     """Return the project root directory given the path to a page module.
@@ -34,6 +35,7 @@ def project_root_from_page(file_path: str) -> Path:
     # where the project root was two levels up from the page file.
     return p.parent.parent
 
+@st.cache_data(ttl=900, show_spinner=False)
 def load_cached_dataframe(root: Path, game_key: str) -> pd.DataFrame:
     paths = {
         "powerball": root / "Data" / "cached_powerball_data.csv",

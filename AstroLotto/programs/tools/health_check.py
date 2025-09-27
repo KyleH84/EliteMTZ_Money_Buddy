@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # Minimal health check wrapper to keep older admin pages working.
 # Delegates to programs.features.health if available.
 from typing import Dict, Any
+import streamlit as st
 try:
     from programs.features.health import scan_all as _scan_all
 except Exception:

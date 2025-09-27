@@ -20,6 +20,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.calibration import CalibratedClassifierCV
+import streamlit as st
 
 # Optional backends (guarded imports)
 try:
@@ -124,5 +125,6 @@ def predict_proba(model_tuple, X: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]
 def save_model(model_tuple, path: str):
     joblib.dump(model_tuple, path)
 
+@st.cache_data(ttl=900, show_spinner=False)
 def load_model(path: str):
     return joblib.load(path)

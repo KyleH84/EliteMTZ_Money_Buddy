@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from typing import List, Dict
 import pandas as pd
 import numpy as np
+import streamlit as st
 
 @dataclass
 class HeuristicParams:

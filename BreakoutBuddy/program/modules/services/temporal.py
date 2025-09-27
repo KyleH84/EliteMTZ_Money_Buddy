@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 import pandas as pd
 from modules.temporal_agent import TemporalAgent, KozyrevConfig
+import streamlit as st
 
 def time_sensitivity(row) -> float:
     """Compute a time-sensitivity scalar for a single row if possible."""

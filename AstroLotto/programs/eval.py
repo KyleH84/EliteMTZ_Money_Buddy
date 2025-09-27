@@ -12,6 +12,7 @@ import numpy as np
 import pandas as pd
 from typing import Dict, Any
 from .model import make_pipeline
+import streamlit as st
 
 def walk_forward(X: pd.DataFrame, y: pd.Series, train_min: int = 400, step: int = 1) -> Dict[str, Any]:
     n = len(X)

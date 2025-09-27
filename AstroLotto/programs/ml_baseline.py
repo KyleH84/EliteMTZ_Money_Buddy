@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 from typing import Dict, List, Tuple, Optional
 import pandas as pd
+import streamlit as st
 
 def try_fit_probabilities(df: pd.DataFrame, game: str) -> Dict[int, float]:
     try:

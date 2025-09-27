@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # Program/sitecustomize.py
 import os, sys, time, random, inspect
 from pathlib import Path
+import streamlit as st
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "Data"

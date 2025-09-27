@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from typing import Dict, Tuple
 import pandas as pd
 from collections import Counter
+import streamlit as st
 
 SPECIAL_META: Dict[str, Tuple[str, int]] = {
     "powerball": ("powerball", 26),        # column name (best-guess), max value

@@ -11,6 +11,7 @@ from pathlib import Path
 # ---------- Strict per-app Data/Extras resolver (BreakoutBuddy) ----------
 from pathlib import Path
 import os, sys
+import streamlit as st
 BB_HERE     = Path(__file__).resolve()
 BB_APP_ROOT = BB_HERE.parents[2]  # fixed to app root   # .../BreakoutBuddy
 

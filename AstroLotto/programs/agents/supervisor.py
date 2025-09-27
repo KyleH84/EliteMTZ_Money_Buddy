@@ -6,6 +6,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 (PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
 
 from .state import RunState
+import streamlit as st
 
 class SupervisorAgent:
     def choose_mode(self, state: RunState, z_alignment: float | None = None) -> str:

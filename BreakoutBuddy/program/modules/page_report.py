@@ -92,6 +92,7 @@ top_n = st.number_input("Top N", value=20, min_value=5, max_value=200, step=5)
 include_watchlist = st.checkbox("Include watchlist evaluation", value=True)
 wl_csv = str(BB_DATA / 'watchlist.csv')
 
+@st.cache_data(ttl=900, show_spinner=False)
 def load_df(path):
     if not os.path.exists(path):
         return None

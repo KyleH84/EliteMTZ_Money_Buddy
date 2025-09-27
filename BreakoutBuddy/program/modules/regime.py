@@ -9,6 +9,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 import pandas as pd
 import yfinance as yf
 import math
+import streamlit as st
 
 def _pct_rank(s: pd.Series, window:int=252) -> pd.Series:
     return s.rolling(window).apply(lambda x: (x<=x.iloc[-1]).mean(), raw=False)

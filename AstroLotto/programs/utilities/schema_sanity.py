@@ -10,6 +10,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 from pathlib import Path
 from typing import List
 import pandas as pd
+import streamlit as st
 
 EXPECTED = {
     "cached_powerball_data.csv":  {"cols": ["draw_date","white1","white2","white3","white4","white5","special"]},

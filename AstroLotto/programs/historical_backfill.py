@@ -11,6 +11,7 @@ import os
 from pathlib import Path
 from typing import Optional, Dict, Any
 import pandas as pd
+import streamlit as st
 try:
     import requests
 except Exception:
@@ -92,6 +93,7 @@ def _fetch_powerball_official() -> Optional[pd.DataFrame]:
         return pd.DataFrame(rows) if rows else None
     except Exception: return None
 
+@st.cache_data(ttl=900, show_spinner=False)
 def fetch_history(game: str) -> Optional[pd.DataFrame]:
     g = _norm_game(game)
     if g == "powerball": return _fetch_ny("powerball") or _fetch_powerball_official()

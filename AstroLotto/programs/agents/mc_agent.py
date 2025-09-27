@@ -8,6 +8,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 import random
 from typing import Dict, Any, List
 from .state import PickSet
+import streamlit as st
 
 class MonteCarloAgent:
     def __init__(self, sampler_fn):

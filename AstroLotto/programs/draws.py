@@ -14,6 +14,7 @@ from typing import List, Dict, Tuple, Optional
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
+import streamlit as st
 
 SESSION = requests.Session()
 SESSION.headers.update({"User-Agent": "AstroLotto/10.3.6 (+https://local)"})

@@ -11,6 +11,7 @@ from pathlib import Path
 # ---------- Strict per-app Data/Extras resolver (BreakoutBuddy) ----------
 from pathlib import Path
 import os, sys
+import streamlit as st
 BB_HERE     = Path(__file__).resolve()
 BB_APP_ROOT = BB_HERE.parents[2]  # fixed to app root   # .../BreakoutBuddy
 
@@ -82,6 +83,7 @@ from typing import Tuple, Optional
 import duckdb
 from .cache import _conn
 
+@st.cache_data(ttl=900, show_spinner=False)
 def get_locked_cap() -> Tuple[bool, Optional[float]]:
     """Return (enabled, cap_high) if a lock is set, else (False, None)."""
     con = _conn()

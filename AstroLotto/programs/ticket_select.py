@@ -11,6 +11,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 import numpy as np
 from typing import Dict, List, Optional, Tuple
 import random
+import streamlit as st
 
 GAME_RULES = {
     "powerball":   {"k_white": 5, "white_min": 1, "white_max": 69, "special_min": 1, "special_max": 26},
