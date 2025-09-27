@@ -2,30 +2,44 @@ from __future__ import annotations
 
 from pathlib import Path
 import os
+import pandas as pd
+
+# Local data directories
 PROJECT_DIR = Path(__file__).resolve().parent
 (PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
 (PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
-
-import pandas as pd
-from pathlib import Path
 
 def _data_dir() -> Path:
     d = Path(__file__).resolve().parents[1] / "Data"
     d.mkdir(parents=True, exist_ok=True)
     return d
 
+# --- NEW: import our feature filler ---
+from .enrich import ensure_features
+
 def _ensure_rank_cols(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
+
+    # Fill missing core columns with defaults
     if "Combined" not in df.columns:
         pu = pd.to_numeric(df.get("P_up", 0.5), errors="coerce").fillna(0.5)
         rel = pd.to_numeric(df.get("RelSPY", 0.0), errors="coerce").fillna(0.0)
         rv  = pd.to_numeric(df.get("RVOL", 1.0), errors="coerce").fillna(1.0)
         df["Combined"] = (pu * 70.0 + rel * 10.0 + (rv - 1.0) * 20.0).clip(0, 100)
+
+    # Try agent-based enrichment if available
     try:
         from modules.services import agents_service as AS
         df = AS.enrich_scores(df)
     except Exception:
         pass
+
+    # --- NEW: run our enrichment to replace "None" with real values ---
+    try:
+        df = ensure_features(df)
+    except Exception:
+        pass
+
     sort_col = "Combined_with_agents" if "Combined_with_agents" in df.columns else "Combined"
     return df.sort_values(by=[sort_col], ascending=False).reset_index(drop=True)
 
@@ -37,16 +51,24 @@ def _fallback_rows(n: int) -> pd.DataFrame:
     return _ensure_rank_cols(pd.DataFrame({"Ticker": syms, "P_up": 0.55, "RelSPY": 0.0, "RVOL": 1.1}))
 
 def _persist_ranked(df: pd.DataFrame) -> None:
+    """Persist latest ranked table to disk (legacy, but harmless in cloud)."""
     try:
         (_data_dir() / "ranked_latest.csv").write_text(df.to_csv(index=False), encoding="utf-8")
     except Exception:
         pass
 
 def rank_now(arg) -> pd.DataFrame | tuple:
+    """
+    Rank stocks now.
+    - If arg is a DataFrame, rank directly.
+    - Else, treat arg as settings dict (with universe_size, top_n).
+    Returns either a DataFrame or a tuple (snap, regime, ranked, None, None).
+    """
     if isinstance(arg, pd.DataFrame):
         df = _ensure_rank_cols(arg)
         _persist_ranked(df)
         return df
+
     try:
         settings = dict(arg)
     except Exception:
@@ -56,18 +78,24 @@ def rank_now(arg) -> pd.DataFrame | tuple:
         top_n = int(settings.get("top_n", 25))
     except Exception:
         uni_n, top_n = 300, 25
+
     try:
         from modules import data as data_mod
         from modules import regime as regime_mod
+
         tickers = data_mod.list_universe(uni_n)
         snap = data_mod.pull_enriched_snapshot(tickers)
+
         ranked = _ensure_rank_cols(snap)
+
         try:
             regime = regime_mod.compute_regime()
         except Exception:
             regime = {}
+
         _persist_ranked(ranked)
         return snap, regime, ranked, None, None
+
     except Exception:
         ranked = _fallback_rows(top_n)
         _persist_ranked(ranked)

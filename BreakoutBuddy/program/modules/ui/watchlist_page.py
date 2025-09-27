@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from .. import watchlist as wlmod
+from ..services.enrich import ensure_features  # fill missing indicators
 
 def render_watchlist(df: pd.DataFrame | None = None, **kwargs):
     """
@@ -17,6 +18,7 @@ def render_watchlist(df: pd.DataFrame | None = None, **kwargs):
         if st.button("Add"):
             if new:
                 try:
+                    # Prefer dedicated methods if they exist
                     if hasattr(wlmod, "add_to_watchlist"):
                         wlmod.add_to_watchlist(new)
                     else:
@@ -56,18 +58,17 @@ def render_watchlist(df: pd.DataFrame | None = None, **kwargs):
     except Exception:
         pass
 
-    # Drop duplicate tickers if any and keep the newest row
+    # Drop duplicate tickers and fill indicators
     if df is not None and not df.empty and "Ticker" in df.columns:
         df = df.drop_duplicates(subset=["Ticker"], keep="last")
+        df = ensure_features(df)  # <- compute/fill RelSPY, RSI4, ConnorsRSI, RVOL, P_up, SqueezeHint, etc.
 
     st.dataframe(df, use_container_width=True, hide_index=True)
 
-# Back-compat: accept positional/keyword args like (df, conn=..., *args)
+# Back-compat for callers importing render()
 def render(*args, **kwargs):
-    df = None
-    if "df" in kwargs:
-        df = kwargs.pop("df")
-    elif len(args) >= 1:
+    df = kwargs.pop("df", None)
+    if df is None and len(args) >= 1:
         df = args[0]
-    # Ignore any other kwargs (e.g., conn) to maintain compatibility
+    # Ignore other kwargs (e.g., conn)
     return render_watchlist(df=df, **kwargs)
