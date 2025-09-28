@@ -282,7 +282,7 @@ def render_admin_tab(*, settings: Any = None):
         "Maintenance",
         "Market Regime",
         "Utilities",
-    ])
+    , 'Utilities'])
 
     with tabs[0]:
         current = _get_data_dir()
