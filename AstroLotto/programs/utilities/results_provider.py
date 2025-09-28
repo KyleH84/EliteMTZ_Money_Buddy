@@ -1,11 +1,9 @@
-
 from __future__ import annotations
 import datetime as _dt
-import json, re
+import re
 from dataclasses import dataclass
 from typing import List, Optional
 import requests
-import streamlit as st
 
 @dataclass
 class DrawResult:
@@ -16,7 +14,7 @@ class DrawResult:
 
 class ResultsProvider:
     """Providers for official draw results."""
-@st.cache_data(ttl=900, show_spinner=False)
+
     def fetch_powerball_recent(self, count: int = 50) -> List[DrawResult]:
         url = f"https://www.powerball.com/api/v1/numbers/powerball/recent{count}?format=json"
         r = requests.get(url, timeout=15)

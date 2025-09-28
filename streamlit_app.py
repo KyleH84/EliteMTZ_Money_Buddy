@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 # --- Health widget (BreakoutBuddy-aware import) ---
 try:
     from utilities.health_widget import render_health_widget  # either root-level utilities or already on sys.path

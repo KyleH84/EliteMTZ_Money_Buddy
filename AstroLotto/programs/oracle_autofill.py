@@ -14,7 +14,7 @@ import streamlit as st
 try:
     from .oracle_live_feeds import get_live_parts, CAP_TOTAL
 except Exception:
-@st.cache_data(ttl=900, show_spinner=False)
+    @st.cache_data(ttl=900, show_spinner=False)
     def get_live_parts() -> Dict[str, float]:
         return {"markets": 0.0, "space": 0.0, "weird": 0.0, "cap": 0.33}
     CAP_TOTAL = 0.33
