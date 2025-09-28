@@ -1,107 +1,67 @@
 from __future__ import annotations
-# program/app_main.py
 
-import os
-from pathlib import Path
+# ### PATH BOOTSTRAP
+import os, sys
+_THIS_DIR = os.path.dirname(__file__)
+_REPO_ROOT = os.path.abspath(os.path.join(_THIS_DIR, "..", ".."))
+_SRC_DIR = os.path.join(_REPO_ROOT, "src")
+for _p in (_REPO_ROOT, _SRC_DIR):
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
+import importlib
+import pkgutil
 import streamlit as st
-from modules.tabs.about import render_about_tab
-from modules.tabs.elitenewsbot import render_elitenewsbot_tab
 
-# Try to import duckdb, but don't crash if unavailable (e.g., Python 3.13 on Windows)
-DUCK_OK = True
-conn = None
-try:
-    import duckdb  # type: ignore
-except Exception as e:
-    DUCK_OK = False
-    duck_error = str(e)
-
-APP_ROOT = Path(__file__).resolve().parents[1]  # program/
-BB_ROOT = APP_ROOT.parents[0]                   # BreakoutBuddy root
-DATA_DIR = BB_ROOT / "Data"
-DATA_DIR.mkdir(parents=True, exist_ok=True)
-
-# Connect if duckdb works
-if DUCK_OK:
-    try:
-        db_path = DATA_DIR / "bb.duckdb"
-        conn = duckdb.connect(str(db_path))
-    except Exception as e:
-        DUCK_OK = False
-        duck_error = str(e)
-
-# Top-nav
 st.set_page_config(page_title="BreakoutBuddy", layout="wide")
+
 st.title("BreakoutBuddy")
-st.caption("BB build: 2025-09-19 (safe duckdb import; robust quick explain fallback)")
+st.caption("BB build: safe import; robust fallback")
 
-# If duckdb failed, warn but keep going
-if not DUCK_OK:
-    st.warning("DuckDB not available. Continuing without DB features.\n\n"
-               "Tip: Use Python 3.11/3.12 or install a compatible DuckDB wheel. "
-               f"Details: {duck_error}")
+# ---- Discover pages dynamically from BreakoutBuddy.program.pages, excluding reporting_fixed ----
+from . import pages as _pages_pkg  # type: ignore
 
-# Sidebar controls (example/common keys so tabs can read them)
-with st.sidebar:
-    st.header("Controls")
-    st.session_state.setdefault("controls_top_n", st.slider("Top N", 10, 100, 25, 5))
-    st.session_state.setdefault("universe_size", st.slider("Universe size", 50, 1000, 300, 50))
-    st.selectbox("Sort by", ["Combined", "Combined_with_agents", "ChangePct"], index=0, key="sort_by")
-    st.toggle("Plain-English Why", value=True, key="plain_english_on")
+def _list_pages():
+    mods = []
+    for m in pkgutil.iter_modules(_pages_pkg.__path__):
+        name = m.name
+        if name.lower() in {"reporting_fixed", "reporting_fixed_page", "reporting"}:
+            continue  # exclude; rendered under Admin -> Utilities
+        mods.append(name)
+    # Prefer order: main-like first, watchlist near top, rest alphabetical
+    def _key(n: str):
+        if "main" in n.lower(): return (0, n)
+        if "watchlist" in n.lower(): return (1, n)
+        return (2, n)
+    return sorted(mods, key=_key)
 
-# Tabs
-from modules.tabs.dashboard import render_dashboard_tab
-from modules.tabs.single import render_single_tab
-from modules.tabs.explore import render_explore_tab
-from modules.ui.watchlist_page import render as render_watchlist_page
-from modules.tabs.admin import render_admin_tab
-try:
-    from modules.tabs.agents import render_agents_tab
-except Exception:
-    def render_agents_tab(**kwargs):
-        st.subheader("Agents")
-        st.info("Agents tab unavailable in this environment.")
+_page_names = _list_pages()
+tabs = st.tabs(["Main"] + [n.replace("_", " ") for n in _page_names] + ["admin"])
 
-tab = st.tabs(["Dashboard", "Single", "Explore", "Watchlist", "Report", "Agents", "Admin", "About", "EliteNewsBot"])
+# Main tab may be simple overview
+with tabs[0]:
+    st.write("Welcome to BreakoutBuddy. Select a tab or open Admin for Utilities.")
 
-with tab[0]:
-    render_dashboard_tab(settings=st.session_state, has_agents=True)
-
-with tab[1]:
-    render_single_tab(settings=st.session_state)
-
-with tab[2]:
-    try:
-        render_explore_tab(settings=st.session_state, conn=conn, enrich_features_fn=None)
-    except Exception as e:
-        st.error(f"Explore failed: {e}")
-
-with tab[3]:
-    try:
-        render_watchlist_page(conn=conn, settings=st.session_state, enrich_features_fn=None, header=True)
-    except Exception as e:
-        st.error(f"Watchlist failed: {e}")
-
-with tab[4]:
-    # Reports tab: lazy import to avoid breaking other environments
-    try:
+# Render discovered pages
+for idx, mod_name in enumerate(_page_names, start=1):
+    with tabs[idx]:
         try:
-            from modules.tabs.report import render_report_tab as _render_reports
-        except Exception:
-            from modules.tabs.reports import render_reports_tab as _render_reports  # type: ignore
-        _render_reports(settings=st.session_state)
-    except Exception as _e:
-        st.subheader('Report')
-        st.info('Reports coming soon.')
-        st.caption(f'Details: {_e}')
-with tab[5]:
-    render_agents_tab(settings=st.session_state, has_agents=True)
+            mod = importlib.import_module(f".pages.{mod_name}", package=__package__)
+            # Call a conventional renderer if present
+            if hasattr(mod, "render_page"):
+                mod.render_page()  # type: ignore
+            elif hasattr(mod, "render_watchlist_page"):
+                mod.render_watchlist_page()  # type: ignore
+            else:
+                st.info(f"Page '{mod_name}' has no render_* function.")
+        except Exception as e:
+            st.error(f"Failed to render page '{mod_name}': {e}")
 
-with tab[6]:
-    render_admin_tab(settings=st.session_state)
-
-with tab[7]:
-    render_about_tab(settings=st.session_state)
-
-with tab[-1]:
-    render_elitenewsbot_tab(settings=st.session_state)
+# Admin -> Utilities (Reporting Fixed)
+try:
+    from .modules.tabs.admin import render_admin  # type: ignore
+    with tabs[len(_page_names) + 1]:
+        render_admin()
+except Exception as e:
+    with tabs[len(_page_names) + 1]:
+        st.error(f"Admin panel failed to load: {e}")
