@@ -25,3 +25,6 @@ def render():
             for _ in range(nsets): picks.append(predict_megamillions(_paths_for(game)))
         for i, p in enumerate(picks, 1):
             st.write(f"**Set {i}:** {p}")
+
+if __name__ == "__main__":
+    render()

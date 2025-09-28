@@ -11,7 +11,7 @@ def render_watchlist(df: pd.DataFrame | None = None, **kwargs):
     """
     if df is None:
         df = pd.DataFrame()
-df = ensure_basic_indicators(df)
+    df = ensure_basic_indicators(df)
 
     st.header("Watchlist")
 
