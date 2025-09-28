@@ -1,9 +1,9 @@
-# program/modules/tabs/admin.py
 from __future__ import annotations
+# program/modules/tabs/admin.py
 
 
 try:
-    from modules.utilities.reporting_fixed_panel import render_reporting_fixed_panel
+from modules.utilities.reporting_fixed_panel import render_reporting_fixed_panel  # used inside Utilities tab
 except Exception:
     try:
         from ..utilities.reporting_fixed_panel import render_reporting_fixed_panel  # relative
@@ -282,7 +282,7 @@ def render_admin_tab(*, settings: Any = None):
         "Maintenance",
         "Market Regime",
         "Utilities",
-    , 'Utilities'])
+    ])
 
     with tabs[0]:
         current = _get_data_dir()
@@ -333,10 +333,7 @@ def render_admin_tab(*, settings: Any = None):
 
 
 # Auto-wired panel
-render_reporting_fixed_panel()
-
-
-
+# moved: render_reporting_fixed_panel(...) now inside Utilities tab
 # --- Reporting Snapshot (on-demand) ---
 import streamlit as _st
 _st.divider(); _st.subheader('Reporting Snapshot')
