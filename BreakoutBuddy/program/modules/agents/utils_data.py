@@ -1,14 +1,5 @@
 from __future__ import annotations
 
-"""
-Modified utils_data for BreakoutBuddy agents.
-
-The key change here is the consistent spelling of the Connors RSI
-feature column.  The canonical feature list and alias mappings now
-reference `ConnorsRSI` (with an 's') instead of the inconsistent
-`ConnorRSI`.  All other logic remains unchanged.
-"""
-
 from pathlib import Path
 import os
 PROJECT_DIR = Path(__file__).resolve().parent
@@ -215,7 +206,7 @@ def join_features_with(
     right: pd.DataFrame,
     how: str = "left",
 ) -> pd.DataFrame:
-    """Merge helper on Ticker for post‑processing (e.g., attach agent outputs)."""
+    """Merge helper on Ticker for post-processing (e.g., attach agent outputs)."""
     if left is None or left.empty:
         return right
     if right is None or right.empty:

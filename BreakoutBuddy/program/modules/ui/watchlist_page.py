@@ -1,4 +1,5 @@
 import streamlit as st
+from BreakoutBuddy.program.utilities.feature_fixups import ensure_basic_indicators
 import pandas as pd
 from .. import watchlist as wlmod
 from ..services.enrich import ensure_features  # fill missing indicators
@@ -10,6 +11,7 @@ def render_watchlist(df: pd.DataFrame | None = None, **kwargs):
     """
     if df is None:
         df = pd.DataFrame()
+df = ensure_basic_indicators(df)
 
     st.header("Watchlist")
 

@@ -72,3 +72,95 @@ def fill_feature_gaps(df: pd.DataFrame, spy_ref=None,
             df['SqueezeHint'] = compute_squeeze_hint(close, high, low)
 
     return df
+
+# === ConnorsRSI computation helpers ===
+import numpy as np
+import pandas as pd
+
+def _rsi(series: pd.Series, length: int) -> pd.Series:
+    delta = series.diff()
+    gain = delta.clip(lower=0).rolling(length, min_periods=length).mean()
+    loss = (-delta.clip(upper=0)).rolling(length, min_periods=length).mean()
+    rs = gain / loss.replace(0, np.nan)
+    rsi = 100 - (100 / (1 + rs))
+    return rsi
+
+def _streak(series: pd.Series) -> pd.Series:
+    delta = series.diff()
+    sign = np.sign(delta).replace(0, np.nan)
+    streak = pd.Series(0.0, index=series.index)
+    run = 0.0
+    last = np.nan
+    for i, s in enumerate(sign):
+        if np.isnan(s):
+            run = 0.0
+        elif s == last:
+            run += s
+        else:
+            run = s
+        streak.iloc[i] = run
+        last = s
+    return streak
+
+def _percent_rank(series: pd.Series, length: int) -> pd.Series:
+    def pr(x):
+        s = pd.Series(x)
+        return 100.0 * s.rank(pct=True).iloc[-1]
+    return series.rolling(length, min_periods=length).apply(pr, raw=False)
+
+def compute_connorsrsi(close: pd.Series,
+                       rsi_len: int = 3,
+                       streak_rsi_len: int = 2,
+                       pr_len: int = 100) -> pd.Series:
+    rsi_price = _rsi(close, rsi_len)
+    streak = _streak(close)
+    rsi_streak = _rsi(streak.fillna(0), streak_rsi_len)
+    chg2 = close.diff(2)
+    pr = _percent_rank(chg2, pr_len)
+    crsi = (rsi_price + rsi_streak + pr) / 3.0
+    return crsi.rename("ConnorsRSI")
+
+def ensure_connorsrsi(df: pd.DataFrame) -> pd.DataFrame:
+    out = df.copy()
+    price_col = None
+    for c in ["close","Close","adj_close","Adj Close","price","Price"]:
+        if c in out.columns:
+            price_col = c; break
+    if price_col is not None:
+        if "ConnorsRSI" not in out.columns:
+            out["ConnorsRSI"] = compute_connorsrsi(pd.to_numeric(out[price_col], errors="coerce"))
+    else:
+        if "ConnorsRSI" not in out.columns:
+            out["ConnorsRSI"] = np.nan
+    return out
+
+
+def ensure_basic_indicators(df: pd.DataFrame) -> pd.DataFrame:
+    out = ensure_connorsrsi(df)
+    # P_up: derive from ConnorsRSI as a simple proxy if missing
+    if "P_up" not in out.columns:
+        if "ConnorsRSI" in out.columns:
+            pu = (out["ConnorsRSI"] / 100.0).clip(0,1)
+            out["P_up"] = pu.rolling(3, min_periods=1).mean()
+        else:
+            out["P_up"] = 0.5
+    # SqueezeHint from BB width percentile
+    price_col = None
+    for c in ["close","Close","adj_close","Adj Close","price","Price"]:
+        if c in out.columns:
+            price_col = c; break
+    if "SqueezeHint" not in out.columns and price_col:
+        s = pd.to_numeric(out[price_col], errors="coerce")
+        try:
+            bb_mid = s.rolling(20, min_periods=20).mean()
+            bb_std = s.rolling(20, min_periods=20).std()
+            bb_up = bb_mid + 2*bb_std
+            bb_dn = bb_mid - 2*bb_std
+            width = (bb_up - bb_dn) / (bb_mid.replace(0, np.nan)).abs()
+            pct = width.rank(pct=True)
+            out["SqueezeHint"] = 1.0 - pct
+        except Exception:
+            out["SqueezeHint"] = np.nan
+    elif "SqueezeHint" not in out.columns:
+        out["SqueezeHint"] = np.nan
+    return out

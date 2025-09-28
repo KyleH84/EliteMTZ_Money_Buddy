@@ -1,23 +1,15 @@
+﻿from modules.utilities.reporting_fixed_panel import render_reporting_fixed_panel
+# program/modules/tabs/admin.py
 from __future__ import annotations
-
-"""
-Rewritten BreakoutBuddy Admin page.
-
-This version removes the stray import and auto‑execution of the reporting panel at
-module import time. Instead, a new tab called **Reporting Snapshot** is
-added to the admin UI where the fixed reporting panel can be viewed on
-demand. The rest of the admin tooling is preserved verbatim from the
-original implementation.
-"""
 
 import os
 from pathlib import Path
-from typing import Optional, List, Any
+from typing import Optional, List, Any, Tuple
 
 import pandas as pd  # type: ignore
 import streamlit as st
 
-# Back‑compat panel: OHLCV maintenance
+# Back-compat panel: OHLCV maintenance
 from ..services.ohlcv_maint import admin_panel as ohlcv_admin_panel
 
 # ===================== Root & Data directory resolution =====================
@@ -97,7 +89,7 @@ def _section_agents_rank():
             except Exception as e:
                 st.error(f"Calibration failed: {e}")
     with c2:
-        if st.button("Calibrate + Re‑rank now (save ranked_latest.csv)", use_container_width=True, key="admin_agents_calibrate_rerank"):
+        if st.button("Calibrate + Re-rank now (save ranked_latest.csv)", use_container_width=True, key="admin_agents_calibrate_rerank"):
             try:
                 from modules.agents.auto_tune import run_agents_calibration  # type: ignore
                 from modules.services.scoring import rank_now  # type: ignore
@@ -115,16 +107,16 @@ def _section_agents_rank():
                     _save_watchlist_snapshot(ranked)
                     st.success(f"Saved {outp.name} with {len(ranked)} rows.")
             except Exception as e:
-                st.error(f"Re‑rank failed: {e}")
+                st.error(f"Re-rank failed: {e}")
 
 
 def _section_llm():
     st.subheader("Local LLMs (GPT4All, .gguf)")
-    st.caption("Optional. Point to a folder with .gguf models; we'll auto‑pick the best instruct model.")
+    st.caption("Optional. Point to a folder with .gguf models; we'll auto-pick the best instruct model.")
     try:
         from modules.services import local_llm as _llm  # type: ignore
         cfg = _llm.get_config()
-        path_in = st.text_input("Model directory", value=cfg.get("model_dir",""), placeholder=r"C:\\Models\\GGUF   or   /mnt/models/gguf", key="llm_model_dir")
+        path_in = st.text_input("Model directory", value=cfg.get("model_dir",""), placeholder=r"C:\Models\GGUF   or   /mnt/models/gguf", key="llm_model_dir")
         c1, c2, c3, c4 = st.columns(4)
         with c1:
             if st.button("Save path", key="llm_save_path"):
@@ -133,7 +125,7 @@ def _section_llm():
             if st.button("Scan", key="llm_scan"):
                 st.session_state["_llm_scan_models"] = _llm.list_models(path_in)
         with c3:
-            if st.button("Auto‑pick best now", key="llm_autopick"):
+            if st.button("Auto-pick best now", key="llm_autopick"):
                 models = st.session_state.get("_llm_scan_models", _llm.list_models(path_in))
                 if models:
                     best = _llm.suggest_best_model(models)
@@ -197,12 +189,12 @@ def _section_csv_qa():
                     st.markdown("**Local model read**")
                     st.write(aug)
                 else:
-                    st.info("Local LLM not available or failed — showing rule‑based summary above.")
+                    st.info("Local LLM not available or failed â€” showing rule-based summary above.")
 
 
 def _section_maintenance():
-    st.subheader("Maintenance — Clean build junk")
-    st.caption("Removes __pycache__, *.pyc, build/dist, .pytest_cache, and egg‑info inside this app folder.")
+    st.subheader("Maintenance â€” Clean build junk")
+    st.caption("Removes __pycache__, *.pyc, build/dist, .pytest_cache, and egg-info inside this app folder.")
     if st.button("Clean now", key="maint_clean_now"):
         base = APP_ROOT
         patterns = [
@@ -273,15 +265,6 @@ def _section_utilities():
 
 # ===================== New Admin layout that keeps your overrides =====================
 def render_admin_tab(*, settings: Any = None):
-    """Render the BreakoutBuddy Admin page.
-
-    A new tab called 'Reporting Snapshot' has been added at the end of the
-    admin tab list. This tab calls the reporting panel on demand. Other
-    functionality is unchanged from the original admin page.
-
-    Args:
-        settings: Optional runtime settings (unused).
-    """
     st.header("Admin")
 
     tabs = st.tabs([
@@ -292,10 +275,8 @@ def render_admin_tab(*, settings: Any = None):
         "Maintenance",
         "Market Regime",
         "Utilities",
-        "Reporting Snapshot",
     ])
 
-    # Storage & Cache
     with tabs[0]:
         current = _get_data_dir()
         with st.expander("Data folder", expanded=False):
@@ -330,26 +311,34 @@ def render_admin_tab(*, settings: Any = None):
         st.markdown("---")
         ohlcv_admin_panel(st)
 
-    # Agents & Rank
     with tabs[1]:
         _section_agents_rank()
-    # Local LLMs
     with tabs[2]:
         _section_llm()
-    # Data QA
     with tabs[3]:
         _section_csv_qa()
-    # Maintenance
     with tabs[4]:
         _section_maintenance()
-    # Market Regime
     with tabs[5]:
         _section_regime()
-    # Utilities
     with tabs[6]:
         _section_utilities()
-    # Reporting Snapshot
-    with tabs[7]:
-        # Import here to avoid circular import at module load time
-        from modules.utilities.reporting_fixed_panel import render_reporting_fixed_panel
-        render_reporting_fixed_panel()
+
+
+# Auto-wired panel
+render_reporting_fixed_panel()
+
+
+
+# --- Reporting Snapshot (on-demand) ---
+import streamlit as _st
+_st.divider(); _st.subheader('Reporting Snapshot')
+if _st.button('Show Reporting Snapshot'):
+    try:
+        from BreakoutBuddy.program.utilities.reporting_fixed_panel import render_reporting_fixed_panel as _render_panel
+    except Exception:
+        _render_panel = None
+    if _render_panel:
+        _render_panel()
+    else:
+        _st.info('Reporting panel not available.')
