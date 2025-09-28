@@ -1,112 +1,60 @@
 from __future__ import annotations
 
-from pathlib import Path
-import os
-PROJECT_DIR = Path(__file__).resolve().parent
-(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
-(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
-
-
-from typing import List, Dict, Any
-import random
+from typing import Optional, Sequence, Tuple, Dict
+import numpy as np
 import pandas as pd
-from .smart_features import WHITE_RANGES, SPECIAL_RANGES, detect_white_columns
-import streamlit as st
-try:
-    from .smart_features import long_short_blend, gap_overdue_bonus
-except Exception:
-    long_short_blend = None
-    gap_overdue_bonus = None
 
-def _blend_hotcold_weights(df: pd.DataFrame, game: str) -> Dict[int, float]:
-    # Use long/short blend and gap bonus if available; else uniform
-    try:
-        base = long_short_blend(df, game, short_days=30, alpha=0.3) if long_short_blend else {}
-        gap = gap_overdue_bonus(df, game, strength=0.2) if gap_overdue_bonus else {}
-    except Exception:
-        base, gap = {}, {}
-    lo, hi, _ = WHITE_RANGES.get(game, (1, 69, 5))
-    w = {}
-    for i in range(lo, hi+1):
-        b = float(base.get(i, 1.0))
-        g = float(gap.get(i, 1.0)) if gap else 1.0
-        w[i] = max(1e-9, b * g)
-    return w
+# Use AL-local utilities only
+from .probability import compute_number_probs, GAME_RULES
 
 
-def _weighted_sample_unique(pop, weights, k):
-    if len(pop) <= k: return sorted(pop)
-    total = sum(max(0.0,w) for w in weights) or 1.0
-    pool = list(zip(pop, [max(0.0,w)/total for w in weights]))
-    picks=[]
-    for _ in range(k):
-        r=random.random(); acc=0.0
-        for i,(n,w) in enumerate(pool):
-            acc+=w
-            if r<=acc or i==len(pool)-1:
-                picks.append(n)
-                pool.pop(i)
-                rem=sum(w for _,w in pool) or 1.0
-                pool=[(nn, ww/rem) for nn,ww in pool]
-                break
-    return sorted(picks)
+def fallback_predict(
+    game: str,
+    history: Optional[pd.DataFrame] = None,
+    n_white: int = 5,
+    n_special: int = 1,
+    seed: Optional[int] = None,
+) -> Tuple[Sequence[int], Sequence[int]]:
+    """Conservative, dependency-free fallback pick generator.
 
-def _freq_weights_from_df(df: pd.DataFrame, game: str) -> Dict[int,float]:
-    lo, hi, _ = WHITE_RANGES.get(game, (1,69,5))
-    if df is None or df.empty: return {i:1.0 for i in range(lo,hi+1)}
-    whites = detect_white_columns(df)
-    if not whites: return {i:1.0 for i in range(lo,hi+1)}
-    series = [pd.to_numeric(df[c], errors="coerce") for c in whites]
-    vals = pd.concat(series, axis=0).dropna().astype(int)
-    counts = vals.value_counts().to_dict()
-    if long_short_blend:
-        try:
-            bl = long_short_blend(df, game, short_days=30, alpha=0.25)
-            for n,v in bl.items(): counts[n]=counts.get(n,0)+0.2*v
-        except Exception: pass
-    if gap_overdue_bonus:
-        try:
-            gb = gap_overdue_bonus(df, game, strength=0.15)
-            for n,v in gb.items(): counts[n]=counts.get(n,0)+0.15*(v-1.0)
-        except Exception: pass
-    return {i: 0.5+float(counts.get(i,0)) for i in range(lo,hi+1)}
+    - Uses frequency-weighted probabilities from historical draws when provided.
+    - Falls back to uniform sampling within the legal game ranges.
+    - Never imports BreakoutBuddy; stays inside AstroLotto utilities.
 
-def predict_frequency_fallback(game: str, df: pd.DataFrame, model: Dict[str,Any], n_picks: int = 3) -> List[Dict[str,Any]]:
-    game = (game or "").lower().strip()
-    lo,hi,k = WHITE_RANGES.get(game, (1,69,5))
-    pop = list(range(lo,hi+1))
-    base = _freq_weights_from_df(df, game)
-    model_scores = {}
-    if isinstance(model, dict):
-        model_scores = model.get("scores") or model.get("white_scores") or {}
-    for i in pop:
-        try:
-            base[i] = max(0.0, float(base.get(i,1.0))) * (1.0 + 0.15*float(model_scores.get(str(i), model_scores.get(i, 0.0))))
-        except Exception:
-            pass
-    weights = [base[i] for i in pop]
-    out=[]
-    for _ in range(max(1,int(n_picks or 1))):
-        white = _weighted_sample_unique(pop, weights, k)
-        pick = {"white": white, "notes": "fallback"}
-        if game in SPECIAL_RANGES:
-            slo,shi = SPECIAL_RANGES[game]
-            # Try special frequency if present
-            special=None
-            if isinstance(df, pd.DataFrame) and not df.empty:
-                for c in df.columns:
-                    if str(c).lower() in ("special","powerball","mega_ball","megaball","lucky_ball","bonus"):
-                        s = pd.to_numeric(df[c], errors="coerce").dropna().astype(int)
-                        if not s.empty:
-                            sc = s.value_counts().to_dict()
-                            spop=list(range(slo,shi+1))
-                            sweights=[0.5+float(sc.get(i,0)) for i in spop]
-                            special=_weighted_sample_unique(spop, sweights, 1)[0]
-                            break
-            if special is None:
-                special = random.randint(slo,shi)
-            pick["special"]=special
-        else:
-            pick["special"]=""
-        out.append(pick)
-    return out
+    Returns:
+        (whites, specials) as sorted integer sequences.
+    """
+    rules: Dict[str, Dict[str, int]] = GAME_RULES
+    key = game if game in rules else game.replace(" ", "")
+    rule = rules.get(key, {"white_max": 69, "special_max": 26})
+
+    white_max = int(rule["white_max"])
+    special_max = int(rule.get("special_max", 0) or 0)
+
+    # If history provided, compute weighted probabilities; else uniform.
+    if isinstance(history, pd.DataFrame) and not history.empty:
+        probs = compute_number_probs(history, game)
+        p_white = probs["white"]
+        p_special = probs["special"]
+    else:
+        p_white = np.full(white_max, 1.0 / white_max)
+        p_special = np.full(special_max, 1.0 / special_max) if special_max else None
+
+    rng = np.random.default_rng(seed)
+
+    whites = rng.choice(
+        np.arange(1, white_max + 1),
+        size=min(n_white, white_max),
+        replace=False,
+        p=p_white,
+    )
+    specials: Sequence[int] = []
+    if special_max and p_special is not None and n_special > 0:
+        specials = rng.choice(
+            np.arange(1, special_max + 1),
+            size=min(n_special, special_max),
+            replace=False,
+            p=p_special,
+        )
+
+    return sorted(whites.tolist()), sorted(list(specials))
