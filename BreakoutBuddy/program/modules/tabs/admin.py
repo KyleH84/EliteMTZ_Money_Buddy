@@ -1,6 +1,14 @@
 # program/modules/tabs/admin.py
 from __future__ import annotations
 
+
+try:
+    from modules.utilities.reporting_fixed_panel import render_reporting_fixed_panel
+except Exception:
+    try:
+        from ..utilities.reporting_fixed_panel import render_reporting_fixed_panel  # relative
+    except Exception:
+        render_reporting_fixed_panel = None
 import os
 from pathlib import Path
 from typing import Optional, List, Any, Tuple

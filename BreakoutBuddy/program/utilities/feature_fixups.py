@@ -164,3 +164,23 @@ def ensure_basic_indicators(df: pd.DataFrame) -> pd.DataFrame:
     elif "SqueezeHint" not in out.columns:
         out["SqueezeHint"] = np.nan
     return out
+
+
+def report_feature_gaps(df):
+    """
+    Return a small audit table with counts of missing or non-finite values for key features.
+    """
+    import numpy as np, pandas as pd
+    cols = ["ConnorsRSI", "P_up", "SqueezeHint", "RelSPY"]
+    rep = []
+    for c in cols:
+        if c in df.columns:
+            series = pd.to_numeric(df[c], errors="coerce")
+            rep.append({
+                "feature": c,
+                "missing": int(series.isna().sum()),
+                "nonfinite": int(np.isinf(series).sum())
+            })
+        else:
+            rep.append({"feature": c, "missing": None, "nonfinite": None})
+    return pd.DataFrame(rep)

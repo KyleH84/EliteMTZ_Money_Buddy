@@ -101,3 +101,10 @@ def render(tab_name: str = "main"):
     tabs = get_tabs()
     fn = tabs.get(tab_name, tabs["main"])
     return fn()
+
+if __name__ == "__main__":
+    try:
+        render("main")
+    except Exception as e:
+        import streamlit as st
+        st.error(f"AstroLotto main failed: {e}")
