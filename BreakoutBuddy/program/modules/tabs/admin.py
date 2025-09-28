@@ -1,4 +1,3 @@
-﻿from modules.utilities.reporting_fixed_panel import render_reporting_fixed_panel
 # program/modules/tabs/admin.py
 from __future__ import annotations
 

@@ -5,8 +5,6 @@ import os, sys, time, socket, subprocess, webbrowser, shutil
 from pathlib import Path
 import streamlit as st
 
-render_health_widget()
-
 st.set_page_config(page_title="Money Buddy â€” Home", page_icon="ðŸ’¼", layout="wide")
 
 ROOT = Path(__file__).resolve().parent

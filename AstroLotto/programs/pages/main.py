@@ -26,5 +26,4 @@ def render():
         for i, p in enumerate(picks, 1):
             st.write(f"**Set {i}:** {p}")
 
-if __name__ == "__main__":
-    render()
+render()
