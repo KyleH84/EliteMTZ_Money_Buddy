@@ -29,3 +29,7 @@ def fallback_predict(
     if special_max and p_special is not None and n_special > 0:
         specials = rng.choice(range(1, special_max + 1), size=min(n_special, special_max), replace=False, p=p_special)
     return sorted(whites.tolist()), sorted(list(specials))
+
+
+def predict_frequency_fallback(*args, **kwargs):
+    return fallback_predict(*args, **kwargs)
