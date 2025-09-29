@@ -234,7 +234,17 @@ from typing import Any, Dict, List, Optional, Tuple
 import inspect, json, math, re
 
 # Core utilities
-from utilities.probability import compute_number_probs, GAME_RULES
+# Core utilities (importable in all run modes)
+try:
+    # when repo root is on sys.path
+    from programs.utilities.probability import compute_number_probs, GAME_RULES  # type: ignore
+except Exception:
+    try:
+        # when THIS_DIR (programs/) is on sys.path
+        from utilities.probability import compute_number_probs, GAME_RULES  # type: ignore
+    except Exception:
+        # when running as a package (python -m AstroLotto.programs.app_main)
+        from .utilities.probability import compute_number_probs, GAME_RULES  # type: ignore
 from utilities.fallback_predict import predict_frequency_fallback
 from utilities.per_ball_ml import train_per_ball_ml, predict_per_ball_ml
 from utilities.oracle_engine import OracleSettings, compute_oracle

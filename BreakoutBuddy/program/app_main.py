@@ -1,72 +1,43 @@
 from __future__ import annotations
+# BreakoutBuddy/program/app_main.py — fixed tabs + robust imports
 
-# ### PATH BOOTSTRAP
-import os, sys
-_THIS_DIR = os.path.dirname(__file__)
-_REPO_ROOT = os.path.abspath(os.path.join(_THIS_DIR, "..", ".."))
-_SRC_DIR = os.path.join(_REPO_ROOT, "src")
-for _p in (_REPO_ROOT, _SRC_DIR):
-    if _p not in sys.path:
-        sys.path.insert(0, _p)
-
-import importlib
-import pkgutil
+from pathlib import Path
+import sys
 import streamlit as st
+
+# --- PATH BOOTSTRAP: put repo root on sys.path so absolute imports work ---
+_THIS = Path(__file__).resolve()
+_REPO_ROOT = _THIS.parents[2]  # .../EliteMTZ_Money_Buddy
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
+# --- Import tab renderers from modules/tabs (Reporting lives under Admin) ---
+from BreakoutBuddy.program.modules.tabs.dashboard import render_dashboard_tab
+from BreakoutBuddy.program.modules.tabs.scanner import render_scanner_tab
+from BreakoutBuddy.program.modules.tabs.explore import render_explore_tab
+from BreakoutBuddy.program.modules.tabs.agents import render_agents_tab
+from BreakoutBuddy.program.modules.tabs.single import render_single_tab
+from BreakoutBuddy.program.modules.tabs.watchlist import render_watchlist_tab
+from BreakoutBuddy.program.modules.tabs.about import render_about_tab
+from BreakoutBuddy.program.modules.tabs.admin import render_admin_tab  # includes Reporting Fixed panel
 
 st.set_page_config(page_title="BreakoutBuddy", layout="wide")
 
-st.title("BreakoutBuddy")
-st.caption("BB build: safe import; robust fallback")
+TABS: list[tuple[str, callable]] = [
+    ("Dashboard", render_dashboard_tab),
+    ("Scanner",   render_scanner_tab),
+    ("Explore",   render_explore_tab),
+    ("Agents",    render_agents_tab),
+    ("Single",    render_single_tab),
+    ("Watchlist", render_watchlist_tab),
+    ("Admin",     render_admin_tab),      # Reporting Fixed is under Admin → Utilities
+    ("About",     render_about_tab),
+]
 
-# ---- Discover pages dynamically from BreakoutBuddy.program.pages, excluding any reporting panel modules ----
-from . import pages as _pages_pkg  # type: ignore
-
-def _list_pages():
-    mods = []
-    for m in pkgutil.iter_modules(_pages_pkg.__path__):
-        name = m.name
-        # Exclude any reporting panel modules (rendered under Admin -> Utilities)
-        if name.lower() in {
-            "reporting_fixed", "reporting_fixed_page", "reporting",
-            "reportingfixed", "reporting__fixed"
-        }:
-            continue
-        mods.append(name)
-    # Prefer order: main-like first, watchlist near top, rest alphabetical
-    def _key(n: str):
-        nl = n.lower()
-        if "main" in nl: return (0, n)
-        if "watchlist" in nl: return (1, n)
-        return (2, n)
-    return sorted(mods, key=_key)
-
-_page_names = _list_pages()
-tabs = st.tabs(["Main"] + [n.replace("_", " ") for n in _page_names] + ["Admin"])
-
-# Main tab may be simple overview
-with tabs[0]:
-    st.write("Welcome to BreakoutBuddy. Select a tab or open Admin for Utilities.")
-
-# Render discovered pages
-for idx, mod_name in enumerate(_page_names, start=1):
-    with tabs[idx]:
+tabs = st.tabs([name for name, _ in TABS])
+for i, (name, fn) in enumerate(TABS):
+    with tabs[i]:
         try:
-            mod = importlib.import_module(f".pages.{mod_name}", package=__package__)
-            # Call a conventional renderer if present
-            if hasattr(mod, "render_page"):
-                mod.render_page()  # type: ignore
-            elif hasattr(mod, "render_watchlist_page"):
-                mod.render_watchlist_page()  # type: ignore
-            else:
-                st.info(f"Page '{mod_name}' has no render_* function.")
+            fn()
         except Exception as e:
-            st.error(f"Failed to render page '{mod_name}': {e}")
-
-# Admin -> Utilities (reports panel lives here)
-try:
-    from .modules.tabs.admin import render_admin  # type: ignore
-    with tabs[len(_page_names) + 1]:
-        render_admin()
-except Exception as e:
-    with tabs[len(_page_names) + 1]:
-        st.error(f"Admin panel failed to load: {e}")
+            st.error(f"Failed to render '{name}': {type(e).__name__}: {e}")
