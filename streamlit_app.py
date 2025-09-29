@@ -27,7 +27,7 @@ import os, sys, runpy
 from pathlib import Path
 import streamlit as st
 
-
+render_health_widget()
 
 # --- Supabase status indicator (helps catch misconfigured secrets) ---
 _SUPA_URL = os.getenv("SUPABASE_URL")

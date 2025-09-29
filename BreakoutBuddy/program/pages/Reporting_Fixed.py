@@ -1,4 +1,4 @@
-﻿import streamlit as st
+import streamlit as st
 import pandas as pd
 
 from utilities.health_widget import render_health_widget
@@ -7,6 +7,8 @@ from utilities.feature_fixups import fill_feature_gaps, report_feature_gaps
 from data.spy_loader import get_spy_prices
 
 st.set_page_config(page_title="Reporting (Fixed)", layout="wide")
+render_health_widget()
+
 st.title("Reporting (Fixed)")
 
 epoch = get_refresh_epoch()

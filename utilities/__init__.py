@@ -1,1 +1,1 @@
-# neutral shim package for repo-level 'utilities'
+# repo-level utilities shim

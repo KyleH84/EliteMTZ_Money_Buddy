@@ -1,9 +1,11 @@
-﻿from utilities.health_widget import render_health_widget
+from utilities.health_widget import render_health_widget
 # home_main.py (launcher with logs, BATâ†’Direct fallback, cleaner, and Recreate .venv)
 from __future__ import annotations
 import os, sys, time, socket, subprocess, webbrowser, shutil
 from pathlib import Path
 import streamlit as st
+
+render_health_widget()
 
 st.set_page_config(page_title="Money Buddy â€” Home", page_icon="ðŸ’¼", layout="wide")
 
