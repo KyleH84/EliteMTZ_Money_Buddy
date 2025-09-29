@@ -1,8 +1,16 @@
 from __future__ import annotations
 import streamlit as st
-
-# other admin imports here ...
-from modules.utilities.reporting_fixed_panel import render_reporting_fixed_panel
+_panel = None
+try:
+    from modules.utilities.reporting_fixed_panel import render_reporting_fixed_panel as _panel  # type: ignore
+except Exception:
+    try:
+        from ..utilities.reporting_fixed_panel import render_reporting_fixed_panel as _panel  # type: ignore
+    except Exception:
+        try:
+            from ...pages.Reporting_Fixed import render_reporting_fixed_panel as _panel  # type: ignore
+        except Exception:
+            _panel = None
 
 def render_admin() -> None:
     tabs = st.tabs([
@@ -14,13 +22,12 @@ def render_admin() -> None:
         "Market Regime",
         "Utilities",
     ])
-
-    # ... render other admin sections in their indices ...
-
-    # Utilities tab: Reporting Fixed lives here (only here)
     with tabs[6]:
         st.subheader("Utilities")
-        try:
-            render_reporting_fixed_panel()
-        except Exception as e:
-            st.error(f"Reporting Fixed panel failed: {e}")
+        if _panel is not None:
+            try:
+                _panel()
+            except Exception as e:
+                st.error(f"Reporting Fixed panel failed: {e}")
+        else:
+            st.info("Reporting Fixed panel module not found.")
