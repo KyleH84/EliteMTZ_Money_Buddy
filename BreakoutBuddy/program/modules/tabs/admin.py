@@ -1,6 +1,6 @@
+from __future__ import annotations
 from modules.utilities.reporting_fixed_panel import render_reporting_fixed_panel
 # program/modules/tabs/admin.py
-from __future__ import annotations
 
 import os
 from pathlib import Path
@@ -327,4 +327,3 @@ def render_admin_tab(*, settings: Any = None):
 
 # Auto-wired panel
 render_reporting_fixed_panel()
-
