@@ -13,7 +13,13 @@ import datetime as dt
 import hashlib
 
 from utilities.probability import GAME_RULES
-from utilities.quantum_predictor import quantum_probability_map
+try:
+    from programs.utilities.quantum_predictor import quantum_probability_map  # type: ignore
+except Exception:
+    try:
+        from utilities.quantum_predictor import quantum_probability_map  # type: ignore
+    except Exception:
+        from ..utilities.quantum_predictor import quantum_probability_map  # type: ignore
 from utilities.archetypal_engine import archetypal_weights
 from utilities.retrocausal_feedback import apply_retro_weights, RetroConfig
 from utilities.per_ball_trainer import compute_per_position_probs

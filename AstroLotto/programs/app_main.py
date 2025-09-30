@@ -245,10 +245,35 @@ except Exception:
     except Exception:
         # when running as a package (python -m AstroLotto.programs.app_main)
         from .utilities.probability import compute_number_probs, GAME_RULES  # type: ignore
-from utilities.fallback_predict import predict_frequency_fallback
-from utilities.per_ball_ml import train_per_ball_ml, predict_per_ball_ml
-from utilities.oracle_engine import OracleSettings, compute_oracle
-from utilities.oracle_data import kp_index_recent, solar_flare_activity, moon_phase_bucket, moon_phase_fraction, market_volatility_proxy
+# Fallback predictor import (alias to expected name)
+try:
+    from programs.utilities.fallback_predict import fallback_predict as predict_frequency_fallback  # type: ignore
+except Exception:
+    try:
+        from utilities.fallback_predict import fallback_predict as predict_frequency_fallback  # type: ignore
+    except Exception:
+        from .utilities.fallback_predict import fallback_predict as predict_frequency_fallback  # type: ignore
+try:
+    from programs.utilities.per_ball_ml import train_per_ball_ml, predict_per_ball_ml  # type: ignore
+except Exception:
+    try:
+        from utilities.per_ball_ml import train_per_ball_ml, predict_per_ball_ml  # type: ignore
+    except Exception:
+        from .utilities.per_ball_ml import train_per_ball_ml, predict_per_ball_ml  # type: ignore
+try:
+    from programs.utilities.oracle_engine import OracleSettings, compute_oracle  # type: ignore
+except Exception:
+    try:
+        from utilities.oracle_engine import OracleSettings, compute_oracle  # type: ignore
+    except Exception:
+        from .utilities.oracle_engine import OracleSettings, compute_oracle  # type: ignore
+try:
+    from programs.utilities.oracle_data import kp_index_recent, solar_flare_activity, moon_phase_bucket, moon_phase_fraction, market_volatility_proxy  # type: ignore
+except Exception:
+    try:
+        from utilities.oracle_data import kp_index_recent, solar_flare_activity, moon_phase_bucket, moon_phase_fraction, market_volatility_proxy  # type: ignore
+    except Exception:
+        from .utilities.oracle_data import kp_index_recent, solar_flare_activity, moon_phase_bucket, moon_phase_fraction, market_volatility_proxy  # type: ignore
 
 # Engines & UI
 from engine.meta_selector import meta_compose, improve_picks
