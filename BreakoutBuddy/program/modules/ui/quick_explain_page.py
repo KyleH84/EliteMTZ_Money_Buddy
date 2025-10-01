@@ -1,5 +1,5 @@
-# program/modules/ui/quick_explain_page.py
 from __future__ import annotations
+# program/modules/ui/quick_explain_page.py
 
 from typing import Optional, Dict, Any, List, Tuple
 import math

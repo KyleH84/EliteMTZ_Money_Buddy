@@ -1,5 +1,5 @@
-# Shim forwarding to BreakoutBuddy.program.utilities.feature_fixups
 from __future__ import annotations
+# Shim forwarding to BreakoutBuddy.program.utilities.feature_fixups
 try:
     from BreakoutBuddy.program.utilities.feature_fixups import *  # type: ignore
 except Exception as _e:

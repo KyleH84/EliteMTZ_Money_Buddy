@@ -1,5 +1,5 @@
-
 from __future__ import annotations
+
 
 # cloud_csv_shim.py
 # -------------------------------------------------------------

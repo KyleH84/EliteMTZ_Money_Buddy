@@ -1,5 +1,5 @@
-# Root shim: forward to BreakoutBuddy.program.utilities.data_registry
 from __future__ import annotations
+# Root shim: forward to BreakoutBuddy.program.utilities.data_registry
 try:
     from BreakoutBuddy.program.utilities.data_registry import *  # type: ignore
 except Exception as _e:

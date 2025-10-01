@@ -1,5 +1,5 @@
-# program/modules/tabs/explore.py
 from __future__ import annotations
+# program/modules/tabs/explore.py
 
 from typing import Any, List, Optional, Tuple
 from pathlib import Path

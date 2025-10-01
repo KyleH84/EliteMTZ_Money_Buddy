@@ -1,5 +1,5 @@
-# program/modules/tabs/single.py
 from __future__ import annotations
+# program/modules/tabs/single.py
 
 from typing import Any, Optional
 from pathlib import Path

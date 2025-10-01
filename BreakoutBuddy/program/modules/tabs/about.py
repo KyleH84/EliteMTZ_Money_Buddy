@@ -168,3 +168,4 @@ ranks candidates, and gives concise explanations you can actually act on.
 
 # Auto-wired panel
 render_reporting_fixed_panel()
+

@@ -1,3 +1,4 @@
+from __future__ import annotations
 # sitecustomize.py
 """
 BreakoutBuddy hardening (auto-loaded):
@@ -12,7 +13,6 @@ BreakoutBuddy hardening (auto-loaded):
    when some module uses brittle Path.parents[...] math.
 """
 
-from __future__ import annotations
 import os
 import builtins
 import shutil

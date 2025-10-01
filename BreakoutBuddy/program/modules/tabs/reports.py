@@ -1,5 +1,5 @@
-# program/modules/tabs/reports.py
 from __future__ import annotations
+# program/modules/tabs/reports.py
 from typing import Any
 
 # Re-export both spellings so app_main can import either modules.tabs.report or modules.tabs.reports

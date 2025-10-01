@@ -371,3 +371,4 @@ if (log_dir and any((log_dir / f"launcher_{n.lower()}.log").exists() for n in AP
                 txt = "(could not read log file)"
             st.markdown(f"**{name}** â€” `{lf}`")
             st.text_area(f"Log: {name}", txt, height=200)
+
