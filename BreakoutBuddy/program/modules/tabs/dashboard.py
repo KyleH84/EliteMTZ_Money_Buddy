@@ -1,6 +1,15 @@
-from __future__ import annotations
-from ..utilities.cloud_paths import resolve_data_dir
 # program/modules/tabs/dashboard.py
+
+import streamlit as st
+# Sidebar controls (added)
+if 'universe_size' not in st.session_state:
+    st.session_state['universe_size'] = 500
+if 'rows_to_display' not in st.session_state:
+    st.session_state['rows_to_display'] = 25
+st.sidebar.number_input("Universe size", min_value=50, max_value=5000, step=50, key="universe_size")
+st.sidebar.number_input("Rows to display", min_value=5, max_value=200, step=5, key="rows_to_display")
+
+from __future__ import annotations
 
 from typing import Any, List, Optional, Tuple
 from pathlib import Path
@@ -21,7 +30,7 @@ except Exception:
 from modules.ui import quick_explain_page
 
 APP_ROOT = Path(__file__).resolve().parents[3]
-DATA_DIR = resolve_data_dir(APP_ROOT, "BREAKOUTBUDDY_DATA", "Data")
+DATA_DIR = Path(os.getenv("BREAKOUTBUDDY_DATA", APP_ROOT / "Data")).expanduser().resolve()
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 

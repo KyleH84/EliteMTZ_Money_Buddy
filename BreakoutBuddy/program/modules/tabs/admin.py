@@ -327,3 +327,16 @@ def render_admin_tab(*, settings: Any = None):
 
 # Auto-wired panel
 render_reporting_fixed_panel()
+
+
+def _admin_reporting_fixed_ui():
+    import streamlit as st
+    st.subheader("Reporting Fixed")
+    st.info("Reporting Fixed tools moved here from page-level tabs.")
+
+def render_admin_page():
+    import streamlit as st
+    st.title("Admin")
+    # existing content might define its own layout; we ensure Utilities + Reporting Fixed are present
+    _admin_utilities_section()
+    _admin_reporting_fixed_ui()
