@@ -1,8 +1,8 @@
+from __future__ import annotations
 
 from pathlib import Path
 import os
 
-from __future__ import annotations
 from pathlib import Path
 
 # NEW: use cloud-safe path resolver
@@ -41,6 +41,7 @@ try:
 except Exception:
     BeautifulSoup = None
 
+ROOT = Path(".").resolve()
 DATA = ROOT / "Data"
 CACHE = DATA / "cache"
 LOGS = DATA / "logs"
