@@ -16,7 +16,7 @@ import streamlit as st
 
 # soft deps from your oracle modules (fallbacks provided)
 try:
-    from utilities.oracle_data import kp_index_recent, solar_flare_activity, market_volatility_proxy, moon_phase_bucket, moon_phase_fraction
+    from .oracle_data import kp_index_recent, solar_flare_activity, market_volatility_proxy, moon_phase_bucket, moon_phase_fraction
 except Exception:
     def kp_index_recent(): return None
     def solar_flare_activity(): return {"M":0,"X":0}
