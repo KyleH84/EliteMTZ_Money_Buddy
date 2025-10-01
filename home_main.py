@@ -1,6 +1,6 @@
+from __future__ import annotations
 from utilities.health_widget import render_health_widget
 # home_main.py (launcher with logs, BATâ†’Direct fallback, cleaner, and Recreate .venv)
-from __future__ import annotations
 import os, sys, time, socket, subprocess, webbrowser, shutil
 from pathlib import Path
 import streamlit as st
@@ -371,4 +371,3 @@ if (log_dir and any((log_dir / f"launcher_{n.lower()}.log").exists() for n in AP
                 txt = "(could not read log file)"
             st.markdown(f"**{name}** â€” `{lf}`")
             st.text_area(f"Log: {name}", txt, height=200)
-
