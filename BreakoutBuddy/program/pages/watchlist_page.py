@@ -5,7 +5,7 @@ import pandas as pd
 
 # Keep imports at column 0; no stray global code
 from ..utilities.watchlist_store import load_watchlist, save_watchlist  # adjust if your store module differs
-from ..modules.features import ensure_basic_indicators  # minimal indicators for display
+from ..features import ensure_basic_indicators  # minimal indicators for display
 
 
 def render_watchlist_page() -> None:

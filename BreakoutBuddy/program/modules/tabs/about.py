@@ -1,4 +1,4 @@
-from modules.utilities.reporting_fixed_panel import render_reporting_fixed_panel
+from ..utilities.reporting_fixed_panel import render_reporting_fixed_panel
 # program/modules/tabs/about.py
 from __future__ import annotations
 from typing import Any

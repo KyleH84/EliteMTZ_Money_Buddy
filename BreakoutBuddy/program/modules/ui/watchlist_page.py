@@ -2,7 +2,7 @@ from __future__ import annotations
 import streamlit as st
 import pandas as pd
 from ..utilities.watchlist_store import load_watchlist, save_watchlist
-from ..modules.features import ensure_basic_indicators
+from ..features import ensure_basic_indicators
 
 def render_watchlist_page() -> None:
     st.subheader("Watchlist")

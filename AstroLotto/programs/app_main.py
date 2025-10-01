@@ -1,4 +1,21 @@
 from __future__ import annotations
+# --- Streamlit Cloud import safety shim (ensures package-relative imports work) ---
+try:
+    from pathlib import Path as _P
+    import sys as _sys
+    _THIS = _P(__file__).resolve()
+    _APP_ROOT = _THIS.parents[1]   # .../AstroLotto
+    _REPO_ROOT = _APP_ROOT.parent  # repo root
+    for _p in (_THIS.parent, _APP_ROOT, _REPO_ROOT):
+        _sp = str(_p)
+        if _sp not in _sys.path:
+            _sys.path.insert(0, _sp)
+    if __package__ in (None, "", "__main__"):
+        __package__ = "programs"
+except Exception:
+    pass
+# --- end shim ---
+
 
 from pathlib import Path
 import sys
