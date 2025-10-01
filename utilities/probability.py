@@ -1,37 +1,33 @@
 from __future__ import annotations
+# Robust bridge so `utilities.probability` always resolves.
+# Tries AstroLotto then src/shared by package import; then falls back to direct file-path loading.
+from pathlib import Path
+import importlib, importlib.util
 
-# Robust shim so imports like `from utilities.probability import ...` always resolve.
-# Priority:
-#   1) AstroLotto.programs.utilities.probability  (AL-local)
-#   2) src.shared.utilities.probability           (shared lib, if present)
-#   3) Minimal fallback implementations (keeps app running)
+def _load():
+    # Try normal package imports
+    for modname in [
+        "AstroLotto.programs.utilities.probability",
+        "src.shared.utilities.probability",
+    ]:
+        try:
+            return importlib.import_module(modname)
+        except Exception:
+            pass
+    # File-path fallback
+    root = Path(__file__).resolve().parent.parent
+    candidates = [
+        root / "AstroLotto" / "programs" / "utilities" / "probability.py",
+        root / "src" / "shared" / "utilities" / "probability.py",
+    ]
+    for c in candidates:
+        if c.exists():
+            spec = importlib.util.spec_from_file_location("__probability_impl__", c)
+            if spec and spec.loader:
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)  # type: ignore[attr-defined]
+                return mod
+    raise ModuleNotFoundError("utilities.probability: no implementation found")
 
-try:
-    # 1) Prefer AstroLotto's local implementation
-    from AstroLotto.programs.utilities.probability import *  # type: ignore
-except Exception:
-    try:
-        # 2) Fall back to shared implementation
-        from src.shared.utilities.probability import *  # type: ignore
-    except Exception:
-        # 3) Minimal fallback so the app does not crash
-        import numpy as _np
-        from typing import Dict, Any
-
-        GAME_RULES: Dict[str, Dict[str, int]] = {
-            "MegaMillions": {"white_max": 70, "special_max": 25},
-            "Powerball": {"white_max": 69, "special_max": 26},
-        }
-
-        def _uniform_probs(n: int):
-            if n <= 0:
-                return None
-            arr = _np.full(n, 1.0 / n, dtype=float)
-            return arr
-
-        def compute_number_probs(history, game: str) -> Dict[str, Any]:
-            rules = GAME_RULES.get(game, {"white_max": 69, "special_max": 26})
-            return {
-                "white": _uniform_probs(int(rules.get("white_max", 69))),
-                "special": _uniform_probs(int(rules.get("special_max", 26))),
-            }
+_impl = _load()
+globals().update({k: getattr(_impl, k) for k in dir(_impl) if not k.startswith("_")})
