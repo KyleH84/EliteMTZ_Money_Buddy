@@ -1,11 +1,10 @@
 from __future__ import annotations
-# Robust bridge so `utilities.probability` always resolves.
-# Tries AstroLotto then src/shared by package import; then falls back to direct file-path loading.
+# Robust bridge so `utilities.probability` always resolves (Cloud-safe).
+# Tries AstroLotto then src/shared; falls back to file-path loading.
 from pathlib import Path
 import importlib, importlib.util
 
 def _load():
-    # Try normal package imports
     for modname in [
         "AstroLotto.programs.utilities.probability",
         "src.shared.utilities.probability",
@@ -14,7 +13,6 @@ def _load():
             return importlib.import_module(modname)
         except Exception:
             pass
-    # File-path fallback
     root = Path(__file__).resolve().parent.parent
     candidates = [
         root / "AstroLotto" / "programs" / "utilities" / "probability.py",
