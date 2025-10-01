@@ -15,7 +15,7 @@ import pandas as pd
 import numpy as np
 
 from .oracle_data import moon_phase_fraction, moon_phase_bucket, kp_lookup_before, f10_7_flux_lookup, flare_counts_before
-from utilities.alignment import planetary_alignment_index, mercury_retrograde_flag
+from .alignment import planetary_alignment_index, mercury_retrograde_flag
 import streamlit as st
 
 @dataclass
