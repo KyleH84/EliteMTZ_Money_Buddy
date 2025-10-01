@@ -1,7 +1,26 @@
-from __future__ import annotations
 
 from pathlib import Path
 import os
+
+from __future__ import annotations
+from pathlib import Path
+
+# NEW: use cloud-safe path resolver
+try:
+    from .cloud_paths import resolve_data_dir  # lives in AstroLotto/programs/utilities/
+except Exception:
+    # super-safe fallback: local Data/ under this package
+    def resolve_data_dir(app_root: Path, env_var_name: str, default_subdir: str) -> Path:
+        p = app_root / default_subdir
+        p.mkdir(parents=True, exist_ok=True)
+        return p
+
+# "programs" folder is two levels up from this file
+APP_ROOT = Path(__file__).resolve().parents[2]   # .../AstroLotto/programs
+DATA_DIR = resolve_data_dir(APP_ROOT, "ASTROLOTTO_DATA", "Data")
+CACHE = DATA_DIR / "cache"
+CACHE.mkdir(parents=True, exist_ok=True)
+
 PROJECT_DIR = Path(__file__).resolve().parent
 (PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
 (PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
@@ -22,7 +41,6 @@ try:
 except Exception:
     BeautifulSoup = None
 
-ROOT = Path(".").resolve()
 DATA = ROOT / "Data"
 CACHE = DATA / "cache"
 LOGS = DATA / "logs"
