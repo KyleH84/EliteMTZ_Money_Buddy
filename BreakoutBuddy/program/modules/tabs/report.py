@@ -1,4 +1,5 @@
 from __future__ import annotations
+from ..utilities.cloud_paths import resolve_data_dir
 # program/modules/tabs/report.py
 
 from pathlib import Path
@@ -10,7 +11,7 @@ from utilities.feature_fixups import fill_feature_gaps
 from data.spy_loader import get_spy_prices
 
 APP_ROOT = Path(__file__).resolve().parents[3]
-DATA_DIR = Path(os.getenv("BREAKOUTBUDDY_DATA", APP_ROOT / "Data")).expanduser().resolve()
+DATA_DIR = resolve_data_dir(APP_ROOT, "BREAKOUTBUDDY_DATA", "Data")
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 def _load_df() -> pd.DataFrame:

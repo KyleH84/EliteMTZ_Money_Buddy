@@ -1,10 +1,11 @@
 from __future__ import annotations
+from ..utilities.cloud_paths import resolve_data_dir
 from pathlib import Path
 import json, os
 from typing import List
 
 APP_ROOT = Path(__file__).resolve().parents[3]
-DATA_DIR = Path(os.getenv("BREAKOUTBUDDY_DATA", APP_ROOT / "Data")).expanduser().resolve()
+DATA_DIR = resolve_data_dir(APP_ROOT, "BREAKOUTBUDDY_DATA", "Data")
 WATCHLIST_FILE = DATA_DIR / "watchlist.json"
 
 def load_watchlist() -> List[str]:

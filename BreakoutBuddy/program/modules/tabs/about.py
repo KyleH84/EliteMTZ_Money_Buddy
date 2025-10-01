@@ -1,4 +1,5 @@
 from __future__ import annotations
+from ..utilities.cloud_paths import resolve_data_dir
 from ..utilities.reporting_fixed_panel import render_reporting_fixed_panel
 # program/modules/tabs/about.py
 from typing import Any
@@ -7,7 +8,7 @@ import os
 import streamlit as st
 
 APP_ROOT = Path(__file__).resolve().parents[3]
-DATA_DIR = Path(os.getenv("BREAKOUTBUDDY_DATA", APP_ROOT / "Data")).expanduser().resolve()
+DATA_DIR = resolve_data_dir(APP_ROOT, "BREAKOUTBUDDY_DATA", "Data")
 
 def render_about_tab(*, settings: Any = None) -> None:
     st.header("About BreakoutBuddy")
@@ -168,4 +169,3 @@ ranks candidates, and gives concise explanations you can actually act on.
 
 # Auto-wired panel
 render_reporting_fixed_panel()
-

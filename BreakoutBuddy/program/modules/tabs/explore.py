@@ -1,4 +1,5 @@
 from __future__ import annotations
+from ..utilities.cloud_paths import resolve_data_dir
 # program/modules/tabs/explore.py
 
 from typing import Any, List, Optional, Tuple
@@ -18,7 +19,7 @@ except Exception:
 from modules.ui import quick_explain_page
 
 APP_ROOT = Path(__file__).resolve().parents[3]
-DATA_DIR = Path(os.getenv("BREAKOUTBUDDY_DATA", APP_ROOT / "Data")).expanduser().resolve()
+DATA_DIR = resolve_data_dir(APP_ROOT, "BREAKOUTBUDDY_DATA", "Data")
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 
@@ -198,4 +199,3 @@ def render_explore_tab(*, settings: Any = None, enrich_features_fn=None, **_kwar
     st.markdown("---")
     default = str(view["Ticker"].iloc[0]) if "Ticker" in view.columns and len(view) else None
     quick_explain_page.render(df=view, default_ticker=default, show_header=True, key_prefix="explore")
-

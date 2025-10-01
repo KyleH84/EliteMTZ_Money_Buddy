@@ -1,4 +1,5 @@
 from __future__ import annotations
+from ..utilities.cloud_paths import resolve_data_dir
 # program/modules/agents/auto_tune.py
 
 import os, json
@@ -11,7 +12,7 @@ import streamlit as st
 
 # Resolve app root and Data dir (env/session override friendly if app sets BREAKOUTBUDDY_DATA)
 APP_ROOT = Path(__file__).resolve().parents[3]
-DATA_DIR = Path(os.getenv("BREAKOUTBUDDY_DATA", APP_ROOT / "Data")).expanduser().resolve()
+DATA_DIR = resolve_data_dir(APP_ROOT, "BREAKOUTBUDDY_DATA", "Data")
 
 AGENTS_DIR = DATA_DIR / "agents"
 AGENTS_DIR.mkdir(parents=True, exist_ok=True)
