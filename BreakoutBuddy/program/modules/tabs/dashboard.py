@@ -1,3 +1,4 @@
+from __future__ import annotations
 # program/modules/tabs/dashboard.py
 
 import streamlit as st
@@ -9,7 +10,6 @@ if 'rows_to_display' not in st.session_state:
 st.sidebar.number_input("Universe size", min_value=50, max_value=5000, step=50, key="universe_size")
 st.sidebar.number_input("Rows to display", min_value=5, max_value=200, step=5, key="rows_to_display")
 
-from __future__ import annotations
 
 from typing import Any, List, Optional, Tuple
 from pathlib import Path
