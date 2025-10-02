@@ -1,15 +1,5 @@
-from __future__ import annotations
 # program/modules/tabs/dashboard.py
-
-import streamlit as st
-# Sidebar controls (added)
-if 'universe_size' not in st.session_state:
-    st.session_state['universe_size'] = 500
-if 'rows_to_display' not in st.session_state:
-    st.session_state['rows_to_display'] = 25
-st.sidebar.number_input("Universe size", min_value=50, max_value=5000, step=50, key="universe_size")
-st.sidebar.number_input("Rows to display", min_value=5, max_value=200, step=5, key="rows_to_display")
-
+from __future__ import annotations
 
 from typing import Any, List, Optional, Tuple
 from pathlib import Path
@@ -18,6 +8,10 @@ import os
 import pandas as pd  # type: ignore
 import numpy as np  # type: ignore
 import streamlit as st
+try:
+    from ..services.enrich import enrich_features
+except Exception:
+    enrich_features = None  # type: ignore
 from utilities.feature_fixups import fill_feature_gaps
 from data.spy_loader import get_spy_prices
 
