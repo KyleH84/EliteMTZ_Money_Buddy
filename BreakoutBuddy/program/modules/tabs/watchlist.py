@@ -4,22 +4,22 @@ import streamlit as st
 
 def _load_impl():
     try:
-        from .watchlist_page import render_watchlist_tab as impl  # tabs form
+        from .watchlist_page import render_watchlist_tab as impl  # type: ignore
         return impl
     except Exception:
         pass
     try:
-        from .watchlist_page import render as impl  # tabs legacy
+        from .watchlist_page import render as impl  # type: ignore
         return impl
     except Exception:
         pass
     try:
-        from ..ui.watchlist_page import render_watchlist_tab as impl  # ui form
+        from ..ui.watchlist_page import render_watchlist_tab as impl  # type: ignore
         return impl
     except Exception:
         pass
     try:
-        from ..ui.watchlist_page import render as impl  # ui legacy
+        from ..ui.watchlist_page import render as impl  # type: ignore
         return impl
     except Exception:
         pass

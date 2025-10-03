@@ -124,7 +124,7 @@ if app_choice == "AstroLotto":
             _run_script(p, sys_paths=[app_dir, app_dir.parent])
 
 else:
-    # BreakoutBuddy (flattened)
+    # BreakoutBuddy (flattened: run only program/app_main.py)
     app_dir = base_dir / "BreakoutBuddy"
     program_dir = app_dir / "program"
     bb_main = program_dir / "app_main.py"
