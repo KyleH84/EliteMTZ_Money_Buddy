@@ -2,20 +2,27 @@
 import streamlit as st
 
 # Strict local imports (inside BreakoutBuddy/program)
+from utilities.data_registry import load_active_snapshot, get_refresh_epoch
 try:
-    from BreakoutBuddy.program.utilities.data_registry import load_active_snapshot, get_refresh_epoch
+    from utilities.feature_fixups import fill_feature_gaps, report_feature_gaps  # root shim if available
 except Exception:
     try:
-        # Root-level fallback
-        from utilities.data_registry import load_active_snapshot, get_refresh_epoch
+        # Fallback to BB local utilities; alias ensure_basic_indicators
+        from BreakoutBuddy.program.utilities.feature_fixups import ensure_basic_indicators as fill_feature_gaps  # type: ignore
+        def report_feature_gaps(df):
+            try:
+                missing = []
+                for c in ["P_up","ConnorsRSI","SqueezeHint","AgentBoost_exact"]:
+                    if c not in df.columns or df[c].isna().all():
+                        missing.append(c)
+                return {"missing": missing, "rows": len(df)}
+            except Exception:
+                return {"missing": [], "rows": 0}
     except Exception:
-        # Safe stubs to keep UI alive; Admin/Utilities will prompt user to refresh
-        def load_active_snapshot(*args, **kwargs):
-            import pandas as pd
-            return pd.DataFrame()
-        def get_refresh_epoch():
-            return 0
-from utilities.feature_fixups import fill_feature_gaps, report_feature_gaps
+        def fill_feature_gaps(df, spy_ref=None):
+            return df
+        def report_feature_gaps(df):
+            return {"missing": [], "rows": getattr(df, 'shape', [0,0])[0] if hasattr(df,'shape') else 0}
 from data.spy_loader import get_spy_prices
 
 def render_reporting_fixed_panel():
