@@ -124,7 +124,7 @@ if app_choice == "AstroLotto":
             _run_script(p, sys_paths=[app_dir, app_dir.parent])
 
 else:
-    # BreakoutBuddy (flattened: run only program/app_main.py)
+    # BreakoutBuddy: flattened to single entrypoint app_main.py
     app_dir = base_dir / "BreakoutBuddy"
     program_dir = app_dir / "program"
     bb_main = program_dir / "app_main.py"
@@ -132,6 +132,7 @@ else:
         _run_script(bb_main, sys_paths=[program_dir, app_dir, base_dir])
     else:
         st.error(f"Main file not found: {bb_main}")
+
 
 
     # Discover page scripts under common locations
@@ -150,4 +151,3 @@ else:
     for t, p in zip(tabs[1:], extra_pages):
         with t:
             _run_script(p, sys_paths=[program_dir, app_dir, base_dir])
-

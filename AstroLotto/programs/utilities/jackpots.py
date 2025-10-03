@@ -195,6 +195,14 @@ def get_jackpot(game: str, force_refresh: bool = False) -> Optional[int]:
     val = None
     try:
         val = fetcher()
+        # Optional: persist jackpot value to Supabase as latest snapshot
+        try:
+            import pandas as _pd
+            from .persistence_supabase import save_table as _al_save
+            _df = _pd.DataFrame([{'Key': key, 'Value': int(val), 'AsOf': _pd.Timestamp.utcnow()}])
+            _al_save('jackpots_latest', _df, app='AL')
+        except Exception:
+            pass
     except Exception as e:
         _log(f"fetch error {key}: {e}")
         val = None
