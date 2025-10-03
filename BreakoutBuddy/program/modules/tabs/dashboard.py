@@ -9,9 +9,9 @@ import pandas as pd  # type: ignore
 import numpy as np  # type: ignore
 import streamlit as st
 try:
-    from ..services.enrich import enrich_features
+    from ..services.persistence_supabase import save_table, load_table
 except Exception:
-    enrich_features = None  # type: ignore
+    save_table = load_table = None  # type: ignore
 from utilities.feature_fixups import fill_feature_gaps
 from data.spy_loader import get_spy_prices
 
@@ -153,17 +153,19 @@ def _scan_and_save(limit: int, use_watchlist: bool) -> Tuple[pd.DataFrame, pd.Da
         if r:
             rows.append(r)
     snap = pd.DataFrame(rows)
-    if 'enrich_features' in globals() and enrich_features is not None:
-        try:
-            snap = enrich_features(snap)
-        except Exception as _en:
-            pass
     if not snap.empty:
         for col in ["P_up","ConnorsRSI","SqueezeHint"]:
             if col not in snap.columns:
                 snap[col] = np.nan
         snap.to_csv(DATA_DIR / "explore_snapshot_latest.csv", index=False)
         ranked = _rank_now(snap)
+    # Save latest snapshot/ranked to Supabase tables, if available
+    try:
+        if 'save_table' in globals() and save_table is not None:
+            save_table('snapshot_latest', snap, app='BB')
+            save_table('ranked_latest', ranked if 'ranked' in locals() else snap, app='BB')
+    except Exception:
+        pass
         ranked.to_csv(DATA_DIR / "ranked_latest.csv", index=False)
     else:
         ranked = pd.DataFrame()
@@ -178,6 +180,14 @@ def _load_ranked_from_disk() -> pd.DataFrame:
                 return pd.read_csv(p)
             except Exception:
                 pass
+    # Fallback: try Supabase table if disk is empty
+    try:
+        if 'load_table' in globals() and load_table is not None:
+            df = load_table('ranked_latest', app='BB')
+            if not df.empty:
+                return df
+    except Exception:
+        pass
     return pd.DataFrame()
 
 
