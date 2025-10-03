@@ -300,7 +300,10 @@ try:
 except Exception:
     _render_intention_ui = None
 from visuals.timeline_viz import render_white_surface
-from utilities import jackpots as jp
+try:
+    from AstroLotto.programs.utilities import jackpots as jp
+except Exception:
+    from utilities import jackpots as jp
 
 _rerun = getattr(st, "rerun", getattr(st, "experimental_rerun", None))
 
