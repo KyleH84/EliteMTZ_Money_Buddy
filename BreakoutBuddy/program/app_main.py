@@ -9,41 +9,39 @@ if str(_ROOT) not in sys.path: sys.path.insert(0, str(_ROOT))
 _PROG = _THIS.parent
 if str(_PROG) not in sys.path: sys.path.insert(0, str(_PROG))
 
+# Data/services used across tabs
 from BreakoutBuddy.program.modules.data import list_universe, pull_enriched_snapshot
 from BreakoutBuddy.program.modules.services.enrich import enrich_features
-from BreakoutBuddy.program.modules.tabs.sidebar import render_sidebar_settings
 try:
     from BreakoutBuddy.program.modules.services.persistence_supabase import _client as _sb_client  # type: ignore
 except Exception:
     _sb_client = lambda: None  # type: ignore
 
-if 'universe_size' not in st.session_state: st.session_state['universe_size'] = 500
-if 'rows_to_display' not in st.session_state: st.session_state['rows_to_display'] = 25
+# Centralized sidebar controls
+from BreakoutBuddy.program.modules.tabs.sidebar import render_sidebar_settings
+settings = render_sidebar_settings()
 
+# Tabs
 from BreakoutBuddy.program.modules.tabs.dashboard import render_dashboard_tab
 from BreakoutBuddy.program.modules.tabs.scanner import render_scanner_tab
 from BreakoutBuddy.program.modules.tabs.explore import render_explore_tab
 from BreakoutBuddy.program.modules.tabs.agents import render_agents_tab
 from BreakoutBuddy.program.modules.tabs.single import render_single_tab
 from BreakoutBuddy.program.modules.tabs.watchlist import render_watchlist_tab
-from BreakoutBuddy.program.modules.tabs.elitenewsbot import render_elitenewsbot_tab
 from BreakoutBuddy.program.modules.tabs.admin import render_admin_tab
 from BreakoutBuddy.program.modules.tabs.about import render_about_tab
-
-# Sidebar controls (single place)
-settings = render_sidebar_settings()
-
+from BreakoutBuddy.program.modules.tabs.elitenewsbot import render_elitenewsbot_tab
 
 TABS = [
-    ("Dashboard", lambda: render_dashboard_tab()),
-    ("Scanner",   lambda: render_scanner_tab(settings=st.session_state, list_universe_fn=list_universe, pull_enriched_snapshot_fn=pull_enriched_snapshot, enrich_features_fn=enrich_features)),
-    ("Explore",   lambda: render_explore_tab()),
-    ("Agents",    lambda: render_agents_tab()),
-    ("Single",    lambda: render_single_tab()),
-        ("EliteNewsBot", lambda: render_elitenewsbot_tab(settings=settings)),
-    ("Watchlist", lambda: render_watchlist_tab(conn=_sb_client(), settings=st.session_state, pull_enriched_snapshot_fn=pull_enriched_snapshot, enrich_features_fn=enrich_features)),
-    ("Admin",     lambda: render_admin_tab(settings=st.session_state)),
-    ("About",     lambda: render_about_tab()),
+    ("Dashboard",    lambda: render_dashboard_tab()),
+    ("Scanner",      lambda: render_scanner_tab(settings=settings, list_universe_fn=list_universe, pull_enriched_snapshot_fn=pull_enriched_snapshot, enrich_features_fn=enrich_features)),
+    ("Explore",      lambda: render_explore_tab()),
+    ("Agents",       lambda: render_agents_tab()),
+    ("Single",       lambda: render_single_tab()),
+    ("Watchlist",    lambda: render_watchlist_tab(conn=_sb_client(), settings=settings, pull_enriched_snapshot_fn=pull_enriched_snapshot, enrich_features_fn=enrich_features)),
+    ("EliteNewsBot", lambda: render_elitenewsbot_tab(settings=settings)),
+    ("Admin",        lambda: render_admin_tab(settings=settings)),
+    ("About",        lambda: render_about_tab()),
 ]
 
 tabs = st.tabs([name for name, _ in TABS])

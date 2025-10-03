@@ -1,18 +1,9 @@
-# BreakoutBuddy/program/data/spy_loader.py
+from __future__ import annotations
 import pandas as pd
-from datetime import datetime, timedelta
-import streamlit as st
+import yfinance as yf
 
-@st.cache_data(ttl=3600, show_spinner=False)
-def get_spy_prices(period_days: int = 400) -> pd.DataFrame:
-    try:
-        import yfinance as yf
-    except Exception as e:
-        raise RuntimeError("yfinance not installed or failed to import") from e
-    end = datetime.utcnow()
-    start = end - timedelta(days=period_days+10)
-    spy = yf.download('SPY', start=start.strftime('%Y-%m-%d'), end=end.strftime('%Y-%m-%d'), progress=False)
-    spy = spy.rename(columns={'Adj Close':'Close'})
-    spy = spy[['Close']].dropna()
-    spy.index.name = 'Date'
-    return spy
+def get_spy_prices(period: str = "5y", interval: str = "1d") -> pd.DataFrame:
+    spy = yf.Ticker("SPY")
+    df = spy.history(period=period, interval=interval).reset_index()
+    df.rename(columns={"Date":"Date","Close":"Close"}, inplace=True)
+    return df[["Date","Close"]]
