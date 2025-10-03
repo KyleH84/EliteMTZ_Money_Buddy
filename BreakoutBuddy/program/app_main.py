@@ -4,31 +4,23 @@ import sys
 import streamlit as st
 
 _THIS = Path(__file__).resolve()
-_REPO_ROOT = _THIS.parents[2]
-if str(_REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(_REPO_ROOT))
-_PROG_DIR = _THIS.parent
-if str(_PROG_DIR) not in sys.path:
-    sys.path.insert(0, str(_PROG_DIR))
+_ROOT = _THIS.parents[2]
+if str(_ROOT) not in sys.path: sys.path.insert(0, str(_ROOT))
+_PROG = _THIS.parent
+if str(_PROG) not in sys.path: sys.path.insert(0, str(_PROG))
 
-# ---- Bring in data/services so we can pass required kwargs to tabs ----
 from BreakoutBuddy.program.modules.data import list_universe, pull_enriched_snapshot
 from BreakoutBuddy.program.modules.services.enrich import enrich_features
 try:
-    # Optional Supabase client for watchlist tab
     from BreakoutBuddy.program.modules.services.persistence_supabase import _client as _sb_client  # type: ignore
 except Exception:
     _sb_client = lambda: None  # type: ignore
 
-# ---- Global sidebar controls (persist via session_state) ----
-if "universe_size" not in st.session_state:
-    st.session_state["universe_size"] = 500
-if "rows_to_display" not in st.session_state:
-    st.session_state["rows_to_display"] = 25
+if 'universe_size' not in st.session_state: st.session_state['universe_size'] = 500
+if 'rows_to_display' not in st.session_state: st.session_state['rows_to_display'] = 25
 st.sidebar.number_input("Universe size", min_value=50, max_value=5000, step=50, key="universe_size")
 st.sidebar.number_input("Rows to display", min_value=5, max_value=200, step=5, key="rows_to_display")
 
-# ---- Import tab renderers ----
 from BreakoutBuddy.program.modules.tabs.dashboard import render_dashboard_tab
 from BreakoutBuddy.program.modules.tabs.scanner import render_scanner_tab
 from BreakoutBuddy.program.modules.tabs.explore import render_explore_tab

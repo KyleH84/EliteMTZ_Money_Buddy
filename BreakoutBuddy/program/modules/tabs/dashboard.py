@@ -153,6 +153,11 @@ def _scan_and_save(limit: int, use_watchlist: bool) -> Tuple[pd.DataFrame, pd.Da
         if r:
             rows.append(r)
     snap = pd.DataFrame(rows)
+    if 'enrich_features' in globals() and enrich_features is not None:
+        try:
+            snap = enrich_features(snap)
+        except Exception as _en:
+            pass
     if not snap.empty:
         for col in ["P_up","ConnorsRSI","SqueezeHint"]:
             if col not in snap.columns:

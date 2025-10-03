@@ -2,27 +2,24 @@ from __future__ import annotations
 import inspect
 import streamlit as st
 
-# Adapter: import whichever watchlist renderer exists, then call with only the args it accepts.
 def _load_impl():
-    # Prefer tabs implementation first
     try:
-        from .watchlist_page import render_watchlist_tab as impl  # type: ignore
+        from .watchlist_page import render_watchlist_tab as impl  # tabs form
         return impl
     except Exception:
         pass
     try:
-        from .watchlist_page import render as impl  # type: ignore
-        return impl
-    except Exception:
-        pass
-    # Fallback to ui package
-    try:
-        from ..ui.watchlist_page import render_watchlist_tab as impl  # type: ignore
+        from .watchlist_page import render as impl  # tabs legacy
         return impl
     except Exception:
         pass
     try:
-        from ..ui.watchlist_page import render as impl  # type: ignore
+        from ..ui.watchlist_page import render_watchlist_tab as impl  # ui form
+        return impl
+    except Exception:
+        pass
+    try:
+        from ..ui.watchlist_page import render as impl  # ui legacy
         return impl
     except Exception:
         pass
@@ -35,22 +32,15 @@ def render_watchlist_tab(*, conn=None, settings=None, pull_enriched_snapshot_fn=
         st.error(f"Watchlist: renderer not found: {e}")
         return
 
-    # Call with only the parameters the implementation accepts
     try:
         sig = inspect.signature(impl)
         kwargs = {}
-        for name, p in sig.parameters.items():
-            if name == 'conn':
-                kwargs['conn'] = conn
-            elif name == 'settings':
-                kwargs['settings'] = settings
-            elif name == 'pull_enriched_snapshot_fn':
-                kwargs['pull_enriched_snapshot_fn'] = pull_enriched_snapshot_fn
-            elif name == 'enrich_features_fn':
-                kwargs['enrich_features_fn'] = enrich_features_fn
-            # Gracefully handle 'st' style legacy signatures by passing streamlit module
-            elif name in ('st', 'streamlit'):
-                kwargs[name] = st
+        for name in sig.parameters.keys():
+            if name == 'conn': kwargs['conn'] = conn
+            elif name == 'settings': kwargs['settings'] = settings
+            elif name == 'pull_enriched_snapshot_fn': kwargs['pull_enriched_snapshot_fn'] = pull_enriched_snapshot_fn
+            elif name == 'enrich_features_fn': kwargs['enrich_features_fn'] = enrich_features_fn
+            elif name in ('st','streamlit'): kwargs[name] = st
         return impl(**kwargs)
     except Exception as e:
         st.error(f"Watchlist failed: {type(e).__name__}: {e}")
