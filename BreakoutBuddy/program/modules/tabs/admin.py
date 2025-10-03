@@ -235,6 +235,7 @@ def _section_regime():
 
 
 def _section_utilities():
+    from ..utilities.reporting_fixed_panel import render_reporting_fixed_panel
     st.subheader("Utilities")
     colA, colB, colC = st.columns(3)
     with colA:
@@ -310,6 +311,8 @@ def render_admin_tab(*, settings: Any = None):
 
         st.markdown("---")
         ohlcv_admin_panel(st)
+        st.markdown('---')
+        render_reporting_fixed_panel()
 
     with tabs[1]:
         _section_agents_rank()

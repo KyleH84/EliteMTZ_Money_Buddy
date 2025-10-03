@@ -117,41 +117,11 @@ if app_choice == "AstroLotto":
         if main_path.exists():
             _run_script(main_path, sys_paths=[app_dir, app_dir.parent])
         else:
-            st.error(f"Main file not found: {main_path}")
-
-    for t, p in zip(tabs[1:], extra_pages):
-        with t:
-            _run_script(p, sys_paths=[app_dir, app_dir.parent])
-
-else:
-    # BreakoutBuddy
     app_dir = base_dir / "BreakoutBuddy"
     program_dir = app_dir / "program"
-    # Detect main
-    bb_main = None
-    for candidate in ["app_main.py", "00_Dashboard.py", "main.py"]:
-        c = program_dir / candidate
-        if c.exists():
-            bb_main = c
-            break
-    if bb_main is None:
-        bb_main = program_dir / "00_Dashboard.py"
-
-    # Discover page scripts under common locations
-    extra_pages = _discover_page_files(app_dir, ["program/pages", "pages"])
-
-    tab_titles = ["Main"] + [_nice_title(p) for p in extra_pages]
-    tabs = st.tabs(tab_titles)
-
-    with tabs[0]:
-        if bb_main.exists():
-            # Ensure BB's 'modules' package resolves by adding program_dir to sys.path
-            _run_script(bb_main, sys_paths=[program_dir, app_dir, base_dir])
-        else:
-            st.error(f"Main file not found: {bb_main}")
-
-    for t, p in zip(tabs[1:], extra_pages):
-        with t:
-            _run_script(p, sys_paths=[program_dir, app_dir, base_dir])
-
-
+    bb_main = program_dir / "app_main.py"
+    # Flatten BB: run main only; no outer tabs
+    if bb_main.exists():
+        _run_script(bb_main, sys_paths=[program_dir, app_dir, base_dir])
+    else:
+        st.error(f"Main file not found: {bb_main}")
