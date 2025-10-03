@@ -1,39 +1,35 @@
 from __future__ import annotations
 import inspect
+import importlib
 import streamlit as st
 
-def _load_impl():
-    try:
-        from .watchlist_page import render_watchlist_tab as impl  # type: ignore
-        return impl
-    except Exception:
-        pass
-    try:
-        from .watchlist_page import render as impl  # type: ignore
-        return impl
-    except Exception:
-        pass
-    try:
-        from ..ui.watchlist_page import render_watchlist_tab as impl  # type: ignore
-        return impl
-    except Exception:
-        pass
-    try:
-        from ..ui.watchlist_page import render as impl  # type: ignore
-        return impl
-    except Exception:
-        pass
-    raise ImportError("No watchlist renderer found in tabs.watchlist_page or ui.watchlist_page")
+def _load_watchlist_module():
+    # Try tabs page first, then ui shim
+    for modname in [
+        "BreakoutBuddy.program.modules.tabs.watchlist_page",
+        "BreakoutBuddy.program.modules.ui.watchlist_page",
+    ]:
+        try:
+            return importlib.import_module(modname)
+        except Exception:
+            continue
+    raise ImportError("Could not locate watchlist_page module in tabs/ or ui/.")
 
 def render_watchlist_tab(*, conn=None, settings=None, pull_enriched_snapshot_fn=None, enrich_features_fn=None):
     try:
-        impl = _load_impl()
+        mod = _load_watchlist_module()
     except Exception as e:
-        st.error(f"Watchlist: renderer not found: {e}")
+        st.error(f"Watchlist module not found: {e}")
         return
 
+    func = getattr(mod, "render_watchlist_tab", None) or getattr(mod, "render", None)
+    if func is None:
+        st.error("Watchlist: neither 'render_watchlist_tab' nor 'render' is defined in watchlist_page.")
+        return
+
+    # Pass only kwargs the impl accepts
     try:
-        sig = inspect.signature(impl)
+        sig = inspect.signature(func)
         kwargs = {}
         for name in sig.parameters.keys():
             if name == 'conn': kwargs['conn'] = conn
@@ -41,7 +37,7 @@ def render_watchlist_tab(*, conn=None, settings=None, pull_enriched_snapshot_fn=
             elif name == 'pull_enriched_snapshot_fn': kwargs['pull_enriched_snapshot_fn'] = pull_enriched_snapshot_fn
             elif name == 'enrich_features_fn': kwargs['enrich_features_fn'] = enrich_features_fn
             elif name in ('st','streamlit'): kwargs[name] = st
-        return impl(**kwargs)
+        return func(**kwargs)
     except Exception as e:
-        st.error(f"Watchlist failed: {type(e).__name__}: {e}")
+        st.error(f"Watchlist failed to render: {type(e).__name__}: {e}")
         return

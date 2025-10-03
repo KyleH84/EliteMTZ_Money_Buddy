@@ -1,3 +1,4 @@
+from __future__ import annotations
 # program/modules/tabs/dashboard.py
 from __future__ import annotations
 
@@ -7,16 +8,18 @@ import os
 
 import pandas as pd  # type: ignore
 import numpy as np  # type: ignore
-import streamlit as st
+from typing import Optional, List, Dict, Any
 try:
-    from utilities.feature_fixups import fill_feature_gaps  # root shim or local provides it
+    from ..services.enrich import enrich_features
 except Exception:
-    try:
-        from BreakoutBuddy.program.utilities.feature_fixups import ensure_basic_indicators as fill_feature_gaps  # fallback alias
-    except Exception:
-        def fill_feature_gaps(df, spy_ref=None):
-            return df
+    enrich_features = None  # type: ignore
+try:
+    from ..services.persistence_supabase import save_table, load_table
+except Exception:
+    save_table = load_table = None  # type: ignore
 
+import streamlit as st
+from utilities.feature_fixups import fill_feature_gaps
 from data.spy_loader import get_spy_prices
 
 # Optional yfinance
@@ -40,6 +43,31 @@ _BUILTIN_UNIVERSE = [
     "TM","TMO","LIN","CMCSA","NKE","MCD","DIS","PFE","WFC","ABNB","AMAT","QCOM","TXN","INTC","HON","UPS",
     "CAT","RTX","IBM","CVX","SBUX","SPY","QQQ","META","NVDA","AMZN","AAPL","MSFT","GOOGL","TSLA","AMD",
 ]
+
+
+# ---- Supabase history append helpers ----
+def _append_supabase_history(kind: str, df: 'pd.DataFrame', app: str = 'BB') -> None:
+    if save_table is None or load_table is None or df is None or df.empty:
+        return
+    try:
+        date_str = pd.Timestamp.utcnow().strftime('%Y-%m-%d')
+        name = f"history/{kind}_{date_str}"
+        try:
+            existing = load_table(name, app=app)
+        except Exception:
+            existing = None
+        if existing is not None and not existing.empty:
+            cols = [c for c in ['Ticker','Date','Datetime','AsOf','Close'] if c in df.columns]
+            if cols:
+                merged = pd.concat([existing, df], ignore_index=True).drop_duplicates(subset=cols, keep='last')
+            else:
+                merged = pd.concat([existing, df], ignore_index=True).drop_duplicates(keep='last')
+            save_table(name, merged, app=app)
+        else:
+            save_table(name, df, app=app)
+    except Exception:
+        pass
+
 
 def _load_universe_csv() -> List[str]:
     # Look for common universe files in Data/
@@ -158,11 +186,37 @@ def _scan_and_save(limit: int, use_watchlist: bool) -> Tuple[pd.DataFrame, pd.Da
             rows.append(r)
     snap = pd.DataFrame(rows)
     if not snap.empty:
+        try:
+            if enrich_features is not None:
+                snap = enrich_features(snap)
+        # --- Post-enrich safeguard: ensure feature columns exist (avoid blanks in table)
+        try:
+            _need_cols = ["P_up","ConnorsRSI","SqueezeHint","AgentBoost_exact"]
+            for _c in _need_cols:
+                if _c not in snap.columns:
+                    snap[_c] = None
+            # Fill obvious NAs to safe defaults for display
+            snap["AgentBoost_exact"] = snap["AgentBoost_exact"].fillna(0)
+            for _c in ["P_up","ConnorsRSI","SqueezeHint"]:
+                snap[_c] = snap[_c].fillna("None")
+        except Exception:
+            pass
+        except Exception:
+            pass
         for col in ["P_up","ConnorsRSI","SqueezeHint"]:
             if col not in snap.columns:
                 snap[col] = np.nan
         snap.to_csv(DATA_DIR / "explore_snapshot_latest.csv", index=False)
         ranked = _rank_now(snap)
+    # Save latest and append history to Supabase (non-fatal if not configured)
+    try:
+        if save_table is not None:
+            save_table('snapshot_latest', snap, app='BB')
+            save_table('ranked_latest', ranked if 'ranked' in locals() else snap, app='BB')
+            _append_supabase_history('snapshot', snap, app='BB')
+            _append_supabase_history('ranked', ranked if 'ranked' in locals() else snap, app='BB')
+    except Exception:
+        pass
         ranked.to_csv(DATA_DIR / "ranked_latest.csv", index=False)
     else:
         ranked = pd.DataFrame()
