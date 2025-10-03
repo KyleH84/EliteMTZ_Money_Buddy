@@ -2,7 +2,19 @@
 import streamlit as st
 
 # Strict local imports (inside BreakoutBuddy/program)
-from utilities.data_registry import load_active_snapshot, get_refresh_epoch
+try:
+    from BreakoutBuddy.program.utilities.data_registry import load_active_snapshot, get_refresh_epoch
+except Exception:
+    try:
+        # Root-level fallback
+        from utilities.data_registry import load_active_snapshot, get_refresh_epoch
+    except Exception:
+        # Safe stubs to keep UI alive; Admin/Utilities will prompt user to refresh
+        def load_active_snapshot(*args, **kwargs):
+            import pandas as pd
+            return pd.DataFrame()
+        def get_refresh_epoch():
+            return 0
 from utilities.feature_fixups import fill_feature_gaps, report_feature_gaps
 from data.spy_loader import get_spy_prices
 
