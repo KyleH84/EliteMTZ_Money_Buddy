@@ -1,159 +1,176 @@
 from __future__ import annotations
 
-from pathlib import Path
-import os
-PROJECT_DIR = Path(__file__).resolve().parent
-(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
-(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
-
-from typing import Dict, Any
+from typing import Dict, Any, Tuple, List
 import math
-import streamlit as st
-def _risk_badge(row) -> str:
+
+# NOTE:
+# This module is intentionally self-contained and defensive.
+# It provides three public helpers used across the app:
+#   - explain_for_row(row_dict) -> {quick, detailed, risk_badge}
+#   - explain_scan(df) -> DataFrame with QuickWhy, RiskBadge
+#   - explain_row(row)  (compat for ui/plain_english.py)
+#
+# It does NOT depend on Streamlit so it can be used in vectorized/batch paths.
+
+# -----------------------------
+# Small safe getters
+# -----------------------------
+def _f(row: Dict[str, Any], key: str, default: float) -> float:
     try:
-        rvol = float(row.get('RVOL', 1.0))
+        v = row.get(key, default)
+        if v is None or (isinstance(v, float) and math.isnan(v)):
+            return default
+        return float(v)
     except Exception:
-        rvol = 1.0
+        return default
+
+def _s(row: Dict[str, Any], key: str, default: str = "") -> str:
     try:
-        rsi = float(row.get('RSI4', 50.0))
+        v = row.get(key, default)
+        if v is None:
+            return default
+        return str(v)
     except Exception:
-        rsi = 50.0
-    heat = 0
-    if rvol > 1.8: heat += 1
-    if rsi > 70 or rsi < 30: heat += 1
-    return '🔴 High' if heat >= 2 else ('🟡 Medium' if heat == 1 else '🟢 Low')
-def _quick_list(row) -> str:
-    pros, cons = [], []
-    rel = float(row.get('RelSPY', 0.0) or 0.0)
-    rvol = float(row.get('RVOL', 1.0) or 1.0)
-    rsi = float(row.get('RSI4', 50.0) or 50.0)
-    crsi = float(row.get('ConnorsRSI', 50.0) or 50.0)
-    sq = float(row.get('SqueezeHint', 0.0) or 0.0)
-    chg = float(row.get('ChangePct', 0.0) or 0.0)
-    if rel > 0: pros.append('RelSPY+')
-    if rvol > 1.2: pros.append('RVOL↑')
-    if 45 <= rsi <= 60: pros.append('RSI ok')
-    if sq > 0: pros.append('Squeeze?')
-    if rel < 0: cons.append('RelSPY-')
-    if rvol < 0.8: cons.append('Thin vol')
-    if rsi >= 75: cons.append('Overbought')
-    if rsi <= 25: cons.append('Oversold')
-    if abs(chg) > 0.05: cons.append('Whippy')
-    tags = ' | '.join(pros[:3] + cons[:3])
-    return f"{row.get('Ticker','?')}: [{tags}] • Risk {_risk_badge(row).split()[0]}"
+        return default
 
-def _english_explanation(row: dict) -> str:
-    # Robust, self-contained 2–5 sentence explanation using available fields.
-    tkr = str(row.get('Ticker', '?'))
-    rel = float((row.get('RelSPY', 0.0) or 0.0))
-    rvol = float((row.get('RVOL', 1.0) or 1.0))
-    rsi = float((row.get('RSI4', 50.0) or 50.0))
-    crsi = float((row.get('ConnorsRSI', 50.0) or 50.0))
-    chg = float((row.get('ChangePct', 0.0) or 0.0))
-    atrp = float((row.get('ATRpct', row.get('ATR_Pct', 0.0)) or 0.0))
-    sq = float((row.get('SqueezeHint', 0.0) or 0.0))
-    sc = row.get('Combined', row.get('FinalScore', row.get('HeuristicScore', None)))
+# -----------------------------
+# Badges & simple scoring
+# -----------------------------
+def _risk_badge(row: Dict[str, Any]) -> str:
+    rvol  = _f(row, "RVOL", 1.0)       # relative volume (x)
+    atrp  = _f(row, "ATRp", 2.0)       # ATR as % of price
+    rsi4  = _f(row, "RSI4", 50.0)
+    whips = abs(_f(row, "ChangePct", 0.0)) >= 5.0
 
-    parts = []
+    score = 0.0
+    # base on volatility
+    score += min(max((atrp - 1.5) / 2.5, 0.0), 1.0) * 0.45
+    # add volume participation
+    score += min(max((rvol - 1.0) / 2.0, 0.0), 1.0) * 0.35
+    # RSI extremes add a bit of risk
+    score += (1.0 if (rsi4 >= 75 or rsi4 <= 25) else 0.0) * 0.15
+    # large daily change bumps risk
+    score += (0.05 if whips else 0.0)
 
-    # Sentence 1: context (relative strength + change + score)
-    ctx_bits = []
-    if rel > 0.02:
-        ctx_bits.append("showing strength vs SPY")
-    elif rel < -0.02:
-        ctx_bits.append("lagging SPY")
-    if chg:
-        ctx_bits.append(f"today {('up' if chg>0 else 'down')} {abs(chg)*100:.1f}%")
-    if sc is not None:
-        try:
-            sc_f = float(sc)
-            ctx_bits.append(f"score {sc_f:.2f}")
-        except Exception:
-            pass
-    ctx_txt = ", ".join(ctx_bits) if ctx_bits else "standard conditions"
-    parts.append(f"{tkr} is under {ctx_txt}.")
+    if score < 0.35:
+        return "Low • calmer tape"
+    if score < 0.65:
+        return "Med • active but manageable"
+    return "High • fast tape / mind size"
 
-    # Sentence 2: momentum (RSI/ConnorsRSI)
-    if rsi >= 70:
-        parts.append("Momentum looks extended; RSI is elevated and could fade.")
-    elif rsi <= 30:
-        parts.append("Momentum is washed out; RSI is low and may stabilize or continue weak.")
-    elif 45 <= rsi <= 60:
-        parts.append("Momentum is balanced; RSI sits in a neutral zone.")
+def _pros_cons(row: Dict[str, Any]) -> Tuple[List[str], List[str]]:
+    pros: List[str] = []
+    cons: List[str] = []
+
+    rel   = _f(row, "RelSPY", 0.0)     # relative strength vs SPY
+    rvol  = _f(row, "RVOL", 1.0)
+    rsi4  = _f(row, "RSI4", 50.0)
+    crsi  = _f(row, "ConnorsRSI", 50.0)
+    chg   = _f(row, "ChangePct", 0.0)  # percent change today
+    bbw   = _f(row, "BBWidth", 0.0)    # Bollinger width (%)
+
+    # Pros
+    if rel > 0.0:               pros.append("Outperforming SPY")
+    if rvol >= 1.5:             pros.append("Heavier volume")
+    if 45 <= rsi4 <= 60:        pros.append("Balanced RSI")
+    if chg > 0:                 pros.append("Up on the day")
+    if 0.0 < bbw < 8.0:         pros.append("Tight range / compression")
+
+    # Cons
+    if rel < 0.0:               cons.append("Lagging SPY")
+    if rvol < 0.8:              cons.append("Thin participation")
+    if rsi4 >= 75:              cons.append("Overbought")
+    if rsi4 <= 25:              cons.append("Oversold")
+    if abs(chg) >= 5.0:         cons.append("Whippy move")
+    if bbw >= 12.0:             cons.append("Wide range / choppy")
+
+    return pros, cons
+
+def _english_explanation(row: Dict[str, Any]) -> str:
+    tkr  = _s(row, "Ticker", "?")
+    rel  = _f(row, "RelSPY", 0.0)
+    rvol = _f(row, "RVOL", 1.0)
+    rsi4 = _f(row, "RSI4", 50.0)
+    crsi = _f(row, "ConnorsRSI", 50.0)
+    chg  = _f(row, "ChangePct", 0.0)
+    atrp = _f(row, "ATRp", 2.0)
+    bbw  = _f(row, "BBWidth", 0.0)
+
+    direction = "up" if chg >= 0 else "down"
+    rel_str = "stronger than the market" if rel > 0 else ("weaker than the market" if rel < 0 else "inline with the market")
+
+    bits = []
+    bits.append(f"{tkr} is {direction} {abs(chg):.1f}% on the day and trading {rel_str}.")
+    bits.append(f"Volume looks {'elevated' if rvol >= 1.5 else ('light' if rvol < 0.8 else 'normal')} (RVOL {rvol:.2f}).")
+    if 45 <= rsi4 <= 60:
+        bits.append(f"RSI(4) at {rsi4:.0f} is balanced; ConnorsRSI is {crsi:.0f}.")
     else:
-        parts.append("Momentum is mixed; not clearly overbought or oversold.")
-    if crsi:
-        try:
-            cr = float(crsi)
-            if cr >= 70:
-                parts[-1] += " ConnorsRSI also indicates a short-term stretch."
-            elif cr <= 30:
-                parts[-1] += " ConnorsRSI hints at short-term exhaustion."
-        except Exception:
-            pass
+        zone = 'overbought' if rsi4 >= 75 else ('oversold' if rsi4 <= 25 else 'neutral')
+        bits.append(f"RSI(4) at {rsi4:.0f} sits in a {zone} zone; ConnorsRSI is {crsi:.0f}.")
+    if bbw > 0:
+        regime = "compressed" if bbw < 8 else ("expanding" if bbw < 12 else "wide")
+        bits.append(f"Range looks {regime} (BB width ~{bbw:.1f}%).")
+    bits.append(f"ATR is ~{atrp:.1f}% of price, so position sizing should respect a {('faster' if atrp >= 3 else 'moderate')} tape.")
 
-    # Sentence 3: participation/volume
-    if rvol >= 1.8:
-        parts.append("Participation is strong with RVOL well above average.")
-    elif rvol >= 1.2:
-        parts.append("Volume is above normal, indicating active interest.")
-    elif rvol <= 0.8:
-        parts.append("Volume is light; signals may be less reliable.")
-    else:
-        parts.append("Volume is near average.")
+    pros, cons = _pros_cons(row)
+    if pros:
+        bits.append("Pros: " + ", ".join(pros[:3]) + ".")
+    if cons:
+        bits.append("Cons: " + ", ".join(cons[:3]) + ".")
 
-    # Sentence 4: volatility / structure
-    if sq and sq > 0:
-        parts.append("Range is compressing (squeeze), a break could travel quickly.")
-    elif atrp and atrp >= 0.05:
-        parts.append("Volatility is elevated; expect wider swings.")
-    # else omit
+    return " ".join(bits)
 
-    # Sentence 5: risk wrap using badge
-    parts.append(f"Overall risk: {_risk_badge(row)}.")
+# -----------------------------
+# Public API
+# -----------------------------
+def explain_for_row(row: Dict[str, Any], allow_local_llm: bool = False) -> Dict[str, str]:
+    # Plain, deterministic output. If an LLM is later wired, we still fall back safely.
+    quick = ""
+    detailed = ""
+    try:
+        pros, cons = _pros_cons(row)
+        pro_str = " | ".join(pros[:3]) if pros else "Standard setup"
+        con_str = " | ".join(cons[:3]) if cons else ""
+        quick = f"{_s(row, 'Ticker', '?')}: {pro_str}" + (f" • {con_str}" if con_str else "")
+    except Exception:
+        quick = f"{_s(row, 'Ticker', '?')}: Standard setup"
 
-    # Constrain to ~5 sentences max
-    return " ".join(parts[:5]).strip()
+    try:
+        detailed = _english_explanation(row)
+    except Exception:
+        detailed = quick
 
-def explain_for_row(row: dict, *, allow_local_llm: bool = False) -> Dict[str, Any]:
-    quick = _quick_list(row)
-    detailed = _english_explanation(row)
     badge = _risk_badge(row)
-    if not allow_local_llm:
-        return {'quick': quick, 'detailed': detailed, 'risk_badge': badge}
-    try:
-        from .services import local_llm
-        if local_llm.is_available():
-            feats = {
-                'RelSPY': row.get('RelSPY', 0.0),
-                'RVOL': row.get('RVOL', 1.0),
-                'RSI4': row.get('RSI4', 50.0),
-                'ConnorsRSI': row.get('ConnorsRSI', 50.0),
-                'ChangePct': row.get('ChangePct', 0.0),
-                'SqueezeHint': row.get('SqueezeHint', 0),
-            }
-            prompt = ('You are a trading assistant. Give a short, neutral explanation (2-4 sentences) '
-                      'of intraday setup quality and risk for the following stock, based ONLY on these features. '
-                      'Avoid jargon; keep it actionable.\n\n'
-                      f"Ticker: {row.get('Ticker','?')}\n"
-                      f"Features: {feats}\n")
-            llm_text = local_llm.infer(prompt, max_tokens=140, temp=0.2)
-            if llm_text:
-                detailed = llm_text.strip()
-                return {'quick': quick, 'detailed': detailed, 'risk_badge': badge}
-    except Exception:
-        pass
-    return {'quick': quick, 'detailed': detailed, 'risk_badge': badge}
+    return {"quick": quick, "detailed": detailed, "risk_badge": badge}
+
 def explain_scan(df):
     rows = []
+    # Avoid importing pandas at module import to keep this file lightweight.
+    try:
+        import pandas as pd  # type: ignore
+    except Exception:
+        return df
+
+    if df is None or getattr(df, "empty", True):
+        return df
+
     for _, r in df.iterrows():
         d = explain_for_row(r.to_dict(), allow_local_llm=False)
         out = {k: r.get(k, None) for k in df.columns}
-        out['QuickWhy'] = d['quick']
-        out['RiskBadge'] = d['risk_badge']
+        out["QuickWhy"] = d["quick"]
+        out["RiskBadge"] = d["risk_badge"]
         rows.append(out)
+
     try:
-        import pandas as pd
         return pd.DataFrame(rows)
     except Exception:
         return rows
+
+# Compatibility for ui/plain_english.py
+def explain_row(row: Any) -> str:
+    try:
+        # Support both dict-like and pandas Series
+        rd = row if isinstance(row, dict) else getattr(row, "to_dict", lambda: {})()
+        return explain_for_row(rd)["detailed"]
+    except Exception:
+        return ""
