@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import List, Optional
+from typing import Iterable, List, Optional
 import pandas as pd  # type: ignore
 
 # Optional DuckDB import; do NOT hard-require at import time
@@ -19,6 +19,7 @@ APP_ROOT = Path(__file__).resolve().parents[2]   # program/
 BB_ROOT = APP_ROOT.parents[0]
 DATA_DIR = Path(os.getenv("BREAKOUTBUDDY_DATA", BB_ROOT / "Data")).expanduser().resolve()
 DATA_DIR.mkdir(parents=True, exist_ok=True)
+WATCHLIST_CSV = DATA_DIR / "watchlist.csv"
 
 # Optional scoring helpers
 try:
@@ -73,6 +74,59 @@ def _ensure_ticker_column(df: pd.DataFrame) -> pd.DataFrame:
         if str(c).lower() in ("ticker", "symbol"):
             return df.rename(columns={c: "Ticker"})
     return df
+
+
+def _normalize_tickers(tickers: Iterable[str]) -> List[str]:
+    normalized: List[str] = []
+    for ticker in tickers:
+        text = str(ticker).strip().upper()
+        if text:
+            normalized.append(text)
+    return normalized
+
+
+def _write_watchlist(tickers: Iterable[str]) -> List[str]:
+    items = sorted(dict.fromkeys(_normalize_tickers(tickers)))
+    WATCHLIST_CSV.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        pd.DataFrame({"Ticker": items}).to_csv(WATCHLIST_CSV, index=False)
+    except Exception:
+        return items
+    return items
+
+
+def read_watchlist() -> List[str]:
+    """Return the saved watchlist tickers from Data/watchlist.csv."""
+    if not WATCHLIST_CSV.exists():
+        return []
+    try:
+        df = pd.read_csv(WATCHLIST_CSV)
+    except Exception:
+        return []
+    for col in df.columns:
+        if str(col).lower() in {"ticker", "symbol"}:
+            return _normalize_tickers(df[col].tolist())
+    return []
+
+
+def add_to_watchlist(tickers: Iterable[str] | str) -> List[str]:
+    """Add one or more tickers to the watchlist file."""
+    incoming = [tickers] if isinstance(tickers, str) else list(tickers)
+    new_items = _normalize_tickers(incoming)
+    if not new_items:
+        return read_watchlist()
+    existing = read_watchlist()
+    return _write_watchlist(existing + new_items)
+
+
+def remove_from_watchlist(tickers: Iterable[str] | str) -> List[str]:
+    """Remove one or more tickers from the watchlist file."""
+    candidates = [tickers] if isinstance(tickers, str) else list(tickers)
+    remove = set(_normalize_tickers(candidates))
+    if not remove:
+        return read_watchlist()
+    remaining = [t for t in read_watchlist() if t not in remove]
+    return _write_watchlist(remaining)
 
 
 def _fallback_rank(df: pd.DataFrame) -> pd.DataFrame:
