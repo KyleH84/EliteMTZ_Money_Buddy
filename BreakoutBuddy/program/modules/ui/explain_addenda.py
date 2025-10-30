@@ -4,80 +4,70 @@ import pandas as pd, numpy as np
 
 def _heikin_ashi(df: pd.DataFrame) -> pd.DataFrame:
     ha = pd.DataFrame(index=df.index)
-    ha['HA_Close'] = (df['Open'] + df['High'] + df['Low'] + df['Close']) / 4
-    ha['HA_Open'] = ha['HA_Close'].copy()
-    ha['HA_Open'].iloc[0] = (df['Open'].iloc[0] + df['Close'].iloc[0]) / 2
-    for i in range(1, len(df)):
-        ha['HA_Open'].iloc[i] = (ha['HA_Open'].iloc[i-1] + ha['HA_Close'].iloc[i-1]) / 2
+    ha['HA_Close'] = (df['Open'] + df['High'] + df['Low'] + df['Close']) / 4.0
+    ha['HA_Open'] = (df['Open'] + df['Close']) / 2.0
+    for i in range(1, len(ha)):
+        ha.iloc[i, ha.columns.get_loc('HA_Open')] = (ha.iloc[i-1]['HA_Open'] + ha.iloc[i-1]['HA_Close']) / 2.0
     ha['HA_High'] = pd.concat([df['High'], ha['HA_Open'], ha['HA_Close']], axis=1).max(axis=1)
-    ha['HA_Low']  = pd.concat([df['Low'], ha['HA_Open'], ha['HA_Close']], axis=1).min(axis=1)
+    ha['HA_Low']  = pd.concat([df['Low'],  ha['HA_Open'], ha['HA_Close']], axis=1).min(axis=1)
     return ha
 
 def heikin_ashi_signal(df: pd.DataFrame) -> str:
     if df is None or df.empty: return "n/a"
-    ha = _heikin_ashi(df)
-    last = ha[['HA_Open','HA_Close']].tail(3)
-    # simple trend cue: last 3 HA closes rising & above HA opens
-    if (last['HA_Close'] > last['HA_Open']).all() and last['HA_Close'].is_monotonic_increasing:
-        return "Uptrend (HA)"
-    if (last['HA_Close'] < last['HA_Open']).all() and last['HA_Close'].is_monotonic_decreasing:
-        return "Downtrend (HA)"
+    ha = _heikin_ashi(df).tail(3)
+    if len(ha) < 3: return "n/a"
+    rising = ha['HA_Close'].is_monotonic_increasing and (ha['HA_Close'] > ha['HA_Open']).all()
+    falling = ha['HA_Close'].is_monotonic_decreasing and (ha['HA_Close'] < ha['HA_Open']).all()
+    if rising: return "Uptrend (HA)"
+    if falling: return "Downtrend (HA)"
     return "Mixed (HA)"
 
 def fib_extensions(df: pd.DataFrame) -> dict:
-    # Use last swing high/low window and compute common extension levels
-    if df is None or len(df) < 30: return {}
-    close = df['Close']
-    recent = close.tail(60)
-    swing_low  = recent.min()
-    swing_high = recent.max()
-    # Assume current move is from swing_low -> high if price near high; else high -> low
-    direction_up = recent.iloc[-1] > (swing_low + swing_high)/2
+    if df is None or df.empty or len(df) < 30: return {}
+    close = df['Close'].tail(60)
+    lo, hi = close.min(), close.max()
+    direction_up = close.iloc[-1] >= (lo + hi) / 2.0
+    extent = abs(hi - lo)
+    if extent <= 0: return {}
     if direction_up:
-        base = swing_low; ref = swing_high
-        extent = ref - base
+        ref = hi
         levels = {
             "1.272": ref + 0.272 * extent,
             "1.414": ref + 0.414 * extent,
             "1.618": ref + 0.618 * extent,
         }
     else:
-        base = swing_high; ref = swing_low
-        extent = base - ref
+        ref = lo
         levels = {
             "1.272": ref - 0.272 * extent,
             "1.414": ref - 0.414 * extent,
             "1.618": ref - 0.618 * extent,
         }
-    return {k: float(v) for k,v in levels.items()}
+    return {k: float(v) for k, v in levels.items()}
 
 def elliott_wave_hint(df: pd.DataFrame) -> str:
-    # Placeholder heuristic: count recent higher-highs/lows to hint if impulsive/corrective
-    if df is None or len(df) < 20: return "n/a"
-    close = df['Close'].tail(40)
-    hh = (close > close.shift(1)).sum()
-    ll = (close < close.shift(1)).sum()
-    if hh > ll + 5: return "Impulsive up (EW hint)"
-    if ll > hh + 5: return "Impulsive down (EW hint)"
+    if df is None or df.empty or len(df) < 30: return "n/a"
+    close = df['Close'].tail(60)
+    up = (close > close.shift(1)).sum()
+    down = (close < close.shift(1)).sum()
+    if up >= down + 8: return "Impulsive up (EW hint)"
+    if down >= up + 8: return "Impulsive down (EW hint)"
     return "Corrective / sideways (EW hint)"
 
 def render_advanced_explain(sym: str) -> None:
+    st.markdown("### Advanced: Elliott Wave / Fibonacci Extensions / Heikin Ashi")
     try:
         import yfinance as yf
-        data = yf.download(sym, period="6mo", interval="1d", progress=False, auto_adjust=False)
+        df = yf.download(sym, period="6mo", interval="1d", progress=False, auto_adjust=False)
     except Exception:
-        data = pd.DataFrame()
-    st.markdown("### Advanced: Elliott Wave / Fibonacci Extensions / Heikin Ashi")
-    if data is None or data.empty:
+        df = pd.DataFrame()
+    if df is None or df.empty:
         st.info("Price history unavailable for advanced explanation.")
         return
-    # Heikin Ashi trend
-    st.write("**Heikin Ashi trend:**", heikin_ashi_signal(data))
-    # Fibonacci extensions
-    levels = fib_extensions(data)
+    st.write("**Heikin Ashi trend:**", heikin_ashi_signal(df))
+    levels = fib_extensions(df)
     if levels:
-        st.write("**Fib extensions (approx):**", ", ".join([f"{k}: {v:,.2f}" for k,v in levels.items()]))
+        st.write("**Fib extensions (approx):**", ", ".join([f"{k}: {v:,.2f}" for k, v in levels.items()]))
     else:
         st.write("**Fib extensions:** n/a")
-    # Elliott Wave hint
-    st.write("**Elliott Wave hint:**", elliott_wave_hint(data))
+    st.write("**Elliott Wave hint:**", elliott_wave_hint(df))
