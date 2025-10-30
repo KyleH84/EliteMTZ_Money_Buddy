@@ -35,3 +35,19 @@ def render_watchlist(df: pd.DataFrame):
         df = df.drop_duplicates(subset=['Ticker'], keep='last')
 
     st.dataframe(df, use_container_width=True, hide_index=True)
+
+
+# --- Back-compat alias for app_main import ---
+# app_main imports: from modules.ui.watchlist_page import render
+try:
+    render  # type: ignore[name-defined]
+except NameError:
+    def render(df=None):
+        try:
+            return render_watchlist(df)  # call existing function if present
+        except Exception:
+            # Try common alternates if names differ
+            try:
+                return render_watchlist_tab(df)
+            except Exception:
+                return None
