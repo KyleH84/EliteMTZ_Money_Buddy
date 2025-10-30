@@ -1,48 +1,38 @@
-# === ADDED: Explain a pick panel with small chart ===
-try:
-    import streamlit as st
-    import pandas as pd
-    import numpy as np
+import streamlit as st
+from BreakoutBuddy.program.modules.ui.explain_addenda import render_advanced_explain
+import pandas as pd
+from .. import watchlist as wlmod
 
-    def _explain_block(df: pd.DataFrame) -> None:
-        if df is None or df.empty:
-            return
-        # Ticker chooser
-        tickers = sorted(set(df.get("Ticker", df.get("Symbol", pd.Series([], dtype=str)))).astype(str))
-        if not tickers:
-            return
-        with st.expander("📝 Explain a pick", expanded=False):
-            sym = st.selectbox("Symbol", tickers, key="watchlist_explain_symbol")
-            row = df[df.get("Ticker", df.get("Symbol")) == sym].tail(1)
-            if row.empty:
-                st.info("No data for selection."); return
-            r = row.iloc[-1].to_dict()
+def render_watchlist(df: pd.DataFrame):
+    st.header("Watchlist")
 
-            # Simple bullet explanation
-            bullets = []
-            def num(x, nd=2):
-                try:
-                    return f"{float(x):,.{nd}f}"
-                except Exception:
-                    return str(x)
-            bullets.append(f"**ChangePct**: {num(r.get('ChangePct', 0))}%")
-            bullets.append(f"**RelSPY**: {num(r.get('RelSPY', 0), 3)}")
-            bullets.append(f"**RVOL**: {num(r.get('RVOL', 0), 3)}")
-            bullets.append(f"**RSI4**: {num(r.get('RSI4', 0))}")
-            bullets.append(f"**ConnorsRSI**: {num(r.get('ConnorsRSI', 0))}")
-            bullets.append(f"**SqueezeHint**: {r.get('SqueezeHint', 'Off')}")
-            st.markdown("\n".join([f"- {b}" for b in bullets]))
+    with st.expander("Manage watchlist", expanded=True):
+        new = st.text_input("Add ticker").strip().upper()
+        if st.button("Add"):
+            if new:
+                wlmod.add_to_watchlist(new)
+                st.success(f"Added {new} to watchlist")
 
-            # Small chart (90d) via yfinance if available
-            try:
-                import yfinance as yf
-                data = yf.download(sym, period="90d", interval="1d", progress=False, auto_adjust=False)
-                if not data.empty:
-                    st.line_chart(data["Close"].rename(sym))
-                else:
-                    st.info("No recent price data available.")
-            except Exception as _e:
-                st.info("Chart unavailable.")
-except Exception:
-    # leave silently if not applicable
-    pass
+        to_remove = st.multiselect("Remove tickers", wlmod.read_watchlist())
+        if st.button("Remove selected"):
+            for t in to_remove:
+                wlmod.remove_from_watchlist(t)
+            st.success(f"Removed: {', '.join(to_remove)}")
+
+    # Ensure every watchlist ticker appears in the table
+    try:
+        wl = wlmod.read_watchlist()
+        if isinstance(wl, (list, tuple)) and wl:
+            _all = pd.DataFrame({'Ticker': [str(t).strip().upper() for t in wl]})
+            if df is None or df.empty or 'Ticker' not in df.columns:
+                df = _all
+            else:
+                df = _all.merge(df, on='Ticker', how='left')
+    except Exception:
+        pass
+
+    # Drop duplicate tickers if any and keep the newest row
+    if df is not None and not df.empty and 'Ticker' in df.columns:
+        df = df.drop_duplicates(subset=['Ticker'], keep='last')
+
+    st.dataframe(df, use_container_width=True, hide_index=True)
