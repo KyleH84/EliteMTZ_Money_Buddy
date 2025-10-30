@@ -8,6 +8,7 @@ import os
 import pandas as pd  # type: ignore
 import numpy as np  # type: ignore
 import streamlit as st
+from BreakoutBuddy.program.utilities.fill_indicators_live import enrich_snapshot
 
 # Optional yfinance
 try:
@@ -181,6 +182,7 @@ def render_explore_tab(*, settings: Any = None, enrich_features_fn=None, **_kwar
         work = work.sort_values(by=sort_by, ascending=ascending)
 
     view = work.head(top_n) if not work.empty else work
+    view = enrich_snapshot(view)
     st.dataframe(view, use_container_width=True, hide_index=True)
 
     

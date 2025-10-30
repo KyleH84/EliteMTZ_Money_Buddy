@@ -8,7 +8,7 @@ import os
 import pandas as pd  # type: ignore
 import numpy as np  # type: ignore
 import streamlit as st
-from BreakoutBuddy.program.utilities.fill_indicators_live import fill_missing_indicators
+from BreakoutBuddy.program.utilities.fill_indicators_live import enrich_snapshot
 
 # Optional yfinance
 try:
@@ -217,7 +217,7 @@ def render_dashboard_tab(*, settings: Any = None, has_agents: bool = False) -> N
         "Combined","AgentBoost_exact","Combined_with_agents",
     ]
     show_cols = [c for c in desired if c in view.columns] + [c for c in view.columns if c not in desired]
-    view = fill_missing_indicators(view)
+    view = enrich_snapshot(view)
     st.dataframe(view[show_cols], use_container_width=True, hide_index=True)
 
     st.markdown("---")
