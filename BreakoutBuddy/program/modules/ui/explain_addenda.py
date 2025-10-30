@@ -5,7 +5,7 @@ import pandas as pd, numpy as np
 def _heikin_ashi(df: pd.DataFrame) -> pd.DataFrame:
     ha = pd.DataFrame(index=df.index)
     ha['HA_Close'] = (df['Open'] + df['High'] + df['Low'] + df['Close']) / 4.0
-    ha['HA_Open'] = (df['Open'] + df['Close']) / 2.0
+    ha['HA_Open']  = (df['Open'] + df['Close']) / 2.0
     for i in range(1, len(ha)):
         ha.iloc[i, ha.columns.get_loc('HA_Open')] = (ha.iloc[i-1]['HA_Open'] + ha.iloc[i-1]['HA_Close']) / 2.0
     ha['HA_High'] = pd.concat([df['High'], ha['HA_Open'], ha['HA_Close']], axis=1).max(axis=1)
@@ -56,7 +56,6 @@ def elliott_wave_hint(df: pd.DataFrame) -> str:
 
 def render_advanced_explain(sym: str) -> None:
     st.markdown("### Advanced: Elliott Wave / Fibonacci Extensions / Heikin Ashi")
-    # Mini chart + data fetch
     df = pd.DataFrame()
     try:
         import yfinance as yf
@@ -66,9 +65,7 @@ def render_advanced_explain(sym: str) -> None:
     if df is None or df.empty:
         st.info("Price history unavailable for advanced explanation.")
         return
-    # Small chart (Close)
     st.line_chart(df["Close"].rename(sym))
-    # Readouts
     st.write("**Heikin Ashi trend:**", heikin_ashi_signal(df))
     levels = fib_extensions(df)
     if levels:

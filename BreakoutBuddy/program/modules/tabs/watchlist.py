@@ -1,21 +1,24 @@
-import streamlit as st
-from BreakoutBuddy.program.modules.ui.explain_addenda import render_advanced_explain
 
-# NOTE: This file is a patch helper. If your tab already has code, this block should be appended
-# after your first st.dataframe(...) call to show the Explain panel.
+# === ADDED (non-destructive): safe indicator fill + advanced explain ===
 try:
-    _df = view  # common variable name in tabs
-except NameError:
-    _df = None
-try:
-    import pandas as _pd
-    if isinstance(_df, _pd.DataFrame) and not _df.empty:
-        _syms_series = _df.get('Ticker', _df.get('Symbol'))
-        if _syms_series is not None and len(_syms_series) > 0:
-            _syms = sorted(set(_syms_series.astype(str)))
-            with st.expander('📝 Explain a pick (advanced)', expanded=False):
-                _sym = st.selectbox('Symbol', _syms, key='explain_adv_sym_generic')
-                if _sym:
-                    render_advanced_explain(_sym)
+    from BreakoutBuddy.program.utilities.indicator_fill_safe import safe_fill_indicators
+    from BreakoutBuddy.program.modules.ui.explain_addenda import render_advanced_explain
+    import pandas as _pd, streamlit as _st
+    if 'view' in globals():
+        try:
+            view = safe_fill_indicators(view)
+        except Exception:
+            pass
+        try:
+            if isinstance(view, _pd.DataFrame) and not view.empty:
+                _syms_series = view.get('Ticker', view.get('Symbol'))
+                if _syms_series is not None and len(_syms_series) > 0:
+                    _syms = sorted(set(_syms_series.astype(str)))
+                    with _st.expander('📝 Explain a pick (advanced)', expanded=False):
+                        _sym = _st.selectbox('Symbol', _syms, key='exp_adv__'+__name__)
+                        if _sym:
+                            render_advanced_explain(_sym)
+        except Exception:
+            pass
 except Exception:
     pass

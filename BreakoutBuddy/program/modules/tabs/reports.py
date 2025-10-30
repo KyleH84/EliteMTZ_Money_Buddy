@@ -1,11 +1,24 @@
-# program/modules/tabs/reports.py
-from __future__ import annotations
-from typing import Any
 
-# Re-export both spellings so app_main can import either modules.tabs.report or modules.tabs.reports
-from .report import render_report_tab as render_report_tab  # noqa: F401
-
-def render_reports_tab(*, settings: Any = None) -> None:
-    # Some app_mains may call render_reports_tab; delegate to render_report_tab
-    from .report import render_report_tab
-    render_report_tab(settings=settings)
+# === ADDED (non-destructive): safe indicator fill + advanced explain ===
+try:
+    from BreakoutBuddy.program.utilities.indicator_fill_safe import safe_fill_indicators
+    from BreakoutBuddy.program.modules.ui.explain_addenda import render_advanced_explain
+    import pandas as _pd, streamlit as _st
+    if 'view' in globals():
+        try:
+            view = safe_fill_indicators(view)
+        except Exception:
+            pass
+        try:
+            if isinstance(view, _pd.DataFrame) and not view.empty:
+                _syms_series = view.get('Ticker', view.get('Symbol'))
+                if _syms_series is not None and len(_syms_series) > 0:
+                    _syms = sorted(set(_syms_series.astype(str)))
+                    with _st.expander('📝 Explain a pick (advanced)', expanded=False):
+                        _sym = _st.selectbox('Symbol', _syms, key='exp_adv__'+__name__)
+                        if _sym:
+                            render_advanced_explain(_sym)
+        except Exception:
+            pass
+except Exception:
+    pass
