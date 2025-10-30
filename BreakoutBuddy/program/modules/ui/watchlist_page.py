@@ -37,16 +37,16 @@ def render_watchlist(df: pd.DataFrame):
     st.dataframe(df, use_container_width=True, hide_index=True)
 
 
-# --- Back-compat alias for app_main import ---
-# app_main imports: from modules.ui.watchlist_page import render
-try:
-    render  # type: ignore[name-defined]
-except NameError:
-    def render(df=None):
+# Back-compat: app_main may call render(conn=..., df=..., symbols=...)
+def render(*args, **kwargs):
+    df = kwargs.get("df", None)
+    symbols = kwargs.get("symbols", None)
+    try:
+        return render_watchlist(df=df, symbols=symbols)  # use kw if function supports it
+    except TypeError:
         try:
-            return render_watchlist(df)  # call existing function if present
+            return render_watchlist(df)  # fallback positional
         except Exception:
-            # Try common alternates if names differ
             try:
                 return render_watchlist_tab(df)
             except Exception:
