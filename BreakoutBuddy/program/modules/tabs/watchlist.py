@@ -1,31 +1,21 @@
-from __future__ import annotations
-
-from pathlib import Path
-import os
-PROJECT_DIR = Path(__file__).resolve().parent
-(PROJECT_DIR / "data").mkdir(exist_ok=True, parents=True)
-(PROJECT_DIR / "assets").mkdir(exist_ok=True, parents=True)
-
 import streamlit as st
-from BreakoutBuddy.program.utilities.fill_indicators_live import enrich_snapshot
-from modules.ui.watchlist_page import render as render_watchlist_page
+from BreakoutBuddy.program.modules.ui.explain_addenda import render_advanced_explain
 
-def render_watchlist_tab(
-    *,
-    conn,
-    settings,
-    pull_enriched_snapshot_fn,
-    enrich_features_fn,
-    train_online_fn=None,
-    score_snapshot_fn=None,
-):
-    st.subheader("Watchlist")
-    render_watchlist_page(
-        conn=conn,
-        settings=settings,
-        pull_enriched_snapshot_fn=pull_enriched_snapshot_fn,
-        enrich_features_fn=enrich_features_fn,
-        train_online_fn=train_online_fn,
-        score_snapshot_fn=score_snapshot_fn,
-        header=False,
-    )
+# NOTE: This file is a patch helper. If your tab already has code, this block should be appended
+# after your first st.dataframe(...) call to show the Explain panel.
+try:
+    _df = view  # common variable name in tabs
+except NameError:
+    _df = None
+try:
+    import pandas as _pd
+    if isinstance(_df, _pd.DataFrame) and not _df.empty:
+        _syms_series = _df.get('Ticker', _df.get('Symbol'))
+        if _syms_series is not None and len(_syms_series) > 0:
+            _syms = sorted(set(_syms_series.astype(str)))
+            with st.expander('📝 Explain a pick (advanced)', expanded=False):
+                _sym = st.selectbox('Symbol', _syms, key='explain_adv_sym_generic')
+                if _sym:
+                    render_advanced_explain(_sym)
+except Exception:
+    pass
