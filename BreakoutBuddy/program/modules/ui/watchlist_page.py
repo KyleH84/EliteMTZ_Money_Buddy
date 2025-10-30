@@ -1,5 +1,4 @@
 import streamlit as st
-from BreakoutBuddy.program.modules.ui.explain_addenda import render_advanced_explain
 import pandas as pd
 from .. import watchlist as wlmod
 
@@ -36,3 +35,33 @@ def render_watchlist(df: pd.DataFrame):
         df = df.drop_duplicates(subset=['Ticker'], keep='last')
 
     st.dataframe(df, use_container_width=True, hide_index=True)
+
+# === ADDED: robust render alias for app_main import ===
+# app_main expects: from modules.ui.watchlist_page import render
+# Accept and ignore unknown kwargs (e.g., conn), and delegate to existing functions.
+try:
+    # If a render already exists and accepts kwargs, leave it.
+    import inspect as _inspect
+    if 'render' in globals():
+        _sig = _inspect.signature(render)
+        if any(p.kind == p.VAR_KEYWORD for p in _sig.parameters.values()):
+            pass
+        else:
+            raise NameError('render exists but no **kwargs; replace below')
+    else:
+        raise NameError('no render; define below')
+except Exception:
+    def render(*args, **kwargs):
+        df = kwargs.get('df', None)
+        symbols = kwargs.get('symbols', None)
+        try:
+            return render_watchlist(df=df, symbols=symbols)  # preferred
+        except Exception:
+            try:
+                return render_watchlist(df)  # positional fallback
+            except Exception:
+                try:
+                    return render_watchlist_tab(df)  # alt name
+                except Exception:
+                    return None
+
